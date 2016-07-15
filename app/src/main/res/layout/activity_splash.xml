@@ -9,8 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.maesta.maesta.SplashActivity">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

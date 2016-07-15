@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Maesta</string>
+    <!--Login-->
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgetpassword">Forget Password?</string>
+<!--Aboutus-->
+    <string name="aboutus"> About Us</string>
+    <string name="terms_condition">Terms and Conditions</string>
+
 </resources>
