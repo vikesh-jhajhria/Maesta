@@ -25,21 +25,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-   <!-- <LinearLayout
-        android:gravity="center_horizontal"
-        android:id="@+id/first_name_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/dialog_holo_dark_frame"/>
-    </LinearLayout>-->
 
     <LinearLayout
         android:layout_marginTop="?actionBarSize"
@@ -54,7 +39,7 @@
             android:layout_margin="15dp"
             android:scaleType="fitXY"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:src="@drawable/images"
             />
 

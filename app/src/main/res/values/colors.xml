@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimary">#191919</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#d10000</color>
+    <color name="redButtonColor">#ff0000</color>
     <color name="white">#ffffff</color>
-    <color name="gray_light">#7E7E7E</color>
-    <color name="bg_color">#ffffff</color>
+    <color name="bg_color">#e2e2e2</color>
+    <color name="textColorPrimary">#989898</color>
+    <color name="hLineColor">#bababa</color>
+    <color name="green">#1b9100</color>
+    <color name="textColorSecondary">#2c2c2c</color>
+    <color name="textWhite">#fffefe</color>
 </resources>
