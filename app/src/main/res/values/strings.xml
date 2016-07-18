@@ -8,5 +8,17 @@
 <!--Aboutus-->
     <string name="aboutus"> About Us</string>
     <string name="terms_condition">Terms and Conditions</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="name">Name</string>
+    <string name="contact">Contact Number</string>
+    <string name="msg">Message</string>
+    <string name="send">Send</string>
+    <string name="contact_adres">Contact_Address</string>
+    <string name="maesta_distributor">Maestro Distributer</string>
+    <string name="distributor_adres">Aliquamorci Leo,lacuis in Elementium</string>
+    <string name="adres_city">10435,Delhi,India</string>
+    <string name="phone">Phone</string>
+    <string name="phone_number">+9123456780</string>
+    <string name="status">Status:</string>
 
 </resources>
