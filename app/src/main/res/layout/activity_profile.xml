@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/profile"
+            app:titleTextColor="@color/white" />
+
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?actionBarSize"
+        android:orientation="vertical">
+
+
+
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="@dimen/margin_10"
+            app:cardUseCompatPadding="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textview_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/redButtonColor"
+                    android:layout_margin="@dimen/margin_10"
+                    />
+                <TextView
+                    android:id="@+id/textview_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="John Deo"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/textColorSecondary"
+                     android:layout_marginLeft="@dimen/margin_10"
+                    />
+                <View
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/hLineColor"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/margin_10"></View>
+
+                <TextView
+                    android:id="@+id/textview_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobile"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/redButtonColor"
+                    android:layout_margin="@dimen/margin_10"
+                    />
+                <TextView
+                    android:id="@+id/textview_mobile_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+9087654321"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    />
+                <View android:layout_margin="10dp"
+
+                    android:layout_width="match_parent"
+                    android:background="@color/hLineColor"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/margin_10"></View>
+                <TextView
+                    android:id="@+id/textview_billing_deliver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/billing_deliver"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/redButtonColor"
+                    android:layout_margin="@dimen/margin_10"
+                    />
+                <TextView
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:id="@+id/textview_billing_address"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Android Developer jaipur india 030273"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="@dimen/margin_10"
+            app:cardUseCompatPadding="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_gravity="center_vertical">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textview_current_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_cat"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/redButtonColor"
+                    android:layout_margin="@dimen/margin_10"
+                    />
+                <TextView
+                    android:id="@+id/textview_catgory_name"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:layout_height="wrap_content"
+                    android:text="Silver"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="@dimen/margin_10"
+            app:cardUseCompatPadding="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textview_next_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next_cat"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/redButtonColor"
+                    android:layout_margin="@dimen/margin_10"
+                    />
+                <TextView
+                    android:id="@+id/textview_next_cat_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gold"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    />
+                <View
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/hLineColor"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/margin_10"></View>
+
+                <TextView
+                    android:id="@+id/textview_remaning_target"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remening_target"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/redButtonColor"
+                    android:layout_margin="@dimen/margin_10"
+                    />
+                <TextView
+                    android:id="@+id/textview_remaning_target_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs,55,000.00"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+ </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
