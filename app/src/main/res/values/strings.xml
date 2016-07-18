@@ -5,7 +5,7 @@
     <string name="username">    Username</string>
     <string name="password">Password</string>
     <string name="forgetpassword">Forget Password?</string>
-<!--Aboutus-->
+    <!--Aboutus-->
     <string name="aboutus"> About Us</string>
     <string name="terms_condition">Terms and Conditions</string>
     <string name="contact_us">Contact Us</string>
@@ -20,5 +20,22 @@
     <string name="phone">Phone</string>
     <string name="phone_number">+9123456780</string>
     <string name="status">Status:</string>
+    <string name="orderhistory">Order History</string>
+    <string name="orderid">Order ID</string>
+    <string name="total">Total</string>
+    <string name="profile">Profile</string>
+    <string name="mobile">Mobile No.</string>
+    <string name="billing_deliver">Billing and Delivery Addresss</string>
+    <string name="current_cat">Current Category Level</string>
+    <string name="next_cat">Next Category Level</string>
+    <string name="remening_target">Next Category Remaining Target</string>
+    <string name="desc">Description</string>
+    <string name="add_to_collection">ADD TO COLLECTION</string>
+    <string name="title_activity_navigation">Navigation</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>
