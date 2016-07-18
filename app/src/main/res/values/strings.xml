@@ -2,9 +2,9 @@
     <string name="app_name">Maesta</string>
     <!--Login-->
     <string name="login">Login</string>
-    <string name="username">    Username</string>
+    <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="forgetpassword">Forget Password?</string>
+    <string name="forgetpassword">Forgot Password?</string>
 <!--Aboutus-->
     <string name="aboutus"> About Us</string>
     <string name="terms_condition">Terms and Conditions</string>
@@ -20,5 +20,9 @@
     <string name="phone">Phone</string>
     <string name="phone_number">+9123456780</string>
     <string name="status">Status:</string>
+
+    <!--Home Screen-->
+    <string name="search_hint">Search your product...</string>
+    <string name="new_arrivals">New Arrivals</string>
 
 </resources>

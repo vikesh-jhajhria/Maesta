@@ -7,17 +7,17 @@
     <!---->
 
     <dimen name="font_14">10sp</dimen>
-    <dimen name="font_18">12sp</dimen>
-    <dimen name="font_20">12.5sp</dimen>
-    <dimen name="font_22">13sp</dimen>
-    <dimen name="font_24">14sp</dimen>
-    <dimen name="font_25">15sp</dimen>
-    <dimen name="font_28">16sp</dimen>
-    <dimen name="font_30">17sp</dimen>
-    <dimen name="font_32">18sp</dimen>
-    <dimen name="font_36">20sp</dimen>
-    <dimen name="font_50">25sp</dimen>
-    <dimen name="font_60">34sp</dimen>
+    <dimen name="font_18">13sp</dimen>
+    <dimen name="font_20">14.3sp</dimen>
+    <dimen name="font_22">15.7sp</dimen>
+    <dimen name="font_24">17sp</dimen>
+    <dimen name="font_25">17.8sp</dimen>
+    <dimen name="font_28">20sp</dimen>
+    <dimen name="font_30">21.4sp</dimen>
+    <dimen name="font_32">22.8sp</dimen>
+    <dimen name="font_36">25.6sp</dimen>
+    <dimen name="font_50">35sp</dimen>
+    <dimen name="font_60">42sp</dimen>
 
 
     <dimen name="margin_1">1dp</dimen>

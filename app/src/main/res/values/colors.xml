@@ -10,6 +10,7 @@
     <color name="hLineColor">#bababa</color>
     <color name="green">#1b9100</color>
     <color name="textColorSecondary">#2c2c2c</color>
+    <color name="textColorBlack">#000000</color>
 
     <color name="textWhite">#fffefe</color>
 </resources>
