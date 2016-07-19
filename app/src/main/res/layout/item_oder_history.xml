@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
-        app:cardElevation="@dimen/margin_10"
+        app:cardElevation="@dimen/margin_8"
         app:cardUseCompatPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_18"
@@ -41,7 +42,7 @@
 
                 <TextView
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/textview_pending"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="@dimen/margin_15"
@@ -53,17 +54,20 @@
                     android:text="pending"/>
             </RelativeLayout>
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:background="@color/hLineColor"
                     ></View>
                 <ImageView
 
                     android:id="@+id/img_item"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_marginLeft="@dimen/margin_15"
+                    android:layout_marginRight="@dimen/margin_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/order_history"/>
@@ -73,18 +77,19 @@
                     android:layout_marginTop="10dp"
                     android:textSize="@dimen/font_18"
                     android:textColor="@color/textColorSecondary"
-                    android:id="@+id/textview_orderid"
+                    android:id="@+id/textview_order"
                     android:layout_toRightOf="@+id/img_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/orderid"/>
                 <TextView
+
                     android:layout_marginTop="10dp"
                     android:id="@+id/textview_id"
                     android:textSize="@dimen/font_18"
                     android:textColor="@color/textColorSecondary"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/textview_orderid"
+                    android:layout_toRightOf="@+id/textview_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+98E6F6"/>
@@ -92,19 +97,21 @@
                     android:id="@+id/total"
                     android:textSize="@dimen/font_18"
                     android:textColor="@color/textColorSecondary"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/img_item"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_below="@+id/textview_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/total"/>
                 <TextView
+                    android:id="@+id/price"
                     android:layout_marginLeft="5dp"
                     android:textSize="@dimen/font_18"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginTop="@dimen/margin_5"
                     android:layout_below="@+id/textview_id"
                     android:layout_toRightOf="@+id/total"
                     android:layout_width="wrap_content"
