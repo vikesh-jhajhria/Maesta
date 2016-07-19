@@ -26,7 +26,7 @@
  android:layout_gravity="center_horizontal"
     android:layout_height="100dp"
     android:scaleType="centerInside"
-    android:src="@drawable/mestra_logo"/>
+    android:src="@drawable/maestro_logo"/>
 
             <TextView
                 android:id="@+id/textview_product_name"
