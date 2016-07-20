@@ -45,5 +45,6 @@
     <string name="err_login_pass">Please enter password.</string>
     <string name="password_length_error">Password should be atleast 6 digit long.</string>
     <string name="view_collection">View Collection</string>
+    <string name="place_order">Place Order</string>
 
 </resources>

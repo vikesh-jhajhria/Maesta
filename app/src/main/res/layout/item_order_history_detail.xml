@@ -3,19 +3,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    android:padding="@dimen/activity_horizontal_margin">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-
-        app:cardCornerRadius="2dp"
-        app:cardElevation="5dp"
-        app:cardUseCompatPadding="false">
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="@dimen/margin_5"
+        app:cardUseCompatPadding="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
         <RelativeLayout
@@ -25,7 +21,6 @@
 
 
             <ImageView
-                android:scaleType="fitCenter"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/img_1"
                 android:layout_width="70dp"
@@ -35,7 +30,7 @@
 
             <TextView
 
-                android:id="@+id/txtview_1"
+                android:id="@+id/txtview_product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -53,7 +48,7 @@
                 android:textColor="@color/textColorSecondary"
 
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtview_1"
+                android:layout_below="@+id/txtview_product_name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/img_1"
@@ -67,7 +62,7 @@
                 android:layout_alignTop="@+id/txtview_quantity"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/txtview_quantity"
-                android:background="@color/bg_color"
+                android:background="@drawable/squarebackground"
                 android:paddingBottom="2dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp"
@@ -75,10 +70,10 @@
                 android:text="20" />
 
             <TextView
- android:textColor="@color/redButtonColor"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/txt_view_price"
                 android:layout_width="wrap_content"
-
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtview_quantity"
                 android:layout_marginBottom="20dp"

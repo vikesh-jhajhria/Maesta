@@ -18,6 +18,11 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeActivity"
             android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".MyCollectionActivity"/>
+        <!-- <activity android:name=".OrderHistoryDetailActivity"/>-->
+        <activity android:name=".OrderHistoryActivity"/>
+
+        OrderHistoryActivity
     </application>
 
 </manifest>
