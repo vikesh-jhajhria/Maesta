@@ -40,7 +40,7 @@
             android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:src="@drawable/images"
+            android:src="@drawable/banner_1"
             />
 
         <WebView

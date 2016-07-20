@@ -1,49 +1,39 @@
 package com.maesta.maesta.adapter;
 
-import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.maesta.maesta.R;
-import com.maesta.maesta.vo.Banner;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by vikesh.kumar on 7/18/2016.
- */
-public class BannerAdapter extends PagerAdapter {
+public class BannerAdapter extends FragmentPagerAdapter
+{
+    private final List<Fragment> mFragmentList = new ArrayList();
 
-    Context context;
-    ArrayList<Banner> banners;
+    private final List<String> mFragmentTitleNames = new ArrayList();
 
-    public BannerAdapter(Context context, ArrayList<Banner> bannerList) {
-        this.context = context;
-        this.banners = bannerList;
+    public BannerAdapter(FragmentManager fm) {
+        super(fm);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleNames.add(title);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return banners.size();
+        return mFragmentList.size();
     }
 
     @Override
-    public Object instantiateItem(ViewGroup collection, int position) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = (View) inflater.inflate(R.layout.layout_banner_fragment, collection, false);
-        collection.addView(view);
-        return view;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return false;
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleNames.get(position);
     }
 }

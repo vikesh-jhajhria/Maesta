@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 
 </manifest>
