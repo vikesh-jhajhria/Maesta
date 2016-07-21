@@ -1,7 +1,10 @@
 package com.maesta.maesta;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +26,7 @@ import com.maesta.maesta.adapter.CustomExpandableListAdapter;
 import com.maesta.maesta.adapter.NewArrivalAdapter;
 import com.maesta.maesta.datasource.ExpandableListDataSource;
 import com.maesta.maesta.fragment.BannerFragment;
+import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
@@ -47,7 +51,7 @@ public class HomeActivity extends BaseActivity {
 
     private ViewPager bannerViewPager;
     private RecyclerView newArrivalRV, catetoriesRV;
-
+private Handler handler;
     private ExpandableListView mExpandableListView;
     private ExpandableListAdapter mExpandableListAdapter;
     private List<String> mExpandableListTitle;
@@ -60,7 +64,7 @@ public class HomeActivity extends BaseActivity {
         bannerViewPager = (ViewPager) findViewById(R.id.pager_banner);
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
-
+        handler=new Handler();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
 
@@ -77,9 +81,15 @@ public class HomeActivity extends BaseActivity {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.layout_nav_header, null, false);
         mExpandableListView.addHeaderView(listHeaderView);
+        findViewById(R.id.img_user).setOnClickListener(this);
         View listFooterView = inflater.inflate(R.layout.layout_nav_footer, null, false);
         mExpandableListView.addFooterView(listFooterView);
-
+        findViewById(R.id.txt_my_profile).setOnClickListener(this);
+        findViewById(R.id.txt_terms).setOnClickListener(this);
+        findViewById(R.id.txt_my_order).setOnClickListener(this);
+        findViewById(R.id.txt_about_us).setOnClickListener(this);
+        findViewById(R.id.txt_contact_us).setOnClickListener(this);
+        findViewById(R.id. txt_logout).setOnClickListener(this);
         mExpandableListData = ExpandableListDataSource.getData(this);
         mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
 
@@ -181,6 +191,48 @@ public class HomeActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn_toggle:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            case R.id.img_user:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                break;
+
+            case R.id.txt_my_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                break;
+            case R.id.txt_terms:
+                startActivity(new Intent(getApplicationContext(), TermConditionActivity.class));
+                break;
+            case R.id.txt_contact_us:
+                startActivity(new Intent(getApplicationContext(), ContactUsActivity.class));
+                break;
+            case R.id.txt_about_us:
+                startActivity(new Intent(getApplicationContext(), AboutusActivity.class));
+                break;
+            case R.id.txt_my_order:
+                startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
+                break;
+            case R.id.txt_logout:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                handler.postDelayed(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void run() {
+                        Utils.showDecisionDialog(HomeActivity.this, "Logout", getString(R.string.logout_message), new Utils.AlertCallback() {
+                            @Override
+                            public void callback() {
+                                AppPreferences pref = AppPreferences.getAppPreferences(getApplicationContext());
+                                pref.putStringValue(AppPreferences.USER_ID, "");
+                                pref.putStringValue(AppPreferences.USER_NAME, "");
+                                pref.putStringValue(AppPreferences.USER_PHONE, "");
+                                pref.putStringValue(AppPreferences.API_KEY, "");
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                finishAffinity();
+                            }
+                        });
+                    }
+                }, 50);
+                break;
+
         }
     }
 

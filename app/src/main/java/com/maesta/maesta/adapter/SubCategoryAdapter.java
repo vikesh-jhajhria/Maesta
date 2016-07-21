@@ -38,7 +38,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final SubCategoryVO subcategory = subcategory_list.get(position);
         holder.productName.setText(subcategory.productName);
-holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(context, ListingActivity.class);

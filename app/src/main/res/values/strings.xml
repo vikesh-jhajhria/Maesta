@@ -5,7 +5,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="forgetpassword">Forgot Password?</string>
-<!--Aboutus-->
+    <!--Aboutus-->
     <string name="aboutus"> About Us</string>
     <string name="terms_condition">Terms and Conditions</string>
     <string name="contact_us">Contact Us</string>
@@ -117,5 +117,13 @@
         <item>The Freshman (1990)</item>
         <item>Waiting for Guffman (1996) </item>
     </string-array>
+    <string name="title_activity_change_password">ChangePassword</string>
+    <string name="current_pass">Current Password</string>
+    <string name="new_pass">New Password</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="err_new_pass">Please enter new password.</string>
+    <string name="err_confirm_pass">please enter confirm password</string>
+    <string name="logout">Logout</string>
+    <string name="logout_message">Do you really want to logout ?</string>
 
 </resources>

@@ -21,8 +21,16 @@ public class TermConditionActivity extends BaseActivity
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Term & Condition");
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
 
+        return false;
+    }
 }
