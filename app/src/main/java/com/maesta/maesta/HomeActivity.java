@@ -6,8 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -19,6 +21,8 @@ import com.maesta.maesta.adapter.CustomExpandableListAdapter;
 import com.maesta.maesta.adapter.NewArrivalAdapter;
 import com.maesta.maesta.datasource.ExpandableListDataSource;
 import com.maesta.maesta.fragment.BannerFragment;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
 import com.maesta.maesta.vo.Product;
 
@@ -55,6 +59,8 @@ public class HomeActivity extends BaseActivity {
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
 
+        findViewById(R.id.btn_toggle).setOnClickListener(this);
+
 
         prepareBanner();
         prepareNewArrival();
@@ -69,12 +75,14 @@ public class HomeActivity extends BaseActivity {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.layout_nav_header, null, false);
         mExpandableListView.addHeaderView(listHeaderView);
+        View listFooterView = inflater.inflate(R.layout.layout_nav_footer, null, false);
+        mExpandableListView.addFooterView(listFooterView);
 
         mExpandableListData = ExpandableListDataSource.getData(this);
         mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
 
         addDrawerItems();
-        setupDrawer();
+        applyFont();
     }
     private void addDrawerItems() {
         mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);
@@ -109,27 +117,7 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    private void setupDrawer() {
-        /*mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 
-            *//** Called when a drawer has settled in a completely open state. *//*
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle(R.string.film_genres);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            *//** Called when a drawer has settled in a completely closed state. *//*
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);*/
-    }
     private void prepareBanner() {
         Banner banner = new Banner();
         bannerList.add(banner);
@@ -182,6 +170,26 @@ public class HomeActivity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         catetoriesRV.setLayoutManager(linearLayoutManager);
         catetoriesRV.setAdapter(categoriesAdapter);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.btn_toggle:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+    }
+
+    private void applyFont() {
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_welcome), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_username), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_my_profile), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_my_order), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_about_us), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_contact_us), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_terms), Config.REGULAR);
 
     }
 }

@@ -139,6 +139,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
         android:divider="@null"
-        android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:groupIndicator="@null"
         android:background="@color/white" />
 </android.support.v4.widget.DrawerLayout>

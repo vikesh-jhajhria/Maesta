@@ -47,7 +47,8 @@
     <string name="view_collection">View Collection</string>
     <string name="place_order">Place Order</string>
     <string name="welcome">Welcome !</string>
-
+    <string name="my_profile">My Profile</string>
+    <string name="my_order">My Orders</string>
 
 
     <string-array name="film_genre">
@@ -59,16 +60,7 @@
     </string-array>
 
     <string-array name="actionFilms">
-        <item>Dr. No (1962)</item>
-        <item>Goldfinger (1964)</item>
-        <item>Thunderball (1965)</item>
-        <item>Live and Let Die (1973)</item>
-        <item>Moonraker (1979)</item>
-        <item>For Your Eyes Only (1981)</item>
-        <item>Octopussy (1983)</item>
-        <item>A View to a Kill (1985)</item>
-        <item>Licence to Kill (1989)</item>
-        <item>GoldenEye (1995)</item>
+
     </string-array>
 
     <string-array name="musicals">

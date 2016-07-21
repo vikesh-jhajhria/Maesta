@@ -32,6 +32,7 @@ public class ExpandableListDataSource {
         List<String> thrillerFilms = Arrays.asList(context.getResources().getStringArray(R.array.thrillers));
         List<String> comedyFilms = Arrays.asList(context.getResources().getStringArray(R.array.comedies));
 
+        //List<String> str =
         expandableListData.put(filmGenres.get(0), actionFilms);
         expandableListData.put(filmGenres.get(1), musicalFilms);
         expandableListData.put(filmGenres.get(2), dramaFilms);

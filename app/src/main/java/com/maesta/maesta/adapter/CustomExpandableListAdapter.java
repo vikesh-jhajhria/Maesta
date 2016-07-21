@@ -9,6 +9,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.maesta.maesta.R;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 
 import java.util.List;
 import java.util.Map;
@@ -48,6 +50,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView expandedListTextView = (TextView) convertView
             .findViewById(R.id.expandedListItem);
+        Utils.setTypeface(mContext,expandedListTextView, Config.REGULAR);
         expandedListTextView.setText(expandedListText);
         return convertView;
     }
@@ -82,7 +85,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView listTitleTextView = (TextView) convertView
             .findViewById(R.id.listTitle);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
+        Utils.setTypeface(mContext,listTitleTextView, Config.REGULAR);
         listTitleTextView.setText(listTitle);
         return convertView;
     }
