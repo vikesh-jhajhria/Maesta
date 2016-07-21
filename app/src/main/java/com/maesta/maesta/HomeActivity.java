@@ -84,7 +84,6 @@ public class HomeActivity extends BaseActivity {
         mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
 
         addDrawerItems();
-        setupDrawer();
     }
     private void addDrawerItems() {
         mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);
