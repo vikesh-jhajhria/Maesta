@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by saloni on 7/19/2016.
  */
-public class OrderHistoryDetailActivity extends AppCompatActivity {
+public class OrderHistoryDetailActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<OrderHistoryDetailVO> orderdetail;
     private OrderHistoryDetailAdapter orderAdapter;

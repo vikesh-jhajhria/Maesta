@@ -18,24 +18,24 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:titleEnabled="false"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
 
             <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:fitsSystemWindows="true"
-                android:layout_marginTop="?android:actionBarSize"
                 android:scaleType="fitXY"
+                android:src="@drawable/subcategory_dummy"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:title="Watches" />
 
 
@@ -44,21 +44,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
- <android.support.v7.widget.RecyclerView
-     android:layout_width="match_parent"
+    </android.support.v7.widget.RecyclerView>
 
-     android:background="@color/white"
-     android:layout_height="wrap_content">
-
- </android.support.v7.widget.RecyclerView>
-
-    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

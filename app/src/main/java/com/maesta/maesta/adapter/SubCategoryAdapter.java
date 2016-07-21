@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maesta.maesta.R;
-import com.maesta.maesta.vo.OrderHistoryVO;
+
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.SubCategoryVO;
 
 import java.util.List;
 
-/**
- * Created by saloni.bhansali on 4/21/2016.
- */
+
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.ViewHolder> {
     Context context;
 
@@ -52,7 +52,10 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             super(itemView);;
             productName    =   (TextView) itemView.findViewById(R.id.txt_product_name);
 
-           // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_product_name), Config.MEDIUM);
+
+
+            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
 
 
 

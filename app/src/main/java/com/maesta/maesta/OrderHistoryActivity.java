@@ -5,9 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.maesta.maesta.adapter.OrderHistoryAdapter;
 import com.maesta.maesta.adapter.OrderHistoryDetailAdapter;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.OrderHistoryDetailVO;
 import com.maesta.maesta.vo.OrderHistoryVO;
 
@@ -17,7 +21,7 @@ import java.util.List;
 /**
  * Created by saloni on 7/19/2016.
  */
-public class OrderHistoryActivity extends AppCompatActivity {
+public class OrderHistoryActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<OrderHistoryVO> orderhistory;
     private OrderHistoryAdapter orderAdapter;
@@ -26,6 +30,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_recycleview);
         {
+
             recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
             orderhistory = new ArrayList<>();
             OrderHistoryVO collections = new OrderHistoryVO();
@@ -55,6 +60,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
             orderhistory.add(collection);
             orderhistory.add(collection);
             setToolbar();
+
             orderAdapter = new OrderHistoryAdapter(orderhistory, this);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
@@ -69,4 +75,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
     }

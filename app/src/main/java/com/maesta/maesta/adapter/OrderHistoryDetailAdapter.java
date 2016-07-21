@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maesta.maesta.R;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.OrderHistoryDetailVO;
 
 import java.util.List;
@@ -54,6 +56,10 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
             quantity       =   (TextView) itemView.findViewById(R.id. txtview_quantity);
             price        =   (TextView) itemView.findViewById(R.id.txt_view_price);
             quantityno        =   (TextView) itemView.findViewById(R.id.txtview_quantity_number);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price),Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity), Config.MEDIUM);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number), Config.REGULAR);
            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
 
 

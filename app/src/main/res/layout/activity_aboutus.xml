@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/aboutus"
+
             app:titleTextColor="@color/white" />
 
     </android.support.design.widget.AppBarLayout>
@@ -36,6 +36,7 @@
 
 
         <ImageView
+            android:id="@+id/aboutus_img"
             android:layout_margin="15dp"
             android:scaleType="fitXY"
             android:layout_width="match_parent"
