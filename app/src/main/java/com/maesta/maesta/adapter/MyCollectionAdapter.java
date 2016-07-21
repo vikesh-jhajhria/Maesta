@@ -1,6 +1,7 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.maesta.maesta.OrderHistoryActivity;
+import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
@@ -41,6 +44,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.quantity.setText(collections.quantity );
         holder.price.setText(collections.price );
 
+
     }
     @Override
     public int getItemCount() {
@@ -50,7 +54,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView  product_name, quantity, price, quantityno;
 
-       // CardView product_detail_card;
+        CardView product_detail_card;
 
         public ViewHolder(View itemView) {
             super(itemView);;
@@ -62,7 +66,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity),Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number),Config.MEDIUM);
-           // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
+           product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
 
 
 

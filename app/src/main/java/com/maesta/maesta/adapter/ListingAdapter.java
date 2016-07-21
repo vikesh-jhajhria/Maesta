@@ -1,12 +1,15 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
@@ -37,8 +40,16 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         final ListingVO productlist = listing .get(position);
         holder.product_name.setText(productlist.textTitile );
         holder.price.setText(productlist.textcollection );
-
+        holder.listing_cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,ProductDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
+
+
     @Override
     public int getItemCount() {
         return  listing.size();
@@ -46,14 +57,14 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView  product_name,price;
-
+        CardView  listing_cardview;
        // CardView product_detail_card;
 
         public ViewHolder(View itemView) {
-            super(itemView);;
+            super(itemView);
             product_name    =   (TextView) itemView.findViewById(R.id.txt_title);
             price        =   (TextView) itemView.findViewById(R.id.txt_collection);
-
+            listing_cardview=(CardView)itemView.findViewById(R.id.card_listing);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_title), Config.MEDIUM);
 
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_collection), Config.BOLD);

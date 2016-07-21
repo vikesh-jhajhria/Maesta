@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
-        app:cardElevation="@dimen/margin_5"
+
         app:cardUseCompatPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

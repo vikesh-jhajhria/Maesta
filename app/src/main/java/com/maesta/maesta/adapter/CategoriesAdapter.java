@@ -1,6 +1,8 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
+import com.maesta.maesta.SubcatgoryActivity;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Product;
@@ -42,19 +46,29 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
     public void onBindViewHolder(ProductHolder holder, int position) {
         holder.title.setText(list.get(position).title);
         holder.collection.setText(list.get(position).price);
+        holder.category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SubcatgoryActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
+
+
 
 
 
     class ProductHolder extends RecyclerView.ViewHolder {
         TextView title, collection;
         ImageView image;
+        CardView category;
         public ProductHolder (View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.txt_title);
             collection = (TextView) itemView.findViewById(R.id.txt_collection);
             image = (ImageView) itemView.findViewById(R.id.img_product);
-
+            category=(CardView)itemView.findViewById(R.id.card_category);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_title), Config.MEDIUM);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_collection),Config.REGULAR);
         }

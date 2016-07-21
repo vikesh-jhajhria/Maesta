@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
@@ -82,7 +84,7 @@ public class HomeActivity extends BaseActivity {
         mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
 
         addDrawerItems();
-        applyFont();
+        setupDrawer();
     }
     private void addDrawerItems() {
         mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);

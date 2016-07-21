@@ -6,6 +6,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -53,9 +56,28 @@ public class ListingActivity extends BaseActivity
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
 
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    } @Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    if(item.getItemId() == R.id.search){
+
+        return true;
     }
+    if(item.getItemId() == R.id.check){
+
+        return true;
+    }
+    return false;
+}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_home, menu);
+
+        return true;
+    }
+
 
 
 }

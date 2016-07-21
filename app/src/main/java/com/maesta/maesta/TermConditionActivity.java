@@ -2,6 +2,7 @@ package com.maesta.maesta;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 /**
@@ -20,7 +21,8 @@ public class TermConditionActivity extends BaseActivity
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Term & Condition");
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 }

@@ -30,7 +30,7 @@ public class SplashActivity extends BaseActivity {
                 String userId = preferences.getStringValue(AppPreferences.USER_ID);
                 Log.v(TAG, "userId=" + userId);
                 if (userId.isEmpty()) {
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finishAffinity();
                 } else {
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
