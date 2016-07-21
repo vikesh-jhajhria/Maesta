@@ -40,26 +40,30 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()) {
-            case R.id.btn_login:
+        {
+            if (v.getId() == R.id.txt_forgot_pass) {
+                startActivity(new Intent(this, ForgetPasswordActivity.class));
+                finish();
+            } else if ((v.getId() == R.id.btn_login)) {
+
                 if (((EditText) findViewById(R.id.txt_username)).getText().toString().trim().isEmpty()) {
                     ((TextInputLayout) findViewById(R.id.login_name_input)).setError(getString(R.string.err_login_name));
                     ((EditText) findViewById(R.id.txt_username)).requestFocus();
-                }
-                else if (((EditText) findViewById(R.id.txt_password)).getText().toString().trim().isEmpty()) {
+                } else if (((EditText) findViewById(R.id.txt_password)).getText().toString().trim().isEmpty()) {
                     ((TextInputLayout) findViewById(R.id.rgr_password_input)).setError(getString(R.string.err_login_pass));
                     ((EditText) findViewById(R.id.txt_password)).requestFocus();
 
+                } else if (((EditText) findViewById(R.id.txt_password)).getText().toString().trim().length() < 6) {
+                    ((TextInputLayout) findViewById(R.id.rgr_password_input)).setError(getString(R.string.password_length_error));
+                    ((EditText) findViewById(R.id.txt_password)).requestFocus();
+                } else {
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 }
-                else if (((EditText) findViewById(R.id.txt_password)).getText().toString().trim().length() < 6) {
-                        ((TextInputLayout) findViewById(R.id.rgr_password_input)).setError(getString(R.string.password_length_error));
-                        ((EditText) findViewById(R.id.txt_password)).requestFocus();
-                    } else {
-                        startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-                }
-                }
-
+            }
         }
+    }
+
+
 
 
 

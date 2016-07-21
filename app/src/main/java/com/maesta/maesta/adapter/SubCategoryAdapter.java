@@ -1,12 +1,16 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.maesta.maesta.ListingActivity;
+import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 
 import com.maesta.maesta.utils.Config;
@@ -34,7 +38,13 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final SubCategoryVO subcategory = subcategory_list.get(position);
         holder.productName.setText(subcategory.productName);
-
+holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(context, ListingActivity.class);
+        context.startActivity(intent);
+    }
+});
 
 
     }
@@ -45,13 +55,13 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView   productName;
-
+RelativeLayout relativeLayout;
        // CardView product_detail_card;
 
         public ViewHolder(View itemView) {
-            super(itemView);;
+            super(itemView);
             productName    =   (TextView) itemView.findViewById(R.id.txt_product_name);
-
+            relativeLayout=(RelativeLayout)itemView.findViewById(R.id.rl1);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_product_name), Config.MEDIUM);
 
 

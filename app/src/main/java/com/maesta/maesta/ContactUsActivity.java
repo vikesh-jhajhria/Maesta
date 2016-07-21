@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ public class ContactUsActivity extends BaseActivity {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Contact Us");
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -44,4 +45,5 @@ public class ContactUsActivity extends BaseActivity {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.contct_txtview), Config.BOLD);
 
     }
+
 }

@@ -1,9 +1,13 @@
 package com.maesta.maesta;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,7 +30,7 @@ public class ProfileActivity extends BaseActivity
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -43,5 +47,21 @@ public class ProfileActivity extends BaseActivity
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_next_cat_level), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target_level), Config.REGULAR);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.search){
+
+            return true;
+        }
+
+        return false;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profile, menu);
+
+        return true;
     }
 }

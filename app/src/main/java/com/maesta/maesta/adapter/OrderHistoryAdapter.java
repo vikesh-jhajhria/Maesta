@@ -1,12 +1,16 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.maesta.maesta.OrderHistoryActivity;
+import com.maesta.maesta.OrderHistoryDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
@@ -47,6 +51,13 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         }else if(orderHistory.pending.equalsIgnoreCase("status") ){
             holder.pending.setTextColor(context.getResources().getColor(R.color.colorAccent));
         }
+        holder.order_history_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, OrderHistoryDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -56,7 +67,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView  date,  status, price, orderid,total,pending,order;
 
-       // CardView product_detail_card;
+       CardView order_history_card;
 
         public ViewHolder(View itemView) {
             super(itemView);;
@@ -75,7 +86,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_order),Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.date), Config.REGULAR);
 
-           // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
+            order_history_card    =   (CardView) itemView.findViewById(R.id.cardview_order_history);
 
 
 

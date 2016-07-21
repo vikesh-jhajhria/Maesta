@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.maesta.maesta.adapter.OrderHistoryDetailAdapter;
 import com.maesta.maesta.vo.OrderHistoryDetailVO;
@@ -52,5 +53,14 @@ public class OrderHistoryDetailActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        return false;
     }
     }

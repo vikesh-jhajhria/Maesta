@@ -1,10 +1,16 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,6 +55,8 @@ public class MyCollectionActivity extends BaseActivity {
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(collectionAdapter);
+            findViewById(R.id.btn_place_order).setOnClickListener(this);
+
         }
     }
 
@@ -67,4 +75,33 @@ public class MyCollectionActivity extends BaseActivity {
 
 
     }
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.btn_place_order:
+                startActivity(new Intent(getApplicationContext(),OrderHistoryActivity.class));
+                break;
+        }
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        if(item.getItemId() == R.id.search){
+
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+
+}
