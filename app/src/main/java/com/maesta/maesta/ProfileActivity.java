@@ -30,7 +30,7 @@ public class ProfileActivity extends BaseActivity
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setHomeButtonEnabled(true);
-
+getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -49,7 +49,10 @@ public class ProfileActivity extends BaseActivity
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target_level), Config.REGULAR);
     }
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        if(item.getItemId() == android.R.id.home){
+onBackPressed();
+            return true;
+        }
         if(item.getItemId() == R.id.search){
 
             return true;

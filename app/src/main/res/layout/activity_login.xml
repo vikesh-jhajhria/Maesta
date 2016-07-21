@@ -63,7 +63,7 @@
                 android:drawableLeft="@drawable/login_password"
                 android:drawablePadding="10dp"
                 android:hint="@string/password"
-                android:inputType="textCapWords"
+                android:inputType="textWebPassword"
                 android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_22" />

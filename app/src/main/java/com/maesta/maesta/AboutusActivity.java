@@ -28,11 +28,18 @@ public class AboutusActivity extends BaseActivity {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("About Us");
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
 
 
+        }
+        return false;
+    }
 
 }

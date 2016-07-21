@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,28 +17,49 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProductDetailActivity"
+        <activity
+            android:name=".ProductDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
-        <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MyCollectionActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OrderHistoryDetailActivity"/>
-        <activity android:name=".OrderHistoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="SubcatgoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ListingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ProfileActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ForgetPasswordActivity"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".MyCollectionActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".OrderHistoryDetailActivity" />
+        <activity
+            android:name=".OrderHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SubcatgoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ContactUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TermConditionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/title_activity_change_password"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

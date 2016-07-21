@@ -28,7 +28,7 @@ public class ContactUsActivity extends BaseActivity {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Contact Us");
         getSupportActionBar().setHomeButtonEnabled(true);
-
+getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -44,6 +44,15 @@ public class ContactUsActivity extends BaseActivity {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.contact_adres_name), Config.MEDIUM);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.contct_txtview), Config.BOLD);
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+
+
+        }
+        return false;
     }
 
 }
