@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.maesta.maesta.R;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.CollectionVO;
 
 import java.util.List;
@@ -21,9 +23,9 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
     Context context;
 
     List<CollectionVO> collection;
-    public MyCollectionAdapter(List<CollectionVO>  collection, Context context){
+    public MyCollectionAdapter(List<CollectionVO>  collectionlist, Context context){
         this.context=context;
-        this.collection=collection;
+        this.collection=collectionlist;
     }
     @Override
     public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,11 +35,11 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final CollectionVO election = collection .get(position);
-        holder.product_name.setText(election.product_name );
-        holder.quantityno.setText(election. quantity_number );
-        holder.quantity.setText(election.quantity );
-        holder.price.setText(election.price );
+        final CollectionVO collections = collection .get(position);
+        holder.product_name.setText(collections.product_name );
+        holder.quantityno.setText(collections. quantity_number );
+        holder.quantity.setText(collections.quantity );
+        holder.price.setText(collections.price );
 
     }
     @Override
@@ -56,6 +58,10 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             quantity       =   (TextView) itemView.findViewById(R.id. txtview_quantity);
             price        =   (TextView) itemView.findViewById(R.id.txt_view_price);
             quantityno        =   (TextView) itemView.findViewById(R.id.txtview_quantity_number);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity),Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number),Config.MEDIUM);
            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
 
 

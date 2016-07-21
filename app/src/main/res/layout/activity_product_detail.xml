@@ -22,152 +22,26 @@
             app:titleTextColor="@color/white" />
     </android.support.design.widget.AppBarLayout>
 
+<RelativeLayout
+    android:id="@+id/rl1"
+    android:layout_above="@+id/btn_add_collection"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<include layout="@layout/item_product_detail">
 
+</include>
+    <Button
+        android:id="@+id/btn_add_collection"
+       android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/font_22"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    <ScrollView android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:text="@string/add_to_collection"
+        android:background="@color/colorAccent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="?actionBarSize"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+</RelativeLayout>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="@dimen/margin_10"
-                app:cardUseCompatPadding="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-
-                    <android.support.v4.view.ViewPager
-                        android:layout_width="wrap_content"
-                        android:layout_height="250dp">
-
-                    </android.support.v4.view.ViewPager>
-
-
-                    <TextView
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_24"
-                        android:layout_width="match_parent"
-                        android:text="Rounded sass'n Class Series for Maestra Itali's Eyewear Section"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="@dimen/font_22"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:text="Model C14 MF 14303"
-                        android:layout_marginBottom="@dimen/margin_10"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="@dimen/margin_10"
-                app:cardUseCompatPadding="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-
-                    <TextView
-                        android:id="@+id/textview_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rs.499.00"
-                        android:textSize="@dimen/font_22"
-                        android:textColor="@color/redButtonColor"
-                        android:layout_margin="@dimen/margin_10"
-                        />
-                    <TextView
-                        android:id="@+id/textview_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Price are inclusive of All Taxes:Rs 499.00 "
-                        android:textSize="@dimen/font_22"
-                        android:textColor="@color/textColorSecondary"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        />
-                    <View
-                        android:layout_margin="15dp"
-                        android:layout_width="match_parent"
-                        android:background="@color/hLineColor"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="@dimen/margin_10"></View>
-                    <TextView
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:textSize="@dimen/font_22"
-                        android:layout_marginBottom="@dimen/margin_20"
-                        android:textColor="@color/textColorSecondary"
-                        android:text="Quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="@dimen/margin_10"
-                app:cardUseCompatPadding="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-
-                    <TextView
-                        android:id="@+id/textview_desc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/desc"
-                        android:textSize="@dimen/font_22"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:layout_margin="@dimen/margin_10"
-                        />
-                    <TextView
-                        android:id="@+id/textview_desc_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_10"
-                        android:layout_height="wrap_content"
-                        android:text="Price are inclusive of All Taxes:Rs 499.00 "
-                        android:textSize="@dimen/font_22"
-                        android:textColor="@color/textColorSecondary"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:text="@string/add_to_collection"
-                android:background="@color/redButtonColor"/>
-        </LinearLayout>
-
-    </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+   </android.support.design.widget.CoordinatorLayout>

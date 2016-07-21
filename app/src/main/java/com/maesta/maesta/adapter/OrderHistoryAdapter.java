@@ -1,7 +1,6 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maesta.maesta.R;
-import com.maesta.maesta.vo.OrderHistoryDetailVO;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.OrderHistoryVO;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
     @Override
     public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout. item_oder_history,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.item_order_history,parent,false);
     return new ViewHolder(view);
     }
 
@@ -67,6 +67,14 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             total        =   (TextView) itemView.findViewById(R.id.total);
             pending        =   (TextView) itemView.findViewById(R.id.textview_pending);
             order        =   (TextView) itemView.findViewById(R.id.textview_order);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_staus), Config.REGULAR);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.price),Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_id), Config.MEDIUM);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.total),Config.MEDIUM);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_pending), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_order),Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.date), Config.REGULAR);
+
            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
 
 

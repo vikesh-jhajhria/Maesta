@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/contact_us"
+
             app:titleTextColor="@color/white" />
 
     </android.support.design.widget.AppBarLayout>
@@ -223,6 +223,7 @@
 
 
                 <TextView
+                    android:id="@+id/contct_txtview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
@@ -232,16 +233,17 @@
                     android:textSize="@dimen/font_28" />
 
                 <TextView
+                    android:id="@+id/contact_adres_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="@dimen/margin_20"
-
                     android:text="@string/maesta_distributor"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_18" />
 
                 <TextView
+                    android:id="@+id/full_adres_txtview1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
@@ -252,6 +254,7 @@
                     android:textSize="@dimen/font_18" />
 
                 <TextView
+                    android:id="@+id/full_adres_txtview2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
@@ -267,6 +270,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/phone_txtview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_10"
@@ -277,6 +281,7 @@
                         android:textSize="@dimen/font_18" />
 
                     <TextView
+                        android:id="@+id/txtview_phone_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_20"

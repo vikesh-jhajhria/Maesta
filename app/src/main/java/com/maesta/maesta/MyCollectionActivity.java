@@ -5,8 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.maesta.maesta.adapter.MyCollectionAdapter;
+import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.CollectionVO;
 
 import java.util.ArrayList;
@@ -15,7 +20,7 @@ import java.util.List;
 /**
  * Created by saloni on 7/19/2016.
  */
-public class MyCollectionActivity extends AppCompatActivity {
+public class MyCollectionActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<CollectionVO> collection;
     private MyCollectionAdapter collectionAdapter;
@@ -39,6 +44,7 @@ public class MyCollectionActivity extends AppCompatActivity {
             collection.add(collections);
             collection.add(collections);
             setToolbar();
+            applyFont();
             collectionAdapter = new MyCollectionAdapter(collection, this);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
@@ -52,5 +58,13 @@ public class MyCollectionActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void applyFont() {
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txtview_total), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txtview_total_price), Config.BOLD);
+        Utils.setTypeface(getApplicationContext(), (Button) findViewById(R.id.btn_place_order), Config.BOLD);
+
+
     }
     }
