@@ -111,27 +111,13 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_new_arrival"
                         android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
         </FrameLayout>
     </LinearLayout>
-
-    <!--<android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:paddingTop="24dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <include layout="@layout/layout_nav_header"/>
-        </LinearLayout>
-    </android.support.design.widget.NavigationView>-->
 
     <ExpandableListView
         android:id="@+id/navList"

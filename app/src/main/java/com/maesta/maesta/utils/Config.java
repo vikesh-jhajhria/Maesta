@@ -14,5 +14,25 @@ public class Config {
     public static boolean APP_IN_FRONT;
 
     /*Web Services start*/
-    public static String BASEURL = "http://52.26.252.162:3000/";
+    public static String BASEURL = "http://demo.vertexplus.com/maesta/webservice/";
+    public static String HOME = BASEURL+"home";
+    public static String CATEGORY = BASEURL+"category";
+    public static String PRODUCT = BASEURL+"product";
+    public static String PROJECT_DETAIL = BASEURL+"project_detail";
+    public static String ADD_TO_COLLECTION = BASEURL+"add_to_collection";
+    public static String UPDATE_COLLECTION = BASEURL+"update_collection";
+    public static String REMOVE_COLLECTION = BASEURL+"remove_collection";
+    public static String MY_COLLECTION = BASEURL+"my_collection";
+    public static String PLACE_ORDER = BASEURL+"place_order";
+    public static String ORDER_HISTORY = BASEURL+"order_history";
+    public static String ORDER_HISTORY_DETAIL = BASEURL+"order_history_detail";
+    public static String PAGES = BASEURL+"pages";
+    public static String SHOP_SETTING = BASEURL+"shop_setting";
+    public static String CONTACT_US = BASEURL+"contact_us";
+    public static String LOGIN = BASEURL+"login";
+    public static String CUSTOMER_PROFILE = BASEURL+"customer_profile";
+    public static String CHANGE_PASSWORD = BASEURL+"change_password";
+    public static String FORGOT_PASSWORD = BASEURL+"forgot_password";
+    public static String RESET_PASSWORD = BASEURL+"reset_password";
+
 }

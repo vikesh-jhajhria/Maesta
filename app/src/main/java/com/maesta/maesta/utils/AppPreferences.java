@@ -15,8 +15,12 @@ public class AppPreferences {
     public static final String USER_NAME = "USERNAME";
     public static final String USER_PHONE = "USERPHONE";
     public static final String USER_IMAGE = "USERIMAGE";
-    public static final String USER_IMAGE_URL = "USERIMAGEURL";
-    private static final String SHARED_PREFERENCE_NAME = "MYROLE";
+    public static final String USER_EMAIL = "USEREMAIL";
+    public static final String ADDRESS = "ADDRESS";
+    public static final String CURRENT_CATEGORY_LEVEL = "CURRENT_CATEGORY_LEVEL";
+    public static final String NEXT_CATEGORY_LEVEL = "NEXT_CATEGORY_LEVEL";
+    public static final String REMAINING_TARGET = "REMAINING_TARGET";
+    private static final String SHARED_PREFERENCE_NAME = "MAESTRA";
     private SharedPreferences mPrefs;
 
     private AppPreferences(Context context) {

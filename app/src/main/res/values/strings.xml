@@ -51,6 +51,7 @@
     <string name="my_order">My Orders</string>
     <string name="submit">Submit</string>
     <string name="new_password">New Password</string>
+    <string name="err_invalid_email">Invalid email address</string>
 
 
     <string-array name="film_genre">

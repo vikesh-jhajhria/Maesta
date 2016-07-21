@@ -36,7 +36,7 @@
                 android:drawableLeft="@drawable/login_user"
                 android:drawablePadding="10dp"
                 android:hint="@string/username"
-                android:inputType="textCapWords"
+                android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColorHint="@color/textColorPrimary"
                 android:textColor="@color/textColorPrimary"
@@ -63,7 +63,7 @@
                 android:drawableLeft="@drawable/login_password"
                 android:drawablePadding="10dp"
                 android:hint="@string/password"
-                android:inputType="textCapWords"
+                android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_22" />
