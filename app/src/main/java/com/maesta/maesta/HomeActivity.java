@@ -2,6 +2,7 @@ package com.maesta.maesta;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.maesta.maesta.adapter.BannerAdapter;
@@ -28,11 +30,17 @@ import com.maesta.maesta.datasource.ExpandableListDataSource;
 import com.maesta.maesta.fragment.BannerFragment;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
 import com.maesta.maesta.vo.Product;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,27 +56,30 @@ public class HomeActivity extends BaseActivity {
     private BannerAdapter bannerAdapter;
     private NewArrivalAdapter newArrivalAdapter;
     private CategoriesAdapter categoriesAdapter;
-
+    AppPreferences mPrefs;
     private ViewPager bannerViewPager;
     private RecyclerView newArrivalRV, catetoriesRV;
-private Handler handler;
+    private Handler handler;
     private ExpandableListView mExpandableListView;
     private ExpandableListAdapter mExpandableListAdapter;
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mPrefs = AppPreferences.getAppPreferences(HomeActivity.this);
         RecyclerViewHeader header = (RecyclerViewHeader) findViewById(R.id.rv_header);
         bannerViewPager = (ViewPager) findViewById(R.id.pager_banner);
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
-        handler=new Handler();
+        handler = new Handler();
+        new HomeTask().execute();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
 
-        prepareBanner();
+
         prepareNewArrival();
         prepareCategories();
         header.attachTo(catetoriesRV);
@@ -89,13 +100,14 @@ private Handler handler;
         findViewById(R.id.txt_my_order).setOnClickListener(this);
         findViewById(R.id.txt_about_us).setOnClickListener(this);
         findViewById(R.id.txt_contact_us).setOnClickListener(this);
-        findViewById(R.id. txt_logout).setOnClickListener(this);
+        findViewById(R.id.txt_logout).setOnClickListener(this);
         mExpandableListData = ExpandableListDataSource.getData(this);
         mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
 
         addDrawerItems();
         applyFont();
     }
+
     private void addDrawerItems() {
         mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);
         mExpandableListView.setAdapter(mExpandableListAdapter);
@@ -131,33 +143,16 @@ private Handler handler;
 
 
     private void prepareBanner() {
-        Banner banner = new Banner();
-        bannerList.add(banner);
-        bannerList.add(banner);
-        bannerList.add(banner);
-
         bannerAdapter = new BannerAdapter(getSupportFragmentManager());
-        bannerAdapter.addFragment(BannerFragment.newInstance(bannerList.get(0)),"");
-        bannerAdapter.addFragment(BannerFragment.newInstance(bannerList.get(1)),"");
-        bannerAdapter.addFragment(BannerFragment.newInstance(bannerList.get(2)),"");
+        for(int i=0;i<bannerList.size();i++) {
+            bannerAdapter.addFragment(BannerFragment.newInstance(bannerList.get(i)), "");
+        }
         bannerViewPager.setAdapter(bannerAdapter);
 
     }
 
     private void prepareNewArrival() {
-        Product product = new Product();
-        product.title = "T-shirt";
-        product.price = "2000";
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-        newArrivalList.add(product);
-
-        newArrivalAdapter = new NewArrivalAdapter(this,newArrivalList);
+        newArrivalAdapter = new NewArrivalAdapter(this, newArrivalList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         newArrivalRV.setLayoutManager(linearLayoutManager);
@@ -166,19 +161,7 @@ private Handler handler;
     }
 
     private void prepareCategories() {
-        Product product = new Product();
-        product.title = "T-shirt";
-        product.price = "2000";
-        categoryList.add(product);
-        categoryList.add(product);
-        categoryList.add(product);
-        categoryList.add(product);
-        categoryList.add(product);
-        categoryList.add(product);
-        categoryList.add(product);
-        categoryList.add(product);
-
-        categoriesAdapter = new CategoriesAdapter(this,categoryList);
+        categoriesAdapter = new CategoriesAdapter(this, categoryList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         catetoriesRV.setLayoutManager(linearLayoutManager);
         catetoriesRV.setAdapter(categoriesAdapter);
@@ -232,6 +215,87 @@ private Handler handler;
                     }
                 }, 50);
                 break;
+
+        }
+    }
+
+    class HomeTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            postDataParams.put("api_key", apikey);
+
+
+            return HTTPUrlConnection.getInstance().load(Config.HOME, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                    JSONObject bannerData = object.getJSONObject("banner");
+                    if (bannerData.getBoolean("status")) {
+                        JSONArray bannerArray = bannerData.getJSONArray("data");
+                        for (int i = 0; i < bannerArray.length(); i++) {
+                            Banner banner = new Banner();
+                            banner.url = ((JSONObject) bannerArray.get(i)).getString("image");
+                            bannerList.add(banner);
+
+
+                        }
+                    }
+                    JSONObject productData = object.getJSONObject("product");
+                    if (productData.getBoolean("status")) {
+                        JSONArray productArray = productData.getJSONArray("data");
+                        for (int i = 0; i < productArray.length(); i++) {
+                            Product product = new Product();
+                            product.id = ((JSONObject) productArray.get(i)).getInt("id");
+                            product.price = ((JSONObject) productArray.get(i)).getString("price");
+                            product.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
+                            product.title = ((JSONObject) productArray.get(i)).getString("name");
+                            newArrivalList.add(product);
+
+
+                        }
+                    }
+                    JSONObject categoryData = object.getJSONObject("category");
+                    if (categoryData.getBoolean("status")) {
+                        JSONArray categoryArray = categoryData.getJSONArray("data");
+                        for (int i = 0; i < categoryArray.length(); i++) {
+                            Product product = new Product();
+                            product.id = ((JSONObject) categoryArray.get(i)).getInt("id");
+                            product.thumbURL = ((JSONObject) categoryArray.get(i)).getString("image");
+                            product.title = ((JSONObject) categoryArray.get(i)).getString("name");
+                            categoryList.add(product);
+
+
+                        }
+                    }
+                    //bannerAdapter.notifyDataSetChanged();
+                    newArrivalAdapter.notifyDataSetChanged();
+                    categoriesAdapter.notifyDataSetChanged();
+                    prepareBanner();
+                    /*startActivity(new Intent(getApplicationContext(), ProfileActivity.class));*/
+
+                } else {
+                    Toast.makeText(HomeActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
         }
     }

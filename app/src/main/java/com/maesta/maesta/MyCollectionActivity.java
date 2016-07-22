@@ -96,6 +96,10 @@ public class MyCollectionActivity extends BaseActivity {
         }
         return false;
     }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();

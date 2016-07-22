@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.SubcatgoryActivity;
@@ -45,7 +46,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
     @Override
     public void onBindViewHolder(ProductHolder holder, int position) {
         holder.title.setText(list.get(position).title);
-        holder.collection.setText(list.get(position).price);
         holder.category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +53,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
                 context.startActivity(intent);
             }
         });
+        Glide.with(context).load(list.get(position).thumbURL).asBitmap()
+                .placeholder(R.drawable.banner_1).centerCrop().into(holder.image);
     }
+
 
 
 
@@ -65,6 +68,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
         CardView category;
         public ProductHolder (View itemView) {
             super(itemView);
+
             title = (TextView) itemView.findViewById(R.id.txt_title);
             collection = (TextView) itemView.findViewById(R.id.txt_collection);
             image = (ImageView) itemView.findViewById(R.id.img_product);

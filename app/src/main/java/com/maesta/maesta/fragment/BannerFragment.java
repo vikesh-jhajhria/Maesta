@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
+import com.bumptech.glide.Glide;
 import com.maesta.maesta.R;
 import com.maesta.maesta.vo.Banner;
 
@@ -30,8 +31,8 @@ public class BannerFragment extends Fragment {
         public static BannerFragment newInstance(Banner banner) {
             BannerFragment fragment = new BannerFragment();
             Bundle args = new Bundle();
-            args.putInt("id",banner.id);
-            args.putString("url",banner.url);
+            args.putInt(ID,banner.id);
+            args.putString(URL,banner.url);
             fragment.setArguments(args);
             return fragment;
         }
@@ -51,7 +52,9 @@ public class BannerFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View view   =   inflater.inflate(R.layout.layout_banner_fragment, container, false);
-            //(ImageView) view.findViewById(R.id.img_banner);
+            Glide.with(getActivity()).load(banner.url).asBitmap()
+                    .placeholder(R.drawable.banner_1).centerCrop().into((ImageView) view.findViewById(R.id.img_banner));
+
             return view;
         }
 

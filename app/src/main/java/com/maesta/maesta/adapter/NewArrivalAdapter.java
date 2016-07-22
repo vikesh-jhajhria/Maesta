@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
@@ -43,16 +44,20 @@ public class NewArrivalAdapter extends RecyclerView.Adapter<NewArrivalAdapter.Pr
     }
 
     @Override
-    public void onBindViewHolder(ProductHolder holder, int position) {
+    public void onBindViewHolder(final ProductHolder holder, final int position) {
         holder.title.setText(list.get(position).title);
         holder.price.setText(list.get(position).price);
         holder.new_arrival.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("ID",list.get(position).id);
                 context.startActivity(intent);
             }
         });
+
+        Glide.with(context).load(list.get(position).thumbURL).asBitmap()
+                .placeholder(R.drawable.banner_1).centerCrop().into(holder.image);
     }
 
 
