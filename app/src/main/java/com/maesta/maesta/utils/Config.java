@@ -18,7 +18,7 @@ public class Config {
     public static String HOME = BASEURL+"home";
     public static String CATEGORY = BASEURL+"category";
     public static String PRODUCT = BASEURL+"product";
-    public static String PROJECT_DETAIL = BASEURL+"project_detail";
+    public static String PRODUCT_DETAIL = BASEURL+"product_detail";
     public static String ADD_TO_COLLECTION = BASEURL+"add_to_collection";
     public static String UPDATE_COLLECTION = BASEURL+"update_collection";
     public static String REMOVE_COLLECTION = BASEURL+"remove_collection";

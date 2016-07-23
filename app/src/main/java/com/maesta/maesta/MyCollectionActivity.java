@@ -2,6 +2,7 @@ package com.maesta.maesta;
 
 import android.content.Intent;
 import android.opengl.Visibility;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,13 +15,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maesta.maesta.adapter.MyCollectionAdapter;
+import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.CollectionVO;
+import com.maesta.maesta.vo.Product;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,34 +38,28 @@ import java.util.List;
  */
 public class MyCollectionActivity extends BaseActivity {
     private RecyclerView recyclerView;
-    private List<CollectionVO> collection;
+    private List<CollectionVO> collectionList;
     private MyCollectionAdapter collectionAdapter;
+    AppPreferences mPrefs;
+    TextView totalprice,txtview_remove;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collection_layout_recycleview);
         {
+            mPrefs = AppPreferences.getAppPreferences(MyCollectionActivity .this);
             recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-            collection = new ArrayList<>();
-            CollectionVO collections = new CollectionVO();
-            collections.product_name="Rounded sass'n Class series of Maseta italia's Eye Wear Section";
-            collections.price="Rs.20,000";
-            collections.quantity="Quantity";
-            collections.quantity_number="20";
+            collectionList = new ArrayList<>();
 
-            collection.add(collections);
-            collection.add(collections);
-            collection.add(collections);
-            collection.add(collections);
-            collection.add(collections);
-            collection.add(collections);
             setToolbar();
             applyFont();
-            collectionAdapter = new MyCollectionAdapter(collection, this);
+            collectionAdapter = new MyCollectionAdapter(collectionList, this);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(collectionAdapter);
+           totalprice=(TextView) findViewById(R.id.txtview_total_price);
             findViewById(R.id.btn_place_order).setOnClickListener(this);
+            new MyCollectionTask().execute();
 
         }
     }
@@ -98,6 +102,60 @@ public class MyCollectionActivity extends BaseActivity {
     }
 
 
+
+
+    class MyCollectionTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("customer_id", UserId );
+
+            return HTTPUrlConnection.getInstance().load(Config.MY_COLLECTION, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                    totalprice.setText(object.getString("total"));
+
+                    JSONArray productArray = object.getJSONArray("data");
+                        for (int i = 0; i < productArray.length(); i++) {
+                            CollectionVO collection = new CollectionVO();
+                            collection.product_name=((JSONObject) productArray.get(i)).getString("name");
+                            collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
+                            collection.price = ((JSONObject) productArray.get(i)).getString("price");
+                            collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
+                            collectionList.add(collection);
+
+
+                        }
+
+                }
+                else {
+                    Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 
 
     @Override

@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_10"
+            app:cardElevation="@dimen/margin_5"
             app:cardUseCompatPadding="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_10"
+            app:cardElevation="@dimen/margin_5"
             app:cardUseCompatPadding="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
-                    android:text="Price are inclusive of All Taxes:Rs 499.00 "
+                    android:text="*Price are inclusive of All Taxes"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_22" />
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_40"
             app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_10"
+            app:cardElevation="@dimen/margin_5"
             app:cardUseCompatPadding="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

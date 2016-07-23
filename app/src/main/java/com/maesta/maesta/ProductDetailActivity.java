@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,7 +42,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     private ViewPager productViewPager;
     AppPreferences mPrefs;
     private int ProductId;
-TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,txtview_price_detail,txtview_quantity,txtview_desc_detail;
+    String quantity;
+    TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,txtview_price_detail,txtview_quantity,txtview_desc_detail;
     EditText et_quantity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,28 +69,40 @@ TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,tx
         txtview_quantity=(TextView)findViewById(R.id.txtview_quantity);
         txtview_desc_detail=(TextView)findViewById(R.id.textview_desc_detail);
         et_quantity=(EditText)findViewById(R.id.et_quantity);
+        ((Button) findViewById(R.id.btn_add_collection)).setOnClickListener(this);
 
-        txtview_desc_detail.getText().toString();
-      /*  txtview_product_name.getText().toString();
-        productmodel_txtview.getText().toString(); txtview_desc_detail.getText().toString();
-        txtview_price.getText().toString(); txtview_desc.getText().toString();
-        */
 
-   //     new ProductDetailTask().execute(txtview_desc_detail);
+      new ProductDetailTask().execute();
 
     }
-
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.btn_add_collection:
+                quantity = ((EditText) findViewById(R.id.et_quantity)).getText().toString().trim();
+                if (quantity.isEmpty()) {
+                    ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
+                    ((EditText) findViewById(R.id.et_quantity)).requestFocus();
+                    break;
+                } else if (et_quantity.length()< 0) {
+                    ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
+                    ((EditText) findViewById(R.id.et_quantity)).requestFocus();
+                    break;
+                }
+                else {
+                    new AddToCollectionTask().execute();
+                }
+        }
+    }
     private void productBanner() {
         Banner banner = new Banner();
-        productImageList.add(banner);
-        productImageList.add(banner);
-        productImageList.add(banner);
 
-        ProductImageAdapter = new BannerAdapter(getSupportFragmentManager());
+
+       /* ProductImageAdapter = new BannerAdapter(getSupportFragmentManager());
         ProductImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(0)), "");
         ProductImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(1)), "");
         ProductImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(2)), "");
-        productViewPager.setAdapter(ProductImageAdapter);
+        productViewPager.setAdapter(ProductImageAdapter);*/
 
     }
 
@@ -114,15 +128,7 @@ TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,tx
 
     }
 
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        switch (v.getId()) {
-            case R.id.btn_add_collection:
-                startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
-                 break;
-        }
-    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
@@ -157,10 +163,9 @@ TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,tx
             String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
             postDataParams.put("product_id",""+ProductId);
-            postDataParams.put("user_id", UserId );
+            postDataParams.put("customer_id", UserId );
 
-
-            return HTTPUrlConnection.getInstance().load(Config.PROJECT_DETAIL, postDataParams);
+            return HTTPUrlConnection.getInstance().load(Config.PRODUCT_DETAIL, postDataParams);
         }
 
         @Override
@@ -170,21 +175,30 @@ TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,tx
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    /*JSONObject ProductData = object.getJSONObject("data");
-                    if (ProductData.getBoolean("status")) {
-                        JSONArray bannerArray = bannerData.getJSONArray("data");
-                        for (int i = 0; i < bannerArray.length(); i++) {
-                            Banner banner = new Banner();
-                            banner.url = ((JSONObject) bannerArray.get(i)).getString("image");
-                            bannerList.add(banner);
-
-
-                        }
-                    }
+                    JSONObject productData = object.getJSONObject("data");
+                    txtview_product_name.setText(productData.getString("name"));
+                    productmodel_txtview.setText(productData.getString("model"));
+                    txtview_desc_detail.setText(productData.getString("description"));
+                    txtview_price.setText(productData.getString("price"));
 
                     /*startActivity(new Intent(getApplicationContext(), ProfileActivity.class));*/
 
-                } else {
+
+                    JSONObject galleryImage = object.getJSONObject("gallery");
+                    if (productData.getBoolean("status")) {
+                        JSONArray galleryArray = galleryImage.getJSONArray("data");
+                        for (int i = 0; i < galleryArray.length(); i++) {
+                            Banner banner = new Banner();
+                            banner.url = ((JSONObject) galleryArray.get(i)).getString("image");
+                            productImageList.add(banner);
+
+
+                        }
+
+
+                    }
+                }
+                else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -194,6 +208,53 @@ TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,tx
 
         }
     }
+
+    class AddToCollectionTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("product_id",""+ProductId);
+            postDataParams.put("quantity", quantity );
+            postDataParams.put("customer_id", UserId );
+
+            return HTTPUrlConnection.getInstance().load(Config.ADD_TO_COLLECTION, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+
+                    startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
+
+                }
+                else {
+                    Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
