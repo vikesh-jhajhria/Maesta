@@ -14,7 +14,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:src="@drawable/user_default_icon" />
+        android:src="@drawable/usericon" />
 
     <TextView
         android:id="@+id/txt_welcome"
