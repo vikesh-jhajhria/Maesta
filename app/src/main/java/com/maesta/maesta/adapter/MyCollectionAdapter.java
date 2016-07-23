@@ -2,14 +2,17 @@ package com.maesta.maesta.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.maesta.maesta.OrderHistoryActivity;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
@@ -37,13 +40,14 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final CollectionVO collections = collection .get(position);
         holder.product_name.setText(collections.product_name );
         holder.quantityno.setText(collections. quantity_number );
         holder.quantity.setText(collections.quantity );
         holder.price.setText(collections.price );
-
+        Glide.with(context).load(collections.thumbURL).asBitmap()
+                .placeholder(R.drawable.banner_1).centerCrop().into(holder.productimg);
 
     }
     @Override
@@ -53,11 +57,13 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView  product_name, quantity, price, quantityno;
-
+ImageView productimg;
         CardView product_detail_card;
 
         public ViewHolder(View itemView) {
-            super(itemView);;
+            super(itemView);
+
+            productimg=(ImageView)itemView.findViewById(R.id.img_1);
             product_name    =   (TextView) itemView.findViewById(R.id.txtview_product_name);
             quantity       =   (TextView) itemView.findViewById(R.id. txtview_quantity);
             price        =   (TextView) itemView.findViewById(R.id.txt_view_price);

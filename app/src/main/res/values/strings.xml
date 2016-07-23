@@ -125,5 +125,6 @@
     <string name="err_confirm_pass">please enter confirm password</string>
     <string name="logout">Logout</string>
     <string name="logout_message">Do you really want to logout ?</string>
+    <string name="err_quantity">Please fill quantity</string>
 
 </resources>
