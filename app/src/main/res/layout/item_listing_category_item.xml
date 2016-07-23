@@ -50,9 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
                     android:layout_marginBottom="@dimen/margin_10"
-
                     android:textAllCaps="true"
-
                     android:textSize="@dimen/font_14"
                     android:textColor="@color/colorAccent"
                     android:paddingLeft="@dimen/margin_5"

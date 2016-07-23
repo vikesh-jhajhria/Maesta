@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.maesta.maesta.BaseActivity;
+import com.maesta.maesta.LoginActivity;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -27,6 +31,22 @@ public class Utils {
         hashMap.put("Height", displaymetrics.heightPixels);
         hashMap.put("Width", displaymetrics.widthPixels);
         return hashMap;
+    }
+
+    public static void resetLogin(BaseActivity activity) {
+        AppPreferences pref = AppPreferences.getAppPreferences(activity);
+        pref.putStringValue(AppPreferences.USER_ID, "");
+        pref.putStringValue(AppPreferences.USER_NAME, "");
+        pref.putStringValue(AppPreferences.USER_PHONE, "");
+        pref.putStringValue(AppPreferences.USER_EMAIL, "");
+        pref.putStringValue(AppPreferences.ADDRESS, "");
+        pref.putStringValue(AppPreferences.API_KEY, "");
+        pref.putStringValue(AppPreferences.CURRENT_CATEGORY_LEVEL, "");
+        pref.putStringValue(AppPreferences.NEXT_CATEGORY_LEVEL, "");
+        pref.putStringValue(AppPreferences.REMAINING_TARGET, "");
+
+        activity.startActivity(new Intent(activity, LoginActivity.class));
+        activity.finishAffinity();
     }
 
     public static void setTypeface(Context context, TextView textview, String style) {

@@ -55,9 +55,8 @@ public class NewArrivalAdapter extends RecyclerView.Adapter<NewArrivalAdapter.Pr
                 context.startActivity(intent);
             }
         });
-
         Glide.with(context).load(list.get(position).thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).centerCrop().into(holder.image);
+                .placeholder(R.drawable.banner_1).fitCenter().into(holder.image);
     }
 
 

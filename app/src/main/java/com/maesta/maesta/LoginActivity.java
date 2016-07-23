@@ -74,7 +74,8 @@ public class LoginActivity extends BaseActivity {
                     ((EditText) findViewById(R.id.txt_password)).requestFocus();
                     break;
                 } else {
-                    new LogInTask().execute();
+                    if(Utils.isNetworkConnected(this,true))
+                        new LogInTask().execute();
                 }
                 break;
         }

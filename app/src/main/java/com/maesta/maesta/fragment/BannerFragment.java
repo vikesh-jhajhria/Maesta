@@ -53,7 +53,7 @@ public class BannerFragment extends Fragment {
                                  Bundle savedInstanceState) {
             View view   =   inflater.inflate(R.layout.layout_banner_fragment, container, false);
             Glide.with(getActivity()).load(banner.url).asBitmap()
-                    .placeholder(R.drawable.banner_1).centerCrop().into((ImageView) view.findViewById(R.id.img_banner));
+                    .placeholder(R.drawable.banner_1).fitCenter().into((ImageView) view.findViewById(R.id.img_banner));
 
             return view;
         }

@@ -2,6 +2,7 @@ package com.maesta.maesta;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,9 +16,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +68,7 @@ public class HomeActivity extends BaseActivity {
     private ExpandableListAdapter mExpandableListAdapter;
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
+    private List<RadioButton> pagerIndicatorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +80,9 @@ public class HomeActivity extends BaseActivity {
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
         handler = new Handler();
-        new HomeTask().execute();
+        if (Utils.isNetworkConnected(this, true))
+            new HomeTask().execute();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
-
 
 
         prepareNewArrival();
@@ -143,12 +148,43 @@ public class HomeActivity extends BaseActivity {
 
 
     private void prepareBanner() {
+        pagerIndicatorList = new ArrayList<>();
         bannerAdapter = new BannerAdapter(getSupportFragmentManager());
-        for(int i=0;i<bannerList.size();i++) {
+        for (int i = 0; i < bannerList.size(); i++) {
+            RadioButton btn = createDot();
+            pagerIndicatorList.add(btn);
+            ((RadioGroup)findViewById(R.id.pager_indicator_group)).addView(btn);
             bannerAdapter.addFragment(BannerFragment.newInstance(bannerList.get(i)), "");
         }
+        pagerIndicatorList.get(0).setChecked(true);
         bannerViewPager.setAdapter(bannerAdapter);
 
+        bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                pagerIndicatorList.get(position).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private RadioButton createDot() {
+        RadioButton btn = new RadioButton(this);
+        btn.setLayoutParams(new ViewGroup.MarginLayoutParams(20, 20));
+        btn.setBackground(getResources().getDrawable(R.drawable.radio_selector));
+        btn.setButtonDrawable(new StateListDrawable());
+        btn.setClickable(false);
+
+        return btn;
     }
 
     private void prepareNewArrival() {
@@ -233,8 +269,6 @@ public class HomeActivity extends BaseActivity {
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             postDataParams.put("api_key", apikey);
-
-
             return HTTPUrlConnection.getInstance().load(Config.HOME, postDataParams);
         }
 
@@ -252,8 +286,6 @@ public class HomeActivity extends BaseActivity {
                             Banner banner = new Banner();
                             banner.url = ((JSONObject) bannerArray.get(i)).getString("image");
                             bannerList.add(banner);
-
-
                         }
                     }
                     JSONObject productData = object.getJSONObject("product");
@@ -283,12 +315,11 @@ public class HomeActivity extends BaseActivity {
 
                         }
                     }
-                    //bannerAdapter.notifyDataSetChanged();
                     newArrivalAdapter.notifyDataSetChanged();
                     categoriesAdapter.notifyDataSetChanged();
                     prepareBanner();
-                    /*startActivity(new Intent(getApplicationContext(), ProfileActivity.class));*/
-
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(HomeActivity.this);
                 } else {
                     Toast.makeText(HomeActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
