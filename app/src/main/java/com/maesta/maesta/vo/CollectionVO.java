@@ -10,6 +10,7 @@ public class CollectionVO {
     public  String  quantity_number;
     public  String  price;
     public String thumbURL ;
+    public String remove;
 
 
     public CollectionVO()

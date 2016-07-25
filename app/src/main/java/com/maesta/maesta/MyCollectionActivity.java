@@ -41,9 +41,11 @@ public class MyCollectionActivity extends BaseActivity {
     private List<CollectionVO> collectionList;
     private MyCollectionAdapter collectionAdapter;
     AppPreferences mPrefs;
-    TextView totalprice,txtview_remove;
+    TextView totalprice;
+    String price,quntity,totalprice_reset;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collection_layout_recycleview);
         {
@@ -59,11 +61,18 @@ public class MyCollectionActivity extends BaseActivity {
             recyclerView.setAdapter(collectionAdapter);
            totalprice=(TextView) findViewById(R.id.txtview_total_price);
             findViewById(R.id.btn_place_order).setOnClickListener(this);
+
             new MyCollectionTask().execute();
 
         }
     }
+public void ResetTotal(int index){
+    quntity = (collectionList.get(index).quantity_number);
+    price=(collectionList.get(index).price);
+    
 
+
+    }
     private void setToolbar() {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("My Collection");
@@ -84,8 +93,9 @@ public class MyCollectionActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_place_order:
-                startActivity(new Intent(getApplicationContext(),OrderHistoryActivity.class));
+               new PlaceOrderTask().execute();
                 break;
+
         }
     }
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,7 +129,7 @@ public class MyCollectionActivity extends BaseActivity {
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
-            postDataParams.put("customer_id", UserId );
+            postDataParams.put("customer_id", UserId);
 
             return HTTPUrlConnection.getInstance().load(Config.MY_COLLECTION, postDataParams);
         }
@@ -133,20 +143,21 @@ public class MyCollectionActivity extends BaseActivity {
                 if (object.getBoolean("status")) {
                     totalprice.setText(object.getString("total"));
 
+
                     JSONArray productArray = object.getJSONArray("data");
-                        for (int i = 0; i < productArray.length(); i++) {
-                            CollectionVO collection = new CollectionVO();
-                            collection.product_name=((JSONObject) productArray.get(i)).getString("name");
-                            collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
-                            collection.price = ((JSONObject) productArray.get(i)).getString("price");
-                            collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
-                            collectionList.add(collection);
+                    for (int i = 0; i < productArray.length(); i++) {
+                        CollectionVO collection = new CollectionVO();
+                        collection.id=((JSONObject)productArray.get(i)).getInt("collection_id");
+                        collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
+                        collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
+                        collection.price = ((JSONObject) productArray.get(i)).getString("price");
+                        collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
+                        collection.quantity=("Quantity");
+                        collectionList.add(collection);
 
+                    }
 
-                        }
-
-                }
-                else {
+                } else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -156,6 +167,60 @@ public class MyCollectionActivity extends BaseActivity {
 
         }
     }
+    class PlaceOrderTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("customer_id", UserId);
+
+            return HTTPUrlConnection.getInstance().load(Config.MY_COLLECTION, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                   /* totalprice.setText(object.getString("total"));
+
+                    JSONArray productArray = object.getJSONArray("data");
+                    for (int i = 0; i < productArray.length(); i++) {
+                        CollectionVO collection = new CollectionVO();
+                        collection.id=((JSONObject)productArray.get(i)).getInt("collection_id");
+                        collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
+                        collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
+                        collection.price = ((JSONObject) productArray.get(i)).getString("price");
+                        collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
+                        collection.quantity=("Quantity");
+                        collectionList.add(collection);
+
+                    }*/
+                    startActivity(new Intent(getApplicationContext(),OrderHistoryActivity.class));
+
+                } else {
+                    Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
 
 
     @Override
