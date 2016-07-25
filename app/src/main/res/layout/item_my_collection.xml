@@ -16,6 +16,7 @@
 
         app:cardUseCompatPadding="false">
     <TextView
+        android:id="@+id/remove_txtview"
         android:layout_marginTop="-5dp"
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_7"

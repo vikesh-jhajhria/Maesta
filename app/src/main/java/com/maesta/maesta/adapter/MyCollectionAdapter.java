@@ -1,8 +1,11 @@
 package com.maesta.maesta.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,15 +14,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.maesta.maesta.BaseActivity;
+import com.maesta.maesta.LoginActivity;
+import com.maesta.maesta.MyCollectionActivity;
 import com.maesta.maesta.OrderHistoryActivity;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
+import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.CollectionVO;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,56 +40,126 @@ import java.util.List;
  */
 public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapter.ViewHolder> {
     Context context;
-
+    AppPreferences mPrefs;
     List<CollectionVO> collection;
-    public MyCollectionAdapter(List<CollectionVO>  collectionlist, Context context){
-        this.context=context;
-        this.collection=collectionlist;
-    }
-    @Override
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_my_collection,parent,false);
-    return new ViewHolder(view);
+
+    public MyCollectionAdapter(List<CollectionVO> collectionlist, Context context) {
+        this.context = context;
+        this.collection = collectionlist;
+        mPrefs = AppPreferences.getAppPreferences(this.context);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        final CollectionVO collections = collection .get(position);
-        holder.product_name.setText(collections.product_name );
-        holder.quantityno.setText(collections. quantity_number );
-        holder.quantity.setText(collections.quantity );
-        holder.price.setText(collections.price );
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_my_collection, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final CollectionVO collections = collection.get(position);
+        holder.product_name.setText(collections.product_name);
+        holder.quantityno.setText(collections.quantity_number);
+        holder.quantity.setText(collections.quantity);
+        holder.price.setText(collections.price);
+
+
         Glide.with(context).load(collections.thumbURL).asBitmap()
                 .placeholder(R.drawable.banner_1).centerCrop().into(holder.productimg);
-
+        holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new RemoveOredrTask().execute(collections.id + "", position + "");
+            }
+        });
     }
+
     @Override
     public int getItemCount() {
-        return  collection.size();
+        return collection.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView  product_name, quantity, price, quantityno;
-ImageView productimg;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView product_name, quantity, price, quantityno, txtview_remove;
+        ImageView productimg;
         CardView product_detail_card;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            productimg=(ImageView)itemView.findViewById(R.id.img_1);
-            product_name    =   (TextView) itemView.findViewById(R.id.txtview_product_name);
-            quantity       =   (TextView) itemView.findViewById(R.id. txtview_quantity);
-            price        =   (TextView) itemView.findViewById(R.id.txt_view_price);
-            quantityno        =   (TextView) itemView.findViewById(R.id.txtview_quantity_number);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity),Config.BOLD);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number),Config.MEDIUM);
-           product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
+            productimg = (ImageView) itemView.findViewById(R.id.img_1);
+            product_name = (TextView) itemView.findViewById(R.id.txtview_product_name);
+            quantity = (TextView) itemView.findViewById(R.id.txtview_quantity);
+            price = (TextView) itemView.findViewById(R.id.txt_view_price);
+            quantityno = (TextView) itemView.findViewById(R.id.txtview_quantity_number);
+            txtview_remove = (TextView) itemView.findViewById(R.id.remove_txtview);
 
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number), Config.MEDIUM);
+            product_detail_card = (CardView) itemView.findViewById(R.id.product_detail_card);
 
 
         }
-}
+    }
 
+    /*Remove Order Async Task*/
+    class RemoveOredrTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+        int index;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            ((BaseActivity) context).showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            index = Integer.parseInt(params[1]);
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("collection_id", params[0]);
+            return HTTPUrlConnection.getInstance().load(Config.REMOVE_COLLECTION, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            ((BaseActivity) context).dismissProgressDialog();
+
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                    collection.remove(index);
+                    notifyDataSetChanged();
+                /*totalprice.setText(object.getString("total"));
+
+                JSONArray productArray = object.getJSONArray("data");
+                for (int i = 0; i < productArray.length(); i++) {
+                    CollectionVO collection = new CollectionVO();
+                    collection.product_name=((JSONObject) productArray.get(i)).getString("name");
+                    collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
+                    collection.price = ((JSONObject) productArray.get(i)).getString("price");
+                    collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
+                    collection.quantity=("Quantity");
+                    collectionList.add(collection);
+
+
+                }*/
+                    Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
 }

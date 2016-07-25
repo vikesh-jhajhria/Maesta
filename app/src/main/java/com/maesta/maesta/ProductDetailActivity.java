@@ -84,7 +84,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
-                } else if (et_quantity.length()< 0) {
+                } else if (et_quantity.length()<=0) {
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
@@ -184,7 +184,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     /*startActivity(new Intent(getApplicationContext(), ProfileActivity.class));*/
 
 
-                    JSONObject galleryImage = object.getJSONObject("gallery");
+                    /*JSONObject galleryImage = object.getJSONObject("gallery");
                     if (productData.getBoolean("status")) {
                         JSONArray galleryArray = galleryImage.getJSONArray("data");
                         for (int i = 0; i < galleryArray.length(); i++) {
@@ -196,7 +196,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                         }
 
 
-                    }
+                    }*/
                 }
                 else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
