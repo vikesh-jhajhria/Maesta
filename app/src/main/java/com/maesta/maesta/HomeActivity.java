@@ -1,6 +1,7 @@
 package com.maesta.maesta;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
@@ -13,10 +14,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -84,7 +88,19 @@ public class HomeActivity extends BaseActivity {
             new HomeTask().execute();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
+        ((EditText) findViewById(R.id.txt_search)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
 
+                    return true;
+                }
+                return false;
+            }
+
+        });
         prepareNewArrival();
         prepareCategories();
         header.attachTo(catetoriesRV);
@@ -153,7 +169,7 @@ public class HomeActivity extends BaseActivity {
         for (int i = 0; i < bannerList.size(); i++) {
             RadioButton btn = createDot();
             pagerIndicatorList.add(btn);
-            ((RadioGroup)findViewById(R.id.pager_indicator_group)).addView(btn);
+            ((RadioGroup) findViewById(R.id.pager_indicator_group)).addView(btn);
             bannerAdapter.addFragment(BannerFragment.newInstance(bannerList.get(i)), "");
         }
         pagerIndicatorList.get(0).setChecked(true);
