@@ -75,7 +75,7 @@ public class HomeActivity extends BaseActivity {
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
     private List<RadioButton> pagerIndicatorList;
-
+TextView user_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +85,8 @@ public class HomeActivity extends BaseActivity {
         bannerViewPager = (ViewPager) findViewById(R.id.pager_banner);
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
+
+
         handler = new Handler();
         if (Utils.isNetworkConnected(this, true))
             new HomeTask().execute();
@@ -116,6 +118,7 @@ public class HomeActivity extends BaseActivity {
         View listHeaderView = inflater.inflate(R.layout.layout_nav_header, null, false);
         mExpandableListView.addHeaderView(listHeaderView);
         findViewById(R.id.img_user).setOnClickListener(this);
+        user_name=(TextView)findViewById(R.id.txt_username) ;
         View listFooterView = inflater.inflate(R.layout.layout_nav_footer, null, false);
         mExpandableListView.addFooterView(listFooterView);
         findViewById(R.id.txt_my_profile).setOnClickListener(this);
@@ -230,7 +233,10 @@ public class HomeActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn_toggle:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
+                String UserName = mPrefs.getStringValue(AppPreferences.USER_NAME);
+                user_name.setText(UserName);
                 break;
+
             case R.id.img_user:
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;

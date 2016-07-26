@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
@@ -28,6 +29,7 @@ import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
+import com.maesta.maesta.vo.CollectionVO;
 import com.maesta.maesta.vo.Product;
 
 import org.json.JSONArray;
@@ -47,7 +49,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     private ViewPager productViewPager;
     AppPreferences mPrefs;
     private int ProductId;
-    String quantity;
+
+    String quantity, collectionId,oldquantity;
     TextView txtview_product_name, productmodel_txtview, txtview_price, txtview_desc, txtview_price_detail, txtview_quantity, txtview_desc_detail;
     EditText et_quantity;
     String imageUrl = "";
@@ -212,41 +215,42 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject productData = object.getJSONObject("data");
-                    txtview_product_name.setText(productData.getString("name"));
-                    productmodel_txtview.setText(productData.getString("model"));
-                    txtview_desc_detail.setText(productData.getString("description"));
-                    txtview_price.setText(productData.getString("price"));
-                    imageUrl = productData.getString("image");
+                        txtview_product_name.setText(productData.getString("name"));
+                        productmodel_txtview.setText(productData.getString("model"));
+                        txtview_desc_detail.setText(productData.getString("description"));
+                        txtview_price.setText(productData.getString("price"));
+                        imageUrl = productData.getString("image");
 
-                    JSONObject galleryObject = productData.getJSONObject("gallery");
-                    if (galleryObject.getBoolean("status")) {
-                        JSONArray galleryArray = galleryObject.getJSONArray("data");
-                        for (int i = 0; i < galleryArray.length(); i++) {
-                            Banner banner = new Banner();
-                            banner.url = galleryArray.getString(i);
-                            productImageList.add(banner);
+                        JSONObject galleryObject = productData.getJSONObject("gallery");
+                        if (galleryObject.getBoolean("status")) {
+                            JSONArray galleryArray = galleryObject.getJSONArray("data");
+                            for (int i = 0; i < galleryArray.length(); i++) {
+                                Banner banner = new Banner();
+                                banner.url = galleryArray.getString(i);
+                                productImageList.add(banner);
+                            }
+                            //productImageAdapter.notifyDataSetChanged();
+                            prepareBanner();
                         }
-                        //productImageAdapter.notifyDataSetChanged();
-                        prepareBanner();
+                    JSONObject oldCollection = object.getJSONObject("collection");
+                    if (oldCollection.getBoolean("status")) {
+                        JSONObject collectionData = oldCollection.getJSONObject("data");
+                        collectionId = collectionData.getString("id");
+                     et_quantity.setText(collectionData.getString("quantity"));
+                              oldquantity=collectionData.getString("quantity");
+                        ((Button) findViewById(R.id.btn_add_collection)).setText("Update Collection");
+                        ((Button) findViewById(R.id.btn_add_collection)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                new UpdateCollectionTask().execute();
+                            }
+                        });
+
                     }
 
-                    /*startActivity(new Intent(getApplicationContext(), ProfileActivity.class));*/
 
-
-                    /*JSONObject galleryImage = object.getJSONObject("gallery");
-                    if (productData.getBoolean("status")) {
-                        JSONArray galleryArray = galleryImage.getJSONArray("data");
-                        for (int i = 0; i < galleryArray.length(); i++) {
-                            Banner banner = new Banner();
-                            banner.url = ((JSONObject) galleryArray.get(i)).getString("image");
-                            productImageList.add(banner);
-
-
-                        }
-
-
-                    }*/
-                } else {
+                }
+                else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -300,6 +304,50 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    class UpdateCollectionTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+        int index;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
+
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("customer_id", UserId);
+            postDataParams.put("collection_id", collectionId);
+            postDataParams.put("quantity", oldquantity);
+            return HTTPUrlConnection.getInstance().load(Config.UPDATE_COLLECTION, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
+
+                } else {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

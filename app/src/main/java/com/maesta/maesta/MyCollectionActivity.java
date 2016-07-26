@@ -45,8 +45,6 @@ public class MyCollectionActivity extends BaseActivity {
     private MyCollectionAdapter collectionAdapter;
     AppPreferences mPrefs;
     TextView totalprice;
-    EditText quantity_no;
-    String price, quntity, totalprice_reset, quantityno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,30 +96,10 @@ public class MyCollectionActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_place_order:
-
-             /*   if(quntity.equalsIgnoreCase("0")){
-                    Toast.makeText(getApplicationContext(),"Please fill Quantity of product",Toast.LENGTH_LONG).show();
-                    break;
-                }
-                else {*/
                 new PlaceOrderTask().execute();
                 break;
 
-
         }
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        if (item.getItemId() == R.id.search) {
-
-            return true;
-        }
-        return false;
     }
 
 
@@ -218,13 +196,14 @@ public class MyCollectionActivity extends BaseActivity {
 
         }
     }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_profile, menu);
-        return true;
-    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
 
+        return false;
+    }
 
 }

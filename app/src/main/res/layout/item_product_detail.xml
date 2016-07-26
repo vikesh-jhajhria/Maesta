@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
-                    android:text="Rounded sass'n Class Series for Maestra Itali's Eyewear Section"
+                    android:text=" "
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_24" />
 
@@ -63,7 +63,7 @@
                     android:layout_marginBottom="@dimen/margin_15"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:text="Model C14 MF 14303"
+                    android:text=" "
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/font_22" />
             </LinearLayout>
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_10"
-                    android:text="Rs.499.00"
+                    android:text=""
                     android:textColor="@color/redButtonColor"
                     android:textSize="@dimen/font_22" />
 
@@ -169,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_15"
                     android:layout_marginLeft="@dimen/margin_10"
-                    android:text="Price are inclusive of All Taxes:Rs 499.00 Price are inclusive of All Taxes:Rs 499.00 Price are inclusive of All Taxes:Rs 499.00 Price are inclusive of All Taxes:Rs 499.00Price are inclusive of All Taxes:Rs 499.00Price are inclusive of All Taxes:Rs 499.00Price are inclusive of All Taxes:Rs 499.00Price are inclusive of All Taxes:Rs 499.00Price are inclusive of All Taxes:Rs 499.00 "
+                    android:text="  "
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_22" />
             </LinearLayout>

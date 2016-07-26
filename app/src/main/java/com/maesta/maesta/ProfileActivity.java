@@ -2,23 +2,19 @@ package com.maesta.maesta;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import android.widget.TextView;
 import android.widget.Toast;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 
 /**
@@ -27,7 +23,7 @@ import java.util.HashMap;
 public class ProfileActivity extends BaseActivity
 {
     AppPreferences mPrefs;
-TextView name,mobileno,adress,current_cat_level,nxt_cat_level,target;
+    TextView name,mobileno,adress,current_cat_level,nxt_cat_level,target;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +45,7 @@ TextView name,mobileno,adress,current_cat_level,nxt_cat_level,target;
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setHomeButtonEnabled(true);
-getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -67,9 +63,9 @@ getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target_level), Config.REGULAR);
     }
-    public boolean onOptionsItemSelected(MenuItem item) {
+        public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-onBackPressed();
+           onBackPressed();
             return true;
         }
         if(item.getItemId() == R.id.search){
@@ -125,7 +121,8 @@ onBackPressed();
                 } else {
                     Toast.makeText(ProfileActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
 
