@@ -1,6 +1,7 @@
 package com.maesta.maesta;
 
 import android.content.Intent;
+import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,49 +36,93 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by saloni.bhansali on 7/20/2016.
  */
 public class ProductDetailActivity extends BaseActivity implements View.OnClickListener {
     private ArrayList<Banner> productImageList = new ArrayList<>();
-    private BannerAdapter ProductImageAdapter;
+    private BannerAdapter productImageAdapter;
     private ViewPager productViewPager;
     AppPreferences mPrefs;
     private int ProductId;
     String quantity;
-    TextView txtview_product_name,productmodel_txtview,txtview_price,txtview_desc,txtview_price_detail,txtview_quantity,txtview_desc_detail;
+    TextView txtview_product_name, productmodel_txtview, txtview_price, txtview_desc, txtview_price_detail, txtview_quantity, txtview_desc_detail;
     EditText et_quantity;
+    String imageUrl = "";
+    private List<RadioButton> pagerIndicatorList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         productViewPager = (ViewPager) findViewById(R.id.pager_product);
-        mPrefs = AppPreferences.getAppPreferences(ProductDetailActivity .this);
+        mPrefs = AppPreferences.getAppPreferences(ProductDetailActivity.this);
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null)
-        {
-            ProductId = bundle.getInt("ID",0);
+        if (bundle != null) {
+            ProductId = bundle.getInt("ID", 0);
         }
 
         setToolbar();
         applyFont();
-        productBanner();
         findViewById(R.id.btn_add_collection).setOnClickListener(this);
-        txtview_desc=(TextView)findViewById(R.id.textview_desc) ;
-        txtview_product_name=(TextView)findViewById(R.id.product_name_txtview);
-        productmodel_txtview=(TextView)findViewById(R.id.product_model_txtview);
-        txtview_price=(TextView)findViewById(R.id.textview_product_price);
-        txtview_price_detail=(TextView)findViewById(R.id.textview_price_detail);
-        txtview_quantity=(TextView)findViewById(R.id.txtview_quantity);
-        txtview_desc_detail=(TextView)findViewById(R.id.textview_desc_detail);
-        et_quantity=(EditText)findViewById(R.id.et_quantity);
+        txtview_desc = (TextView) findViewById(R.id.textview_desc);
+        txtview_product_name = (TextView) findViewById(R.id.product_name_txtview);
+        productmodel_txtview = (TextView) findViewById(R.id.product_model_txtview);
+        txtview_price = (TextView) findViewById(R.id.textview_product_price);
+        txtview_price_detail = (TextView) findViewById(R.id.textview_price_detail);
+        txtview_quantity = (TextView) findViewById(R.id.txtview_quantity);
+        txtview_desc_detail = (TextView) findViewById(R.id.textview_desc_detail);
+        et_quantity = (EditText) findViewById(R.id.et_quantity);
         ((Button) findViewById(R.id.btn_add_collection)).setOnClickListener(this);
 
 
-      new ProductDetailTask().execute();
+        new ProductDetailTask().execute();
 
     }
+
+    private void prepareBanner() {
+        pagerIndicatorList = new ArrayList<>();
+        productImageAdapter = new BannerAdapter(getSupportFragmentManager());
+        for (int i = 0; i < productImageList.size(); i++) {
+            RadioButton btn = createDot();
+            pagerIndicatorList.add(btn);
+            ((RadioGroup) findViewById(R.id.pager_indicator_group)).addView(btn);
+            productImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(i)), "");
+        }
+        pagerIndicatorList.get(0).setChecked(true);
+        productViewPager.setAdapter(productImageAdapter);
+
+        productViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                pagerIndicatorList.get(position).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private RadioButton createDot() {
+        RadioButton btn = new RadioButton(this);
+        btn.setLayoutParams(new ViewGroup.MarginLayoutParams(20, 20));
+        btn.setBackground(getResources().getDrawable(R.drawable.radio_selector));
+        btn.setButtonDrawable(new StateListDrawable());
+        btn.setClickable(false);
+
+        return btn;
+    }
+
+    @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
@@ -84,26 +132,14 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
-                } else if (et_quantity.length()<=0) {
+                } else if (et_quantity.length() <= 0) {
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
-                }
-                else {
+                } else {
                     new AddToCollectionTask().execute();
                 }
         }
-    }
-    private void productBanner() {
-        Banner banner = new Banner();
-
-
-       /* ProductImageAdapter = new BannerAdapter(getSupportFragmentManager());
-        ProductImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(0)), "");
-        ProductImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(1)), "");
-        ProductImageAdapter.addFragment(BannerFragment.newInstance(productImageList.get(2)), "");
-        productViewPager.setAdapter(ProductImageAdapter);*/
-
     }
 
     private void setToolbar() {
@@ -131,15 +167,15 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
-        if(item.getItemId() == R.id.search){
+        if (item.getItemId() == R.id.search) {
 
             return true;
         }
-        if(item.getItemId() == R.id.check){
+        if (item.getItemId() == R.id.check) {
 
             return true;
         }
@@ -162,8 +198,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
-            postDataParams.put("product_id",""+ProductId);
-            postDataParams.put("customer_id", UserId );
+            postDataParams.put("product_id", "" + ProductId);
+            postDataParams.put("customer_id", UserId);
 
             return HTTPUrlConnection.getInstance().load(Config.PRODUCT_DETAIL, postDataParams);
         }
@@ -180,6 +216,19 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     productmodel_txtview.setText(productData.getString("model"));
                     txtview_desc_detail.setText(productData.getString("description"));
                     txtview_price.setText(productData.getString("price"));
+                    imageUrl = productData.getString("image");
+
+                    JSONObject galleryObject = productData.getJSONObject("gallery");
+                    if (galleryObject.getBoolean("status")) {
+                        JSONArray galleryArray = galleryObject.getJSONArray("data");
+                        for (int i = 0; i < galleryArray.length(); i++) {
+                            Banner banner = new Banner();
+                            banner.url = galleryArray.getString(i);
+                            productImageList.add(banner);
+                        }
+                        //productImageAdapter.notifyDataSetChanged();
+                        prepareBanner();
+                    }
 
                     /*startActivity(new Intent(getApplicationContext(), ProfileActivity.class));*/
 
@@ -197,8 +246,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
 
                     }*/
-                }
-                else {
+                } else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -224,9 +272,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
-            postDataParams.put("product_id",""+ProductId);
-            postDataParams.put("quantity", quantity );
-            postDataParams.put("customer_id", UserId );
+            postDataParams.put("product_id", "" + ProductId);
+            postDataParams.put("quantity", quantity);
+            postDataParams.put("customer_id", UserId);
 
             return HTTPUrlConnection.getInstance().load(Config.ADD_TO_COLLECTION, postDataParams);
         }
@@ -241,8 +289,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
                     startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
 
-                }
-                else {
+                } else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -252,8 +299,6 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
         }
     }
-
-
 
 
     @Override

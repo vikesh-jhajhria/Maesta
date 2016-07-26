@@ -13,7 +13,7 @@
     <string name="contact">Contact Number</string>
     <string name="msg">Message</string>
     <string name="send">Send</string>
-    <string name="contact_adres">Contact_Address</string>
+    <string name="contact_adres">Contact Address</string>
     <string name="maesta_distributor">Maestro Distributer</string>
     <string name="distributor_adres">Aliquamorci Leo,lacuis in Elementium</string>
     <string name="adres_city">10435,Delhi,India</string>
@@ -126,5 +126,9 @@
     <string name="logout">Logout</string>
     <string name="logout_message">Do you really want to logout ?</string>
     <string name="err_quantity">Please fill quantity</string>
+    <string name="err_name">Please enter your name.</string>
+    <string name="err_number">Please enter your contact number.</string>
+    <string name="err_message">Please enter message.</string>
+    <string name="err_number_length">Contact number should be of 10 digits.</string>
 
 </resources>

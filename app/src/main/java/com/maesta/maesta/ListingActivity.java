@@ -34,11 +34,12 @@ import java.util.List;
 /**
  * Created by saloni.bhansali on 7/20/2016.
  */
-public class ListingActivity extends BaseActivity
-{
+public class ListingActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<ListingVO> productList;
     private ListingAdapter listingAdapter;
+    private int categoryId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +48,8 @@ public class ListingActivity extends BaseActivity
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         productList = new ArrayList<>();
         ListingVO productLists = new ListingVO();
-        productLists.textTitile="Rounded sass'n Class series of Maseta italia's Eye Wear Section";
-        productLists.textcollection="Rs.20,000";
+        productLists.textTitile = "Rounded sass'n Class series of Maseta italia's Eye Wear Section";
+        productLists.textcollection = "Rs.20,000";
         productList.add(productLists);
         productList.add(productLists);
         productList.add(productLists);
@@ -56,20 +57,55 @@ public class ListingActivity extends BaseActivity
         productList.add(productLists);
         productList.add(productLists);
         listingAdapter = new ListingAdapter(productList, this);
-        final GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(listingAdapter);
+
+        categoryId = getIntent().getIntExtra("ID", 0);
+        new GetProductsTask().execute(categoryId + "");
     }
+
     private void setToolbar() {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
-getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-  /*  class ListingTask extends AsyncTask<String, Void, String> {
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+
+
+        }
+
+        if (item.getItemId() == R.id.search) {
+
+            return true;
+        }
+        if (item.getItemId() == R.id.check) {
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_home, menu);
+
+        return true;
+    }
+
+
+    class GetProductsTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
         @Override
@@ -81,10 +117,10 @@ getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         @Override
         protected String doInBackground(String... params) {
             postDataParams = new HashMap<String, String>();
-            postDataParams.put("email_address", username);
-            postDataParams.put("password", password);
+            postDataParams.put("category_id", params[0]);
+            postDataParams.put("page", "1");
 
-            return HTTPUrlConnection.getInstance().load(Config.LOGIN, postDataParams);
+            return HTTPUrlConnection.getInstance().load(Config.PRODUCT, postDataParams);
         }
 
         @Override
@@ -95,19 +131,7 @@ getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
-                    AppPreferences pref = AppPreferences.getAppPreferences(getApplicationContext());
-                    pref.putStringValue(AppPreferences.USER_ID, data.getString("id"));
-                    pref.putStringValue(AppPreferences.USER_NAME, data.getString("name"));
-                    pref.putStringValue(AppPreferences.USER_EMAIL, data.getString("email"));
-                    pref.putStringValue(AppPreferences.USER_PHONE, data.getString("mobile"));
-                    pref.putStringValue(AppPreferences.ADDRESS, data.getString("address"));
-                    pref.putStringValue(AppPreferences.API_KEY, data.getString("address"));
-                    pref.putStringValue(AppPreferences.CURRENT_CATEGORY_LEVEL, data.getString("current_category_level"));
-                    pref.putStringValue(AppPreferences.NEXT_CATEGORY_LEVEL, data.getString("next_category_level"));
-                    pref.putStringValue(AppPreferences.REMAINING_TARGET, data.getString("remaining_target"));
 
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                    finishAffinity();
                 } else {
                     Toast.makeText(ListingActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
@@ -117,36 +141,6 @@ getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
 
 
         }
-    }*/
-
-    @Override
-public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-
-
-        }
-
-    if(item.getItemId() == R.id.search){
-
-        return true;
     }
-    if(item.getItemId() == R.id.check){
-
-        return true;
-    }
-    return false;
-}
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_home, menu);
-
-        return true;
-    }
-
-
 
 }

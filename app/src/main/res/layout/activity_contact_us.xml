@@ -32,7 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_10"
+            app:cardElevation="@dimen/margin_2"
+            android:layout_marginTop="@dimen/margin_14"
+            android:layout_marginLeft="@dimen/margin_14"
+            android:layout_marginRight="@dimen/margin_14"
             app:cardUseCompatPadding="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -75,7 +78,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
-
                                 android:hint="@string/name"
                                 android:inputType="text"
                                 android:singleLine="true"
@@ -125,7 +127,6 @@
                                 android:hint="@string/contact"
                                 android:inputType="number"
                                 android:singleLine="true"
-                                android:textColor="@color/textColorPrimary"
                                 android:textSize="@dimen/font_22" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -167,8 +168,7 @@
                                 android:layout_alignParentTop="true"
                                 android:hint="@string/msg"
                                 android:inputType="text"
-                                android:singleLine="true"
-                                android:textColor="@color/textColorPrimary"
+                                android:maxLines="5"
                                 android:textSize="@dimen/font_22" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -197,7 +197,7 @@
                         android:textAllCaps="false"
                         android:text="@string/send"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/font_20" />
+                        android:textSize="@dimen/font_30" />
 
                 </android.support.v7.widget.CardView>
 
@@ -212,23 +212,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_8"
+            android:layout_marginLeft="@dimen/margin_14"
+            android:layout_marginRight="@dimen/margin_14"
+            android:layout_marginBottom="@dimen/margin_14"
+            android:layout_marginTop="@dimen/margin_12"
+            app:cardElevation="@dimen/margin_2"
             app:cardUseCompatPadding="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
 
 
                 <TextView
                     android:id="@+id/contct_txtview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:text="@string/contact_adres"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_28" />
@@ -237,8 +241,7 @@
                     android:id="@+id/contact_adres_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:text="@string/maesta_distributor"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_18" />
@@ -247,23 +250,12 @@
                     android:id="@+id/full_adres_txtview1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginTop="@dimen/margin_5"
                     android:text="@string/distributor_adres"
                     android:textColor="@color/textColorSecondary"
-
                     android:textSize="@dimen/font_18" />
 
-                <TextView
-                    android:id="@+id/full_adres_txtview2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:text="@string/adres_city"
-                    android:textColor="@color/textColorSecondary"
 
-                    android:textSize="@dimen/font_18" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -274,8 +266,7 @@
                         android:id="@+id/phone_txtview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_5"
                         android:text="@string/phone"
                         android:textColor="@color/colorPrimaryDark"
 
@@ -287,7 +278,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_20"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_5"
                         android:text="@string/phone_number"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_18" />

@@ -35,13 +35,14 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final SubCategoryVO subcategory = subcategory_list.get(position);
         holder.productName.setText(subcategory.productName);
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(context, ListingActivity.class);
+        intent.putExtra("ID",subcategory_list.get(position).id);
         context.startActivity(intent);
     }
 });

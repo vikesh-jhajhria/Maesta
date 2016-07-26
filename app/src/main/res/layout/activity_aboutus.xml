@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:fitsSystemWindows="true">
-
 
 
     <android.support.design.widget.AppBarLayout
@@ -25,32 +23,36 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <LinearLayout
-        android:layout_marginTop="?actionBarSize"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        >
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
-
-        <ImageView
-            android:id="@+id/aboutus_img"
-            android:layout_margin="15dp"
-            android:scaleType="fitXY"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:src="@drawable/banner_1"
-            />
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <WebView
-          android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_about"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner_1" />
+
+            <TextView
+                android:id="@+id/txt_about"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="@dimen/font_18"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
