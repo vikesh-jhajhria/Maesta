@@ -1,12 +1,7 @@
 package com.maesta.maesta.adapter;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,16 +16,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.maesta.maesta.BaseActivity;
-import com.maesta.maesta.LoginActivity;
 import com.maesta.maesta.MyCollectionActivity;
-import com.maesta.maesta.OrderHistoryActivity;
-import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.CollectionVO;
+import com.maesta.maesta.vo.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,10 +36,10 @@ import java.util.List;
 public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapter.ViewHolder> {
     Context context;
     AppPreferences mPrefs;
-    List<CollectionVO> collection;
+    List<Collection> collection;
     String quantityNo;
 
-    public MyCollectionAdapter(List<CollectionVO> collectionlist, Context context) {
+    public MyCollectionAdapter(List<Collection> collectionlist, Context context) {
         this.context = context;
         this.collection = collectionlist;
         mPrefs = AppPreferences.getAppPreferences(this.context);
@@ -62,7 +53,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final CollectionVO collections = collection.get(position);
+        final Collection collections = collection.get(position);
         holder.product_name.setText(collections.product_name);
         holder.quantityno.setText(collections.quantity_number);
         holder.quantity.setText(collections.quantity);

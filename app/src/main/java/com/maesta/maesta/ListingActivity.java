@@ -1,27 +1,19 @@
 package com.maesta.maesta;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maesta.maesta.adapter.ListingAdapter;
-import com.maesta.maesta.adapter.MyCollectionAdapter;
-import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
-import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.CollectionVO;
 import com.maesta.maesta.vo.ListingVO;
 
 import org.json.JSONException;

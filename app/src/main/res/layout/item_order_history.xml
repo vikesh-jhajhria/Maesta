@@ -1,9 +1,9 @@
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
 
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_order_history"
@@ -13,6 +13,7 @@
 
         app:cardUseCompatPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,103 +22,109 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/font_18"
-                    android:layout_margin="@dimen/margin_15"
                     android:layout_height="wrap_content"
-                    android:text="Placed on 2 July,2016"/>
+                    android:layout_margin="@dimen/margin_15"
+                    android:text="Placed on 2 July,2016"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/font_18" />
 
 
                 <TextView
-                    android:layout_toLeftOf="@+id/textview_pending"
                     android:id="@+id/textview_staus"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_18"
-                    android:layout_marginTop="@dimen/margin_15"
                     android:layout_height="wrap_content"
-                    android:text="@string/status"/>
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_toLeftOf="@+id/textview_pending"
+                    android:text="@string/status"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_18" />
 
                 <TextView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/textview_pending"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/margin_15"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:text="pending"
                     android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_18"
 
-                    android:text="pending"/>
+                    android:textSize="@dimen/font_18" />
             </RelativeLayout>
+
             <RelativeLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/hLineColor"
-                    ></View>
+                    android:background="@color/hLineColor"></View>
+
                 <ImageView
 
                     android:id="@+id/img_item"
-                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_15"
                     android:layout_marginRight="@dimen/margin_10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/order_history"/>
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:src="@drawable/order_history" />
 
                 <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/font_18"
-                    android:textColor="@color/textColorSecondary"
                     android:id="@+id/textview_order"
-                    android:layout_toRightOf="@+id/img_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/orderid"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/img_item"
+                    android:text="@string/orderid"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_18" />
+
                 <TextView
 
-                    android:layout_marginTop="10dp"
                     android:id="@+id/textview_id"
-                    android:textSize="@dimen/font_18"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/textview_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+98E6F6"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/textview_order"
+                    android:text="+98E6F6"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_18" />
+
                 <TextView
                     android:id="@+id/total"
-                    android:textSize="@dimen/font_18"
-                    android:textColor="@color/textColorSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textview_id"
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/img_item"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/textview_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/total"/>
+                    android:layout_toRightOf="@+id/img_item"
+                    android:text="@string/total"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_18" />
+
                 <TextView
                     android:id="@+id/price"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="@dimen/font_18"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:layout_below="@+id/textview_id"
-                    android:layout_toRightOf="@+id/total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rs 19876543"/>
+                    android:layout_below="@+id/textview_id"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_toRightOf="@+id/total"
+                    android:text="Rs 19876543"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

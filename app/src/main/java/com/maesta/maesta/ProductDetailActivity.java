@@ -138,6 +138,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     break;
                 } else {
                     new AddToCollectionTask().execute();
+                    finish();
                 }
         }
     }

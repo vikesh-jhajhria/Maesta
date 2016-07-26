@@ -1,16 +1,11 @@
 package com.maesta.maesta;
 
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,8 +20,7 @@ import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.CollectionVO;
-import com.maesta.maesta.vo.Product;
+import com.maesta.maesta.vo.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +35,7 @@ import java.util.List;
  */
 public class MyCollectionActivity extends BaseActivity {
     private RecyclerView recyclerView;
-    private List<CollectionVO> collectionList;
+    private List<Collection> collectionList;
     private MyCollectionAdapter collectionAdapter;
     AppPreferences mPrefs;
     TextView totalprice;
@@ -98,13 +92,10 @@ public class MyCollectionActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_place_order:
-
-             /*   if(quntity.equalsIgnoreCase("0")){
-                    Toast.makeText(getApplicationContext(),"Please fill Quantity of product",Toast.LENGTH_LONG).show();
-                    break;
+                if(Utils.isNetworkConnected(this,true) && collectionList.size() > 0) {
+                    new PlaceOrderTask().execute();
+                    finish();
                 }
-                else {*/
-                new PlaceOrderTask().execute();
                 break;
 
 
@@ -157,7 +148,7 @@ public class MyCollectionActivity extends BaseActivity {
 
                     JSONArray productArray = object.getJSONArray("data");
                     for (int i = 0; i < productArray.length(); i++) {
-                        CollectionVO collection = new CollectionVO();
+                        Collection collection = new Collection();
                         collection.id = ((JSONObject) productArray.get(i)).getInt("collection_id");
                         collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
                         collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");

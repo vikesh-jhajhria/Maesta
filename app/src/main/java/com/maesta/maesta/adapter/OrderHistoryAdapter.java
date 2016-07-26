@@ -9,12 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.maesta.maesta.OrderHistoryActivity;
 import com.maesta.maesta.OrderHistoryDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.OrderHistoryVO;
+import com.maesta.maesta.vo.Order;
 
 import java.util.List;
 
@@ -24,8 +23,8 @@ import java.util.List;
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
     Context context;
 
-    List<OrderHistoryVO> orderhistory;
-    public OrderHistoryAdapter(List<OrderHistoryVO>  order, Context context){
+    List<Order> orderhistory;
+    public OrderHistoryAdapter(List<Order>  order, Context context){
         this.context=context;
         this.orderhistory=order;
     }
@@ -37,24 +36,22 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final OrderHistoryVO orderHistory = orderhistory.get(position);
-        holder.date.setText(orderHistory.date);
-        holder.order.setText(orderHistory.order);
-        holder.orderid.setText(orderHistory.orderId);
-        holder.price.setText(orderHistory.price);
-        holder.pending.setText(orderHistory.pending);
+        final Order orderHistory = orderhistory.get(position);
+        holder.date.setText(orderHistory.order_place);
+        holder.orderid.setText(orderHistory.invoice_number);
+        holder.price.setText(orderHistory.total_amount);
+        holder.pending.setText(orderHistory.order_status);
 
-        holder.status.setText(orderHistory.status);
-        holder.total.setText(orderHistory.total);
-        if (orderHistory.pending.equalsIgnoreCase("pending")) {
+        if (orderHistory.order_status.equalsIgnoreCase("delivered")) {
             holder.pending.setTextColor(context.getResources().getColor(R.color.green));
-        }else if(orderHistory.pending.equalsIgnoreCase("status") ){
+        }else if(orderHistory.order_status.equalsIgnoreCase("pending") ){
             holder.pending.setTextColor(context.getResources().getColor(R.color.colorAccent));
         }
-        holder.order_history_card.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, OrderHistoryDetailActivity.class);
+                intent.putExtra("ID",orderHistory.order_id);
                 context.startActivity(intent);
             }
         });
@@ -67,7 +64,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView  date,  status, price, orderid,total,pending,order;
 
-       CardView order_history_card;
 
         public ViewHolder(View itemView) {
             super(itemView);;
@@ -78,6 +74,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             total        =   (TextView) itemView.findViewById(R.id.total);
             pending        =   (TextView) itemView.findViewById(R.id.textview_pending);
             order        =   (TextView) itemView.findViewById(R.id.textview_order);
+
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_staus), Config.REGULAR);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.price),Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_id), Config.MEDIUM);
@@ -85,9 +82,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_pending), Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.textview_order),Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.date), Config.REGULAR);
-
-            order_history_card    =   (CardView) itemView.findViewById(R.id.cardview_order_history);
-
 
 
         }

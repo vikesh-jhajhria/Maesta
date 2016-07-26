@@ -1,15 +1,12 @@
 package com.maesta.maesta;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.maesta.maesta.adapter.MyCollectionAdapter;
 import com.maesta.maesta.adapter.SubCategoryAdapter;
-import com.maesta.maesta.vo.CollectionVO;
 import com.maesta.maesta.vo.SubCategoryVO;
 
 import java.util.ArrayList;

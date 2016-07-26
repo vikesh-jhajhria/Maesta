@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.OrderHistoryDetailVO;
+import com.maesta.maesta.vo.Collection;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ import java.util.List;
 public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
     Context context;
 
-    List<OrderHistoryDetailVO> order;
-    public OrderHistoryDetailAdapter(List<OrderHistoryDetailVO>  order, Context context){
+    List<Collection> order;
+    public OrderHistoryDetailAdapter(List<Collection>  order, Context context){
         this.context=context;
         this.order=order;
     }
@@ -33,7 +33,7 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final OrderHistoryDetailVO  orderDetail = order .get(position);
+        final Collection orderDetail = order .get(position);
         holder.product_name.setText(orderDetail.product_name );
         holder.quantityno.setText(orderDetail. quantity_number );
         holder.quantity.setText(orderDetail.quantity );

@@ -13,7 +13,6 @@ import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.CollectionVO;
 import com.maesta.maesta.vo.ListingVO;
 
 import java.util.List;
