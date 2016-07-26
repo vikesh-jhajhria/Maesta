@@ -131,11 +131,17 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
         @Override
         protected String doInBackground(String... params) {
+            String customerId = AppPreferences.getAppPreferences(context)
+                    .getStringValue(AppPreferences.USER_ID);
+
+
             index = Integer.parseInt(params[1]);
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             postDataParams.put("api_key", apikey);
             postDataParams.put("collection_id", params[0]);
+            postDataParams.put("customer_id", customerId);
+
             return HTTPUrlConnection.getInstance().load(Config.REMOVE_COLLECTION, postDataParams);
         }
 
@@ -147,6 +153,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
+                    ((MyCollectionActivity)context).resetTotal(object.getString("total_amount"));
                     collection.remove(index);
                     notifyDataSetChanged();
 
@@ -224,12 +231,16 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
         @Override
         protected String doInBackground(String... params) {
+            String customerId = AppPreferences.getAppPreferences(context)
+                    .getStringValue(AppPreferences.USER_ID);
+
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             index = Integer.parseInt(params[1]);
             postDataParams.put("api_key", apikey);
             postDataParams.put("quantity", quantityNo);
             postDataParams.put("collection_id", params[0]);
+            postDataParams.put("customer_id", customerId);
 
             return HTTPUrlConnection.getInstance().load(Config.UPDATE_COLLECTION, postDataParams);
         }
@@ -241,6 +252,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
+                    ((MyCollectionActivity)context).resetTotal(object.getString("total_amount"));
                     collection.get(index).quantity_number=quantityNo;
                     notifyItemChanged(index);
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();

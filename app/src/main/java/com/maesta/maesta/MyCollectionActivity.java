@@ -73,10 +73,8 @@ public class MyCollectionActivity extends BaseActivity {
         }
     }
 
-    public void ResetTotal(int index) {
-        quntity = (collectionList.get(index).quantity_number);
-        price = (collectionList.get(index).price);
-
+    public void resetTotal(String totalAmout) {
+        totalprice.setText(totalAmout);
     }
 
     private void setToolbar() {
