@@ -16,6 +16,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +123,8 @@ public class HomeActivity extends BaseActivity {
         findViewById(R.id.txt_my_order).setOnClickListener(this);
         findViewById(R.id.txt_about_us).setOnClickListener(this);
         findViewById(R.id.txt_contact_us).setOnClickListener(this);
+        findViewById(R.id.my_collection).setOnClickListener(this);
+
         findViewById(R.id.txt_logout).setOnClickListener(this);
         mExpandableListData = ExpandableListDataSource.getData(this);
         mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
@@ -246,6 +250,9 @@ public class HomeActivity extends BaseActivity {
             case R.id.txt_my_order:
                 startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
                 break;
+            case R.id.my_collection:
+                startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
+                break;
             case R.id.txt_logout:
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 handler.postDelayed(new Runnable() {
@@ -357,4 +364,5 @@ public class HomeActivity extends BaseActivity {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_terms), Config.REGULAR);
 
     }
+
 }

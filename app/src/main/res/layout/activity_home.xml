@@ -41,6 +41,14 @@
                     android:layout_toRightOf="@id/btn_toggle"
                     android:src="@drawable/home_logo" />
 
+                <ImageView
+                    android:id="@+id/my_collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/margin_20"
+                    android:paddingRight="@dimen/margin_20"
+                    android:src="@drawable/check" />
             </RelativeLayout>
 
             <android.support.v7.widget.CardView
@@ -58,12 +66,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_10"
                     android:background="@null"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
                     android:drawableRight="@drawable/search_home"
                     android:gravity="center_vertical"
                     android:hint="@string/search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:textColor="@color/textColorPrimary"
                     android:textColorHint="@color/textColorPrimary"
                     android:textSize="@dimen/font_22" />
@@ -144,5 +152,5 @@
         android:layout_gravity="left|start"
         android:background="@color/white"
         android:divider="@null"
-        android:groupIndicator="@null"/>
+        android:groupIndicator="@null" />
 </android.support.v4.widget.DrawerLayout>
