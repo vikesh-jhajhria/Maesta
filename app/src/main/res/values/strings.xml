@@ -125,7 +125,7 @@
     <string name="err_confirm_pass">please enter confirm password</string>
     <string name="logout">Logout</string>
     <string name="logout_message">Do you really want to logout ?</string>
-    <string name="err_quantity">Please fill quantity</string>
+    <string name="err_quantity">Invalid Quantity</string>
     <string name="err_name">Please enter your name.</string>
     <string name="err_number">Please enter your contact number.</string>
     <string name="err_message">Please enter message.</string>

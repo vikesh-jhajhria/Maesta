@@ -199,6 +199,7 @@ public class MyCollectionActivity extends BaseActivity {
                 if (object.getBoolean("status")) {
 
                     startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
+                    finish();
 
                 } else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();

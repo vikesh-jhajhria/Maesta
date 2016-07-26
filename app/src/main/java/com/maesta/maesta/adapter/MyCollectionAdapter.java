@@ -167,7 +167,6 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         int position;
         ViewHolder holder;
 
-
         public updateValidation(ViewHolder holder, int position) {
 
             this.position = position;
@@ -195,7 +194,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
                         if (quantityNo.equalsIgnoreCase(oldQuantity)) {
                             holder.update.setVisibility(View.GONE);
                             break;
-                        } else if (quantityNo.equalsIgnoreCase("0")) {
+                        } else if (quantityNo.equalsIgnoreCase("0")||quantityNo.isEmpty()) {
                             holder.update.setVisibility(View.GONE);
                             break;
                         } else {
