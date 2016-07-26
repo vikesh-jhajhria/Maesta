@@ -84,7 +84,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
-                } else if (et_quantity.length()<=0) {
+                } else if (quantity.length()<=0) {
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;

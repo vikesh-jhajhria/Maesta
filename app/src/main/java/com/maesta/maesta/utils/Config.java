@@ -23,7 +23,7 @@ public class Config {
     public static String UPDATE_COLLECTION = BASEURL+"update_collection";
     public static String REMOVE_COLLECTION = BASEURL+"remove_collection";
     public static String MY_COLLECTION = BASEURL+"my_collection";
-    public static String PLACE_ORDER = BASEURL+"place_order";
+    public static String ORDER_PLACE = BASEURL+"order_place";
     public static String ORDER_HISTORY = BASEURL+"order_history";
     public static String ORDER_HISTORY_DETAIL = BASEURL+"order_history_detail";
     public static String PAGES = BASEURL+"pages";

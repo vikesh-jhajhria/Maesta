@@ -54,8 +54,6 @@
                 android:layout_toRightOf="@+id/img_1"
                 android:text="Rounded sass'n Class series of Maseta italia's Eye Wear Section" />
 
-
-
             <TextView
                 android:textSize="@dimen/font_18"
                 android:textColor="@color/textColorSecondary"
@@ -68,11 +66,12 @@
                 android:layout_toRightOf="@+id/img_1"
                 android:text="Quantity" />
 
-            <TextView
-
+            <EditText
+                android:maxLength="4"
+                android:inputType="number"
                 android:textSize="@dimen/font_18"
                 android:textColor="@color/textColorSecondary"
-                android:id="@+id/txtview_quantity_number"
+                android:id="@+id/et_quantity_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/txtview_quantity"
@@ -84,6 +83,23 @@
                 android:paddingRight="7dp"
                 android:paddingTop="2dp"
                 android:text="20" />
+
+            <TextView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/font_18"
+                android:textColor="@color/white"
+                android:paddingRight="@dimen/margin_5"
+                android:id="@+id/txtview_update"
+                android:paddingLeft="@dimen/margin_5"
+                android:background="@color/redButtonColor"
+                android:layout_toRightOf="@+id/et_quantity_number"
+                android:gravity="center"
+                android:layout_alignTop="@+id/txtview_quantity"
+                android:text="Update"
+                android:layout_alignBottom="@+id/et_quantity_number" />
 
             <TextView
                 android:textColor="@color/colorAccent"

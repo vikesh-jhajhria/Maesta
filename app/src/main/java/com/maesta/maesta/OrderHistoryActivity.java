@@ -1,5 +1,7 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,15 +10,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maesta.maesta.adapter.OrderHistoryAdapter;
 import com.maesta.maesta.adapter.OrderHistoryDetailAdapter;
+import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
+import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.OrderHistoryDetailVO;
 import com.maesta.maesta.vo.OrderHistoryVO;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,12 +35,13 @@ public class OrderHistoryActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<OrderHistoryVO> orderhistory;
     private OrderHistoryAdapter orderAdapter;
+    AppPreferences mPrefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_recycleview);
         {
-
+            mPrefs = AppPreferences.getAppPreferences(OrderHistoryActivity.this);
             recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
             orderhistory = new ArrayList<>();
             OrderHistoryVO collections = new OrderHistoryVO();
@@ -66,6 +76,7 @@ public class OrderHistoryActivity extends BaseActivity {
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(orderAdapter);
+            new OrderHistoryTask().execute();
         }
     }
 
@@ -86,4 +97,48 @@ public class OrderHistoryActivity extends BaseActivity {
 
         return false;
     }
+    class OrderHistoryTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("customer_id", UserId);
+            postDataParams.put("page", "1");
+
+
+            return HTTPUrlConnection.getInstance().load(Config.ORDER_HISTORY, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+
+                    startActivity(new Intent(getApplicationContext(), OrderHistoryDetailActivity.class));
+
+                }
+                else {
+                    Toast.makeText(OrderHistoryActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
     }
