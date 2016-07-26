@@ -46,7 +46,7 @@ public class MyCollectionActivity extends BaseActivity {
     AppPreferences mPrefs;
     TextView totalprice;
     EditText quantity_no;
-    String price, quntity, totalprice_reset,quantityno;
+    String price, quntity, totalprice_reset, quantityno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +98,15 @@ public class MyCollectionActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_place_order:
+
+             /*   if(quntity.equalsIgnoreCase("0")){
+                    Toast.makeText(getApplicationContext(),"Please fill Quantity of product",Toast.LENGTH_LONG).show();
+                    break;
+                }
+                else {*/
                 new PlaceOrderTask().execute();
                 break;
+
 
         }
     }
@@ -202,8 +209,7 @@ public class MyCollectionActivity extends BaseActivity {
 
                     startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
 
-                }
-                else {
+                } else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -219,7 +225,6 @@ public class MyCollectionActivity extends BaseActivity {
         menuInflater.inflate(R.menu.menu_profile, menu);
         return true;
     }
-
 
 
 }
