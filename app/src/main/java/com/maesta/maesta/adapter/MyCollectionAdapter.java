@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +46,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
     Context context;
     AppPreferences mPrefs;
     List<CollectionVO> collection;
+    String quantityNo;
 
     public MyCollectionAdapter(List<CollectionVO> collectionlist, Context context) {
         this.context = context;
@@ -63,13 +68,20 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.quantity.setText(collections.quantity);
         holder.price.setText(collections.price);
 
+        holder.quantityno.addTextChangedListener(new updateValidation(holder, position));
 
         Glide.with(context).load(collections.thumbURL).asBitmap()
                 .placeholder(R.drawable.banner_1).centerCrop().into(holder.productimg);
         holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new RemoveOredrTask().execute(collections.id + "", position + "");
+                new RemoveOrderTask().execute(collections.id + "", position + "");
+            }
+        });
+        holder.update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new UpdateCollectionTask().execute(collections.id + "", position + "");
             }
         });
     }
@@ -80,9 +92,11 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView product_name, quantity, price, quantityno, txtview_remove;
+        TextView product_name, quantity, price, txtview_remove, update;
         ImageView productimg;
+        EditText quantityno;
         CardView product_detail_card;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -91,13 +105,13 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             product_name = (TextView) itemView.findViewById(R.id.txtview_product_name);
             quantity = (TextView) itemView.findViewById(R.id.txtview_quantity);
             price = (TextView) itemView.findViewById(R.id.txt_view_price);
-            quantityno = (TextView) itemView.findViewById(R.id.txtview_quantity_number);
+            quantityno = (EditText) itemView.findViewById(R.id.et_quantity_number);
             txtview_remove = (TextView) itemView.findViewById(R.id.remove_txtview);
-
+            update = (TextView) itemView.findViewById(R.id.txtview_update);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity), Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number), Config.MEDIUM);
+            Utils.setTypeface(context, (EditText) itemView.findViewById(R.id.et_quantity_number), Config.MEDIUM);
             product_detail_card = (CardView) itemView.findViewById(R.id.product_detail_card);
 
 
@@ -105,7 +119,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
     }
 
     /*Remove Order Async Task*/
-    class RemoveOredrTask extends AsyncTask<String, Void, String> {
+    class RemoveOrderTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
         int index;
 
@@ -135,20 +149,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
                 if (object.getBoolean("status")) {
                     collection.remove(index);
                     notifyDataSetChanged();
-                /*totalprice.setText(object.getString("total"));
 
-                JSONArray productArray = object.getJSONArray("data");
-                for (int i = 0; i < productArray.length(); i++) {
-                    CollectionVO collection = new CollectionVO();
-                    collection.product_name=((JSONObject) productArray.get(i)).getString("name");
-                    collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
-                    collection.price = ((JSONObject) productArray.get(i)).getString("price");
-                    collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
-                    collection.quantity=("Quantity");
-                    collectionList.add(collection);
-
-
-                }*/
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
 
                 } else {
@@ -162,4 +163,96 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         }
 
     }
+
+    class updateValidation implements TextWatcher {
+
+        int position;
+        ViewHolder holder;
+
+
+        public updateValidation(ViewHolder holder, int position) {
+
+            this.position = position;
+            this.holder = holder;
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+            switch (holder.quantityno.getId()) {
+
+                case R.id.et_quantity_number:
+                    try {
+                        quantityNo = ((EditText) holder.quantityno).getText().toString().trim();
+                        String oldQuantity = collection.get(position).quantity_number;
+                        if (quantityNo.equalsIgnoreCase(oldQuantity)) {
+                            holder.update.setVisibility(View.GONE);
+                            break;
+                        } else if (quantityNo.equalsIgnoreCase("0")) {
+                            holder.update.setVisibility(View.GONE);
+                            break;
+                        } else {
+                            holder.update.setVisibility(View.VISIBLE);
+
+                            break;
+                        }
+                    }catch (Exception e){
+
+                    }
+            }
+        }
+    }
+
+    class UpdateCollectionTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+        int index;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //((BaseActivity) context).showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            index = Integer.parseInt(params[1]);
+            postDataParams.put("api_key", apikey);
+            postDataParams.put("quantity", quantityNo);
+            postDataParams.put("collection_id", params[0]);
+
+            return HTTPUrlConnection.getInstance().load(Config.UPDATE_COLLECTION, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            //((BaseActivity) context).dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                    collection.get(index).quantity_number=quantityNo;
+                    notifyItemChanged(index);
+                    Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
 }

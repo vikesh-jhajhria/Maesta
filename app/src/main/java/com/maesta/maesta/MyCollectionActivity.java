@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,14 +45,16 @@ public class MyCollectionActivity extends BaseActivity {
     private MyCollectionAdapter collectionAdapter;
     AppPreferences mPrefs;
     TextView totalprice;
-    String price,quntity,totalprice_reset;
+    EditText quantity_no;
+    String price, quntity, totalprice_reset,quantityno;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collection_layout_recycleview);
         {
-            mPrefs = AppPreferences.getAppPreferences(MyCollectionActivity .this);
+            mPrefs = AppPreferences.getAppPreferences(MyCollectionActivity.this);
             recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
             collectionList = new ArrayList<>();
 
@@ -59,20 +64,21 @@ public class MyCollectionActivity extends BaseActivity {
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(collectionAdapter);
-           totalprice=(TextView) findViewById(R.id.txtview_total_price);
+            totalprice = (TextView) findViewById(R.id.txtview_total_price);
             findViewById(R.id.btn_place_order).setOnClickListener(this);
+
 
             new MyCollectionTask().execute();
 
         }
     }
-public void ResetTotal(int index){
-    quntity = (collectionList.get(index).quantity_number);
-    price=(collectionList.get(index).price);
-    
 
+    public void ResetTotal(int index) {
+        quntity = (collectionList.get(index).quantity_number);
+        price = (collectionList.get(index).price);
 
     }
+
     private void setToolbar() {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("My Collection");
@@ -88,30 +94,30 @@ public void ResetTotal(int index){
 
 
     }
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_place_order:
-               new PlaceOrderTask().execute();
+                new PlaceOrderTask().execute();
                 break;
 
         }
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
 
-        if(item.getItemId() == R.id.search){
+        if (item.getItemId() == R.id.search) {
 
             return true;
         }
         return false;
     }
-
-
 
 
     class MyCollectionTask extends AsyncTask<String, Void, String> {
@@ -147,12 +153,12 @@ public void ResetTotal(int index){
                     JSONArray productArray = object.getJSONArray("data");
                     for (int i = 0; i < productArray.length(); i++) {
                         CollectionVO collection = new CollectionVO();
-                        collection.id=((JSONObject)productArray.get(i)).getInt("collection_id");
+                        collection.id = ((JSONObject) productArray.get(i)).getInt("collection_id");
                         collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
                         collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
                         collection.price = ((JSONObject) productArray.get(i)).getString("price");
                         collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
-                        collection.quantity=("Quantity");
+                        collection.quantity = ("Quantity");
                         collectionList.add(collection);
 
                     }
@@ -167,6 +173,7 @@ public void ResetTotal(int index){
 
         }
     }
+
     class PlaceOrderTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
@@ -184,7 +191,7 @@ public void ResetTotal(int index){
             postDataParams.put("api_key", apikey);
             postDataParams.put("customer_id", UserId);
 
-            return HTTPUrlConnection.getInstance().load(Config.MY_COLLECTION, postDataParams);
+            return HTTPUrlConnection.getInstance().load(Config.ORDER_PLACE, postDataParams);
         }
 
         @Override
@@ -194,34 +201,19 @@ public void ResetTotal(int index){
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                   /* totalprice.setText(object.getString("total"));
 
-                    JSONArray productArray = object.getJSONArray("data");
-                    for (int i = 0; i < productArray.length(); i++) {
-                        CollectionVO collection = new CollectionVO();
-                        collection.id=((JSONObject)productArray.get(i)).getInt("collection_id");
-                        collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
-                        collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
-                        collection.price = ((JSONObject) productArray.get(i)).getString("price");
-                        collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
-                        collection.quantity=("Quantity");
-                        collectionList.add(collection);
+                    startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
 
-                    }*/
-                    startActivity(new Intent(getApplicationContext(),OrderHistoryActivity.class));
-
-                } else {
+                }
+                else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
         }
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -229,6 +221,7 @@ public void ResetTotal(int index){
         menuInflater.inflate(R.menu.menu_profile, menu);
         return true;
     }
+
 
 
 }
