@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.maesta.maesta.AboutusActivity;
 import com.maesta.maesta.BaseActivity;
 import com.maesta.maesta.MyCollectionActivity;
 import com.maesta.maesta.R;
@@ -150,7 +151,10 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
 
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin((BaseActivity)context);
+                }
+                else {
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -246,7 +250,10 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
                     collection.get(index).quantity_number=quantityNo;
                     notifyItemChanged(index);
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin((BaseActivity)context);
+                }
+                else {
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

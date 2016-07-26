@@ -109,7 +109,9 @@ public class OrderHistoryDetailActivity extends BaseActivity {
 
                     }
                 orderAdapter.notifyDataSetChanged();
-                } else {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(OrderHistoryDetailActivity.this);
+                }else {
                     Toast.makeText(OrderHistoryDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

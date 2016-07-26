@@ -83,6 +83,8 @@ public class TermConditionActivity extends BaseActivity {
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
                     ((TextView) findViewById(R.id.txt_terms)).setText(Html.fromHtml(data.getString("description")));
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(TermConditionActivity.this);
                 } else {
                     Toast.makeText(TermConditionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }

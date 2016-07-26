@@ -12,6 +12,7 @@ import com.maesta.maesta.adapter.OrderHistoryAdapter;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Order;
 
 import org.json.JSONArray;
@@ -106,6 +107,8 @@ public class OrderHistoryActivity extends BaseActivity {
                         orderList.add(order);
                     }
                     orderAdapter.notifyDataSetChanged();
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(OrderHistoryActivity.this);
                 }
                 else {
                     Toast.makeText(OrderHistoryActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();

@@ -246,6 +246,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                                     startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
                                     finish();
                                 }
+
                                 else {
                                     new UpdateCollectionTask().execute();
                                 }
@@ -255,7 +256,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     }
 
 
-                } else {
+                }
+                else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProductDetailActivity.this);
+                }else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -299,7 +303,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
                     finish();
 
-                } else {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProductDetailActivity.this);
+                }else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -344,7 +350,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
                     finish();
-                } else {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProductDetailActivity.this);
+                }else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
