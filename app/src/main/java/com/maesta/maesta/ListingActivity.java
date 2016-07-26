@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.maesta.maesta.adapter.ListingAdapter;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
+import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.ListingVO;
 
 import org.json.JSONException;
@@ -124,7 +125,10 @@ public class ListingActivity extends BaseActivity {
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
 
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ListingActivity.this);
+                }
+                else {
                     Toast.makeText(ListingActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

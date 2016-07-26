@@ -134,7 +134,10 @@ public class ContactUsActivity extends BaseActivity {
                     ((EditText)findViewById(R.id.et_contact)).setText("");
                     ((EditText)findViewById(R.id.et_msg)).setText("");
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ContactUsActivity.this);
+                }
+                else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

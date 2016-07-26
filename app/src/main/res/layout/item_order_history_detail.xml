@@ -8,24 +8,26 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginRight="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
         app:cardBackgroundColor="@color/white"
-
         app:cardUseCompatPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
         <RelativeLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
 
             <ImageView
-                android:layout_marginLeft="10dp"
                 android:id="@+id/img_1"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/maestro_logo" />
 
             <TextView
@@ -34,31 +36,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:textSize="@dimen/font_22"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/colorPrimaryDark"
                 android:layout_toRightOf="@+id/img_1"
-                android:text="Rounded sass'n Class series of Maseta italia's Eye Wear Section" />
+                android:text="Rounded sass'n Class series of Maseta italia's Eye Wear Section"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/font_22" />
 
 
             <TextView
                 android:id="@+id/txtview_quantity"
                 android:layout_width="wrap_content"
-                android:textColor="@color/textColorSecondary"
-
                 android:layout_height="wrap_content"
+
                 android:layout_below="@+id/txtview_product_name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/img_1"
-                android:text="Quantity" />
+                android:text="Quantity"
+                android:textColor="@color/textColorSecondary" />
 
             <TextView
                 android:id="@+id/txtview_quantity_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
                 android:layout_alignTop="@+id/txtview_quantity"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/txtview_quantity"
@@ -67,20 +68,21 @@
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp"
                 android:paddingTop="2dp"
-                android:text="20" />
+                android:text="20"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:textColor="@color/colorAccent"
                 android:id="@+id/txt_view_price"
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtview_quantity"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_toRightOf="@+id/img_1"
-                android:text="Rs 2000.00" />
+                android:text="Rs 2000.00"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

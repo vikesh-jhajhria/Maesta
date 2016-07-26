@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.maesta.maesta.adapter.MyCollectionAdapter;
 import com.maesta.maesta.adapter.OrderHistoryDetailAdapter;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
@@ -15,6 +16,7 @@ import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Collection;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,17 +40,15 @@ public class OrderHistoryDetailActivity extends BaseActivity {
         setContentView(R.layout.layout_recycleview);
         orderId = getIntent().getStringExtra("ID");
         mPrefs = AppPreferences.getAppPreferences(OrderHistoryDetailActivity.this);
-
+        setToolbar();
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         orderdetail = new ArrayList<>();
-
-        setToolbar();
         orderAdapter = new OrderHistoryDetailAdapter(orderdetail, this);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(orderAdapter);
 
-        if(Utils.isNetworkConnected(this,true)) {
+        if (Utils.isNetworkConnected(this, true)) {
             new OrderHistoryDetailTask().execute(orderId);
         }
     }
@@ -84,12 +84,9 @@ public class OrderHistoryDetailActivity extends BaseActivity {
         protected String doInBackground(String... params) {
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
-            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
             postDataParams.put("order_id", params[0]);
             postDataParams.put("page", "1");
-
-
             return HTTPUrlConnection.getInstance().load(Config.ORDER_HISTORY_DETAIL, postDataParams);
         }
 
@@ -100,8 +97,21 @@ public class OrderHistoryDetailActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
+                    JSONArray orderArray = object.getJSONArray("data");
+                    for (int i = 0; i < orderArray.length(); i++) {
+                        Collection collection = new Collection();
+                        collection.product_name = ((JSONObject) orderArray.get(i)).getString("product_name");
+                        collection.quantity_number = ((JSONObject) orderArray.get(i)).getString("quantity");
+                        collection.price = ((JSONObject) orderArray.get(i)).getString("amount");
+                        collection.thumbURL = ((JSONObject) orderArray.get(i)).getString("image");
+                        collection.quantity = ("Quantity");
+                        orderdetail.add(collection);
 
-                } else {
+                    }
+                orderAdapter.notifyDataSetChanged();
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(OrderHistoryDetailActivity.this);
+                }else {
                     Toast.makeText(OrderHistoryDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

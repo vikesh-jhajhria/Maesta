@@ -85,7 +85,10 @@ public class AboutusActivity extends BaseActivity {
                     ((TextView) findViewById(R.id.txt_about)).setText(Html.fromHtml(data.getString("description")));
                     Glide.with(getApplicationContext()).load(data.getString("image")).asBitmap()
                             .placeholder(R.drawable.banner_1).fitCenter().into((ImageView) findViewById(R.id.img_about));
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(AboutusActivity.this);
+                }
+                else {
                     Toast.makeText(AboutusActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

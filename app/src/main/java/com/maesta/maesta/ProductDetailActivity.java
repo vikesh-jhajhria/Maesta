@@ -50,10 +50,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     AppPreferences mPrefs;
     private int ProductId;
 
-    String quantity, collectionId,oldquantity;
+    String quantity, collectionId, oldquantity;
     TextView txtview_product_name, productmodel_txtview, txtview_price, txtview_desc, txtview_price_detail, txtview_quantity, txtview_desc_detail;
     EditText et_quantity;
-    String imageUrl = "";
+    String imageUrl = "",newQuantity="";
     private List<RadioButton> pagerIndicatorList;
 
     @Override
@@ -131,7 +131,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.btn_add_collection:
                 quantity = ((EditText) findViewById(R.id.et_quantity)).getText().toString().trim();
-                if (quantity.isEmpty()) {
+                if (quantity.isEmpty()||quantity.equalsIgnoreCase("0")) {
                     ((EditText) findViewById(R.id.et_quantity)).setError(getString(R.string.err_quantity));
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
@@ -141,7 +141,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     break;
                 } else {
                     new AddToCollectionTask().execute();
-                    finish();
+
                 }
         }
     }
@@ -175,15 +175,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             onBackPressed();
             return true;
         }
-        if (item.getItemId() == R.id.search) {
-
-            return true;
-        }
-        if (item.getItemId() == R.id.check) {
-
-            return true;
-        }
-        return false;
+        return true;
     }
 
 
@@ -216,34 +208,48 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject productData = object.getJSONObject("data");
-                        txtview_product_name.setText(productData.getString("name"));
-                        productmodel_txtview.setText(productData.getString("model"));
-                        txtview_desc_detail.setText(productData.getString("description"));
-                        txtview_price.setText(productData.getString("price"));
-                        imageUrl = productData.getString("image");
+                    txtview_product_name.setText(productData.getString("name"));
+                    productmodel_txtview.setText(productData.getString("model"));
+                    txtview_desc_detail.setText(productData.getString("description"));
+                    txtview_price.setText(productData.getString("price"));
+                    imageUrl = productData.getString("image");
 
-                        JSONObject galleryObject = productData.getJSONObject("gallery");
-                        if (galleryObject.getBoolean("status")) {
-                            JSONArray galleryArray = galleryObject.getJSONArray("data");
-                            for (int i = 0; i < galleryArray.length(); i++) {
-                                Banner banner = new Banner();
-                                banner.url = galleryArray.getString(i);
-                                productImageList.add(banner);
-                            }
-                            //productImageAdapter.notifyDataSetChanged();
-                            prepareBanner();
+                    JSONObject galleryObject = productData.getJSONObject("gallery");
+                    if (galleryObject.getBoolean("status")) {
+                        JSONArray galleryArray = galleryObject.getJSONArray("data");
+                        for (int i = 0; i < galleryArray.length(); i++) {
+                            Banner banner = new Banner();
+                            banner.url = galleryArray.getString(i);
+                            productImageList.add(banner);
                         }
+                        //productImageAdapter.notifyDataSetChanged();
+                        prepareBanner();
+                    }
                     JSONObject oldCollection = object.getJSONObject("collection");
                     if (oldCollection.getBoolean("status")) {
-                        JSONObject collectionData = oldCollection.getJSONObject("data");
+                          JSONObject collectionData = oldCollection.getJSONObject("data");
                         collectionId = collectionData.getString("id");
-                     et_quantity.setText(collectionData.getString("quantity"));
-                              oldquantity=collectionData.getString("quantity");
+                        et_quantity.setText(collectionData.getString("quantity"));
+                        final String oldQuantity=collectionData.getString("quantity");
+
+
                         ((Button) findViewById(R.id.btn_add_collection)).setText("Update Collection");
                         ((Button) findViewById(R.id.btn_add_collection)).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                new UpdateCollectionTask().execute();
+                                newQuantity=et_quantity.getText().toString().trim();
+                                if(newQuantity.isEmpty()|| newQuantity.equalsIgnoreCase("0")){
+                                    et_quantity.setError("Invalid Quantity");
+                                    et_quantity.requestFocus();
+                                }else if((oldQuantity).equalsIgnoreCase(newQuantity))
+                                {
+                                    startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
+                                    finish();
+                                }
+
+                                else {
+                                    new UpdateCollectionTask().execute();
+                                }
                             }
                         });
 
@@ -251,7 +257,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
 
                 }
-                else {
+                else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProductDetailActivity.this);
+                }else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -293,8 +301,11 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 if (object.getBoolean("status")) {
 
                     startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
+                    finish();
 
-                } else {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProductDetailActivity.this);
+                }else {
                     Toast.makeText(ProductDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -324,7 +335,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             postDataParams.put("api_key", apikey);
             postDataParams.put("customer_id", UserId);
             postDataParams.put("collection_id", collectionId);
-            postDataParams.put("quantity", oldquantity);
+            postDataParams.put("quantity",newQuantity);
             return HTTPUrlConnection.getInstance().load(Config.UPDATE_COLLECTION, postDataParams);
         }
 
@@ -338,8 +349,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 if (object.getBoolean("status")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
-
-                } else {
+                    finish();
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProductDetailActivity.this);
+                }else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -350,11 +363,4 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_home, menu);
-
-        return true;
-    }
 }

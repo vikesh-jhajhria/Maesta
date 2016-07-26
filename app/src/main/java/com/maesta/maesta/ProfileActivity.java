@@ -118,6 +118,8 @@ public class ProfileActivity extends BaseActivity
                     target.setText(productData.getString("remaining_target"));
 
 
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ProfileActivity.this);
                 } else {
                     Toast.makeText(ProfileActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }

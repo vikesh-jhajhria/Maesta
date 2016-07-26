@@ -159,7 +159,10 @@ public class MyCollectionActivity extends BaseActivity {
 
                     }
 
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(MyCollectionActivity.this);
+                }
+                else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -199,8 +202,12 @@ public class MyCollectionActivity extends BaseActivity {
                 if (object.getBoolean("status")) {
 
                     startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
+                    finish();
 
-                } else {
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(MyCollectionActivity.this);
+                }
+                else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
