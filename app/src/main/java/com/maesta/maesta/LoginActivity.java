@@ -51,7 +51,6 @@ public class LoginActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.txt_forgot_pass:
                 startActivity(new Intent(this, ForgetPasswordActivity.class));
-                finish();
                 break;
             case R.id.btn_login:
                 username = ((EditText) findViewById(R.id.txt_username)).getText().toString().trim();

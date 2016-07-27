@@ -56,7 +56,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                     ((EditText) findViewById(R.id.txt_forget_username)).requestFocus();
                 }
                    else {
-                   new ForgetPasswordTask().execute();
+                   new ForgetPasswordTask().execute(email);
                 }
 
             }
@@ -75,13 +75,11 @@ public class ForgetPasswordActivity extends BaseActivity {
         @Override
         protected String doInBackground(String... params) {
             postDataParams = new HashMap<String, String>();
-            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
-            String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
-            postDataParams.put("email_address", email);
-            postDataParams.put("api_key", apikey);
-            postDataParams.put("customer_id", UserId);
 
-            return HTTPUrlConnection.getInstance().load(Config.LOGIN, postDataParams);
+            postDataParams.put("email_address", params[0]);
+
+
+            return HTTPUrlConnection.getInstance().load(Config.FORGOT_PASSWORD, postDataParams);
         }
 
         @Override
@@ -92,8 +90,11 @@ public class ForgetPasswordActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
+                    AppPreferences pref = AppPreferences.getAppPreferences(getApplicationContext());
+                    pref.putStringValue(AppPreferences.USER_ID, data.getString("id"));
+                    pref.putStringValue(AppPreferences.API_KEY, data.getString("api_key"));
                     startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
-                    finishAffinity();
+                    finish();
                 }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(ForgetPasswordActivity.this);
                 }
