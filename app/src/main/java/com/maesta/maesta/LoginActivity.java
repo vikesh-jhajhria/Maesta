@@ -172,8 +172,6 @@ public class LoginActivity extends BaseActivity {
 
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     finishAffinity();
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
-                    Utils.resetLogin(LoginActivity.this);
                 }
                 else {
                     Toast.makeText(LoginActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
