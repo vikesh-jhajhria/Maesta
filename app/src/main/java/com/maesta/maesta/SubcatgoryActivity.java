@@ -31,6 +31,7 @@ public class SubcatgoryActivity extends BaseActivity {
     private List<SubCategoryVO> subcat;
     private SubCategoryAdapter subcategoryAdapter;
     AppPreferences mPrefs;
+    private int categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,8 @@ public class SubcatgoryActivity extends BaseActivity {
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(subcategoryAdapter);
             new SubCategoryTask().execute();
+            categoryId = getIntent().getIntExtra("categoryId", 0);
+            new SubCategoryTask().execute(categoryId + "");
         }
     }
 
@@ -82,6 +85,8 @@ public class SubcatgoryActivity extends BaseActivity {
             String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
             postDataParams.put("customer_id", UserId);
+            postDataParams.put("category_id", params[0]);
+            postDataParams.put("page", "1");
 
 
             return HTTPUrlConnection.getInstance().load(Config.CATEGORY, postDataParams);
@@ -94,7 +99,7 @@ public class SubcatgoryActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    JSONObject data = object.getJSONObject("data");
+                 /*   JSONObject data = object.getJSONObject("data");*/
 
                     startActivity(new Intent(getApplicationContext(), ListingActivity.class));
                     finishAffinity();
