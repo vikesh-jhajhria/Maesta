@@ -34,5 +34,6 @@ public class Config {
     public static String CHANGE_PASSWORD = BASEURL+"change_password";
     public static String FORGOT_PASSWORD = BASEURL+"forgot_password";
     public static String RESET_PASSWORD = BASEURL+"reset_password";
+    public static String VERIFY_CODE = BASEURL+"verify_code";
 
 }

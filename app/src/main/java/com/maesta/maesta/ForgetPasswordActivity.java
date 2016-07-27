@@ -27,6 +27,7 @@ import java.util.HashMap;
 public class ForgetPasswordActivity extends BaseActivity {
     String email;
     AppPreferences mPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +55,11 @@ public class ForgetPasswordActivity extends BaseActivity {
                 if (((EditText) findViewById(R.id.txt_forget_username)).getText().toString().trim().isEmpty()) {
                     ((TextInputLayout) findViewById(R.id.forget_username_input)).setError(getString(R.string.err_login_name));
                     ((EditText) findViewById(R.id.txt_forget_username)).requestFocus();
-                }
-                   else {
-                   new ForgetPasswordTask().execute(email);
+                } else if (!Utils.isEmailValid(email)) {
+                    ((TextInputLayout) findViewById(R.id.forget_username_input)).setError(getString(R.string.err_invalid_email));
+                    ((EditText) findViewById(R.id.txt_forget_username)).requestFocus();
+                } else if (Utils.isNetworkConnected(this, true)) {
+                    new ForgetPasswordTask().execute(email);
                 }
 
             }
@@ -90,15 +93,13 @@ public class ForgetPasswordActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
-                    AppPreferences pref = AppPreferences.getAppPreferences(getApplicationContext());
-                    pref.putStringValue(AppPreferences.USER_ID, data.getString("id"));
-                    pref.putStringValue(AppPreferences.API_KEY, data.getString("api_key"));
-                    startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    Toast.makeText(ForgetPasswordActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getApplicationContext(),
+                            ChangePasswordActivity.class)
+                            .putExtra("API_KEY", data.getString("api_key"))
+                            .putExtra("ID", data.getString("id")));
                     finish();
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
-                    Utils.resetLogin(ForgetPasswordActivity.this);
-                }
-                else {
+                } else {
                     Toast.makeText(ForgetPasswordActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -110,15 +111,14 @@ public class ForgetPasswordActivity extends BaseActivity {
     }
 
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
 
-        public boolean onOptionsItemSelected (MenuItem item){
-                    if (item.getItemId() == android.R.id.home) {
-                        onBackPressed();
-                        return true;
-                    }
-
-                    return false;
-                }
-            }
+        return false;
+    }
+}
 
 
