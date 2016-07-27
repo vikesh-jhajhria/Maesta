@@ -322,7 +322,7 @@ TextView user_name;
                         JSONArray productArray = productData.getJSONArray("data");
                         for (int i = 0; i < productArray.length(); i++) {
                             Product product = new Product();
-                            product.id = ((JSONObject) productArray.get(i)).getInt("id");
+                            product.id = ((JSONObject) productArray.get(i)).getString("id");
                             product.price = ((JSONObject) productArray.get(i)).getString("price");
                             product.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
                             product.title = ((JSONObject) productArray.get(i)).getString("name");
@@ -336,7 +336,7 @@ TextView user_name;
                         JSONArray categoryArray = categoryData.getJSONArray("data");
                         for (int i = 0; i < categoryArray.length(); i++) {
                             Product product = new Product();
-                            product.id = ((JSONObject) categoryArray.get(i)).getInt("id");
+                            product.id = ((JSONObject) categoryArray.get(i)).getString("id");
                             product.thumbURL = ((JSONObject) categoryArray.get(i)).getString("image");
                             product.title = ((JSONObject) categoryArray.get(i)).getString("name");
                             categoryList.add(product);

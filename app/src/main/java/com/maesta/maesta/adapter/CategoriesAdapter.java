@@ -25,6 +25,7 @@ import java.util.ArrayList;
  */
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ProductHolder>{
     Context context;
+    String categoryId;
     ArrayList<Product> list;
 
     public CategoriesAdapter(Context context, ArrayList<Product> list) {
@@ -44,13 +45,16 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
     }
 
     @Override
-    public void onBindViewHolder(ProductHolder holder, int position) {
+    public void onBindViewHolder(ProductHolder holder, final int position) {
         holder.title.setText(list.get(position).title);
+        categoryId=(list.get(position).id);
         holder.category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SubcatgoryActivity.class);
+                intent.putExtra(categoryId,0);
                 context.startActivity(intent);
+
             }
         });
         Glide.with(context).load(list.get(position).thumbURL).asBitmap()
