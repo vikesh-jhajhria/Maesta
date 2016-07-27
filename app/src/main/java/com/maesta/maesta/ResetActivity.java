@@ -1,14 +1,12 @@
 package com.maesta.maesta;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,28 +24,33 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class ChangePasswordActivity extends BaseActivity {
-    Context context = ChangePasswordActivity.this;
-    String newpass, confirmpass, verification;
+public class ResetActivity extends BaseActivity {
+    String newpass, confirmpass;
     AppPreferences mPrefs;
+    String apiKey,userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_change_password);
-        mPrefs = AppPreferences.getAppPreferences(ChangePasswordActivity.this);
+        setContentView(R.layout.activity_reset_password);
+        mPrefs = AppPreferences.getAppPreferences(ResetActivity.this);
         setToolbar();
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            apiKey = bundle.getString("API_KEY", "");
+            userId = bundle.getString("ID", "");
+
+        }
+
         applyFont();
-
-        ((Button) findViewById(R.id.btn_mobile_change)).setOnClickListener(this);
-
+        findViewById(R.id.btn_done).setOnClickListener(this);
+        findViewById(R.id.password_show).setOnClickListener(this);
     }
 
-
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_mobile_change) {
+        if (v.getId() == R.id.btn_done) {
+            newpass = ((EditText) findViewById(R.id.et_new_pass)).getText().toString().trim();
             if (((EditText) findViewById(R.id.et_new_pass)).getText().toString().trim().isEmpty()) {
                 ((TextInputLayout) findViewById(R.id.new_pass_input)).setError(getString(R.string.err_new_pass));
                 ((EditText) findViewById(R.id.et_new_pass)).requestFocus();
@@ -61,30 +64,45 @@ public class ChangePasswordActivity extends BaseActivity {
             } else if (((EditText) findViewById(R.id.et_confirm_pass)).getText().toString().trim().length() < 6) {
                 ((TextInputLayout) findViewById(R.id.confirm_pass_input)).setError(getString(R.string.password_length_error));
                 ((EditText) findViewById(R.id.et_confirm_pass)).requestFocus();
-            } else if (((EditText) findViewById(R.id.et_verification_code_pass)).getText().toString().trim().isEmpty()) {
-                ((TextInputLayout) findViewById(R.id.verification_input)).setError(getString(R.string.password_length_error));
-                ((EditText) findViewById(R.id.et_verification_code_pass)).requestFocus();
+            }
+            else if (!((EditText) findViewById(R.id.et_confirm_pass)).getText().toString().trim().matches(newpass)) {
+                ((TextInputLayout) findViewById(R.id.confirm_pass_input)).setError(getString(R.string.password_match_error));
+                ((EditText) findViewById(R.id.et_confirm_pass)).requestFocus();
             } else {
                 if (Utils.isNetworkConnected(getApplicationContext(), true)) {
                     newpass = ((EditText) findViewById(R.id.et_new_pass)).getText().toString().trim();
                     confirmpass = ((EditText) findViewById(R.id.et_confirm_pass)).getText().toString().trim();
-                    verification = ((EditText) findViewById(R.id.et_verification_code_pass)).getText().toString().trim();
-                    new ChangePasswordTask().execute(newpass, confirmpass, verification);
+
+                    new ResetPasswordTask().execute(newpass, confirmpass);
                 }
 
+            }
+        }
+        if (v.getId() == R.id.password_show) {
+            if (((EditText) findViewById(R.id.et_new_pass)).getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                ((TextView) findViewById(R.id.password_show)).setText("HIDE");
+                ((EditText) findViewById(R.id.et_new_pass)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                ((EditText) findViewById(R.id.et_new_pass)).setSelection(((EditText) findViewById(R.id.et_new_pass)).length());
+
+            } else {
+                ((TextView) findViewById(R.id.password_show)).setText("SHOW");
+                ((EditText) findViewById(R.id.et_new_pass)).setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                ((EditText) findViewById(R.id.et_new_pass)).setSelection(((EditText) findViewById(R.id.et_new_pass)).length());
             }
         }
     }
 
     private void applyFont() {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.et_new_pass), Config.REGULAR);
-        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.et_verification_code_pass), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.et_confirm_pass), Config.REGULAR);
-        Utils.setTypeface(getApplicationContext(), (Button) findViewById(R.id.btn_mobile_change), Config.BOLD);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.password_show), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_almost_done), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_secure_acc), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (Button) findViewById(R.id.btn_done), Config.BOLD);
 
     }
 
-    class ChangePasswordTask extends AsyncTask<String, Void, String> {
+    class ResetPasswordTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
         @Override
@@ -100,7 +118,6 @@ public class ChangePasswordActivity extends BaseActivity {
             postDataParams.put("customer_id", getIntent().getStringExtra("ID"));
             postDataParams.put("new_password", params[0]);
             postDataParams.put("confirm_password", params[1]);
-            postDataParams.put("verification_code", params[2]);
             return HTTPUrlConnection.getInstance().load(Config.RESET_PASSWORD, postDataParams);
         }
 
@@ -111,23 +128,13 @@ public class ChangePasswordActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    Toast.makeText(ChangePasswordActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
-                    JSONObject data = object.getJSONObject("data");
-                    AppPreferences pref = AppPreferences.getAppPreferences(getApplicationContext());
-                    pref.putStringValue(AppPreferences.USER_ID, data.getString("id"));
-                    pref.putStringValue(AppPreferences.USER_NAME, data.getString("name"));
-                    pref.putStringValue(AppPreferences.USER_EMAIL, data.getString("email"));
-                    pref.putStringValue(AppPreferences.USER_PHONE, data.getString("mobile"));
-                    pref.putStringValue(AppPreferences.ADDRESS, data.getString("address"));
-                    pref.putStringValue(AppPreferences.API_KEY, data.getString("api_key"));
-                    pref.putStringValue(AppPreferences.CURRENT_CATEGORY_LEVEL, data.getString("current_category_level"));
-                    pref.putStringValue(AppPreferences.NEXT_CATEGORY_LEVEL, data.getString("next_category_level"));
-                    pref.putStringValue(AppPreferences.REMAINING_TARGET, data.getString("remaining_target"));
+                    Toast.makeText(ResetActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+
 
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     finishAffinity();
-                }else {
-                    Toast.makeText(ChangePasswordActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ResetActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -153,5 +160,4 @@ public class ChangePasswordActivity extends BaseActivity {
 
         return false;
     }
-
 }

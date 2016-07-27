@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maesta.maesta">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,8 +23,7 @@
         <activity
             android:name=".ProductDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-              />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" />
@@ -33,8 +33,7 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".MyCollectionActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity android:name=".OrderHistoryDetailActivity" />
         <activity
             android:name=".OrderHistoryActivity"
@@ -60,10 +59,11 @@
         <activity
             android:name=".TermConditionActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ChangePasswordActivity"
-            android:label="@string/title_activity_change_password"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".ResetActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".VerifyActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
