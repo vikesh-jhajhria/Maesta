@@ -29,7 +29,7 @@ import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
-
+import com.maesta.maesta.vo.Collection;
 import com.maesta.maesta.vo.Product;
 
 import org.json.JSONArray;

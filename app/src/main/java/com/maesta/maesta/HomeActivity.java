@@ -340,8 +340,6 @@ TextView user_name;
                             product.thumbURL = ((JSONObject) categoryArray.get(i)).getString("image");
                             product.title = ((JSONObject) categoryArray.get(i)).getString("name");
                             categoryList.add(product);
-
-
                         }
                     }
                     newArrivalAdapter.notifyDataSetChanged();
