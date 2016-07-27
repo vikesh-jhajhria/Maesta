@@ -75,7 +75,8 @@ public class HomeActivity extends BaseActivity {
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
     private List<RadioButton> pagerIndicatorList;
-TextView user_name;
+    TextView user_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,7 @@ TextView user_name;
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
 
                     return true;
@@ -118,7 +119,7 @@ TextView user_name;
         View listHeaderView = inflater.inflate(R.layout.layout_nav_header, null, false);
         mExpandableListView.addHeaderView(listHeaderView);
         findViewById(R.id.img_user).setOnClickListener(this);
-        user_name=(TextView)findViewById(R.id.txt_username) ;
+        user_name = (TextView) findViewById(R.id.txt_username);
         View listFooterView = inflater.inflate(R.layout.layout_nav_footer, null, false);
         mExpandableListView.addFooterView(listFooterView);
         findViewById(R.id.txt_my_profile).setOnClickListener(this);
@@ -322,7 +323,7 @@ TextView user_name;
                         JSONArray productArray = productData.getJSONArray("data");
                         for (int i = 0; i < productArray.length(); i++) {
                             Product product = new Product();
-                            product.id = ((JSONObject) productArray.get(i)).getString("id");
+                            product.id = ((JSONObject) productArray.get(i)).getInt("id");
                             product.price = ((JSONObject) productArray.get(i)).getString("price");
                             product.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
                             product.title = ((JSONObject) productArray.get(i)).getString("name");
@@ -336,9 +337,12 @@ TextView user_name;
                         JSONArray categoryArray = categoryData.getJSONArray("data");
                         for (int i = 0; i < categoryArray.length(); i++) {
                             Product product = new Product();
-                            product.id = ((JSONObject) categoryArray.get(i)).getString("id");
+                            product.id = ((JSONObject) categoryArray.get(i)).getInt("id");
                             product.thumbURL = ((JSONObject) categoryArray.get(i)).getString("image");
+                            product.iconURL = ((JSONObject) categoryArray.get(i)).getString("icon");
                             product.title = ((JSONObject) categoryArray.get(i)).getString("name");
+                            product.haveSubCategories = (((JSONObject) categoryArray.get(i))
+                                    .getJSONArray("sub_category")).length() > 0;
                             categoryList.add(product);
                         }
                     }
@@ -353,8 +357,6 @@ TextView user_name;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 

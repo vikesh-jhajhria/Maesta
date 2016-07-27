@@ -15,7 +15,7 @@ import com.maesta.maesta.R;
 
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
-import com.maesta.maesta.vo.SubCategoryVO;
+import com.maesta.maesta.vo.Product;
 
 import java.util.List;
 
@@ -23,54 +23,47 @@ import java.util.List;
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.ViewHolder> {
     Context context;
 
-    List<SubCategoryVO> subcategory_list;
-    public SubCategoryAdapter(List<SubCategoryVO>   subcat, Context context){
-        this.context=context;
-        this.subcategory_list=subcat;
+    List<Product> subcategory_list;
+
+    public SubCategoryAdapter(List<Product> subcat, Context context) {
+        this.context = context;
+        this.subcategory_list = subcat;
     }
+
     @Override
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_product_subcategary,parent,false);
-    return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_product_subcategary, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final SubCategoryVO subcategory = subcategory_list.get(position);
-        holder.productName.setText(subcategory.productName);
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(context, ListingActivity.class);
-        intent.putExtra("ID",subcategory_list.get(position).id);
-        context.startActivity(intent);
+        final Product subcategory = subcategory_list.get(position);
+        holder.productName.setText(subcategory.title);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(context, ListingActivity.class);
+                //intent.putExtra("ID", subcategory_list.get(position).id);
+               // context.startActivity(intent);
+            }
+        });
     }
-});
 
-
-    }
     @Override
     public int getItemCount() {
-        return  subcategory_list.size();
+        return subcategory_list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView   productName;
-RelativeLayout relativeLayout;
-       // CardView product_detail_card;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView productName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            productName    =   (TextView) itemView.findViewById(R.id.txt_product_name);
-            relativeLayout=(RelativeLayout)itemView.findViewById(R.id.rl1);
+            productName = (TextView) itemView.findViewById(R.id.txt_product_name);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_product_name), Config.MEDIUM);
 
-
-            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
-
-
-
         }
-}
+    }
 
 }
