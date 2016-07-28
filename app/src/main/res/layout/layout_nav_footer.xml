@@ -4,7 +4,81 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:background="@color/hLineColor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_20"
+            android:src="@drawable/my_profile" />
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/profile_ripple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/img_profile"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/margin_25"
+            android:layout_marginTop="@dimen/margin_5">
+
+
+            <TextView
+                android:id="@+id/txt_my_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:text="@string/my_profile"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_22" />
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+        <ImageView
+            android:id="@+id/img_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_profile"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_5"
+            android:src="@drawable/my_order"/>
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/order_ripple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/img_order"
+            android:layout_below="@+id/profile_ripple"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/txt_my_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:text="@string/my_order"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_22" />
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+    </RelativeLayout>
+
     <View
+
+        android:layout_marginTop="@dimen/margin_5"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/hLineColor" />
@@ -14,47 +88,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/txt_my_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_5"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_5"
-            android:text="@string/my_profile"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_22" />
-    </com.balysv.materialripple.MaterialRippleLayout>
-
-    <com.balysv.materialripple.MaterialRippleLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/txt_my_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_5"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_5"
-            android:text="@string/my_order"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_22" />
-    </com.balysv.materialripple.MaterialRippleLayout>
-
-    <com.balysv.materialripple.MaterialRippleLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
             android:id="@+id/txt_about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_5"
+            android:paddingBottom="@dimen/margin_10"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_5"
+            android:paddingTop="@dimen/margin_15"
             android:text="@string/aboutus"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
@@ -68,10 +108,10 @@
             android:id="@+id/txt_contact_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_5"
+            android:paddingBottom="@dimen/margin_10"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_5"
+            android:paddingTop="@dimen/margin_10"
             android:text="@string/contact_us"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
@@ -85,14 +125,15 @@
             android:id="@+id/txt_terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_5"
+            android:paddingBottom="@dimen/margin_10"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_5"
+            android:paddingTop="@dimen/margin_10"
             android:text="@string/terms_condition"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
     </com.balysv.materialripple.MaterialRippleLayout>
+
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -101,10 +142,10 @@
             android:id="@+id/txt_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_5"
+            android:paddingBottom="@dimen/margin_20"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_5"
+            android:paddingTop="@dimen/margin_10"
             android:text="@string/logout"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />

@@ -17,7 +17,7 @@ public class Config {
     public static String BASEURL = "http://demo.vertexplus.com/maesta/webservice/";
     public static String HOME = BASEURL+"home";
     public static String CATEGORY = BASEURL+"category";
-    public static String PRODUCT = BASEURL+"product";
+    public static String PRODUCT = BASEURL+"products";
     public static String PRODUCT_DETAIL = BASEURL+"product_detail";
     public static String ADD_TO_COLLECTION = BASEURL+"add_to_collection";
     public static String UPDATE_COLLECTION = BASEURL+"update_collection";

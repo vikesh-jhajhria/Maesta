@@ -94,7 +94,7 @@ public class MyCollectionActivity extends BaseActivity {
             case R.id.btn_place_order:
                 if(Utils.isNetworkConnected(this,true) && collectionList.size() > 0) {
                     new PlaceOrderTask().execute();
-                    finish();
+
                 }
                 break;
 

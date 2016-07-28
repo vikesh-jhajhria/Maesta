@@ -17,223 +17,220 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-
             app:titleTextColor="@color/white" />
 
     </android.support.design.widget.AppBarLayout>
+
     <ScrollView
-        android:layout_marginTop="?actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-android:paddingLeft="@dimen/margin_10"
-android:paddingRight="@dimen/margin_10"
+        android:layout_marginTop="?actionBarSize">
 
-
-        android:orientation="vertical">
-
-
-
-
-
-
-        <android.support.v7.widget.CardView
-            android:layout_marginTop="@dimen/margin_10"
-
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_2"
-            app:cardUseCompatPadding="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:orientation="vertical"
+          >
 
-            <LinearLayout
-android:paddingLeft="@dimen/margin_10"
-                android:paddingBottom="@dimen/margin_10"
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/margin_2"
+                app:cardUseCompatPadding="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <TextView
-                    android:id="@+id/textview_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/name"
-                    android:textSize="@dimen/font_30"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_margin="@dimen/margin_10"
-                    />
-                <TextView
-                    android:id="@+id/textview_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="@dimen/font_34"
-                    android:textColor="@color/textColorSecondary"
-                     android:layout_marginLeft="@dimen/margin_10"
-                    />
-                <View
-                    android:layout_margin="10dp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/hLineColor"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/margin_10"></View>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_10"
+                    android:paddingLeft="@dimen/margin_10">
 
-                <TextView
-                    android:id="@+id/textview_mobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mobile"
-                    android:textSize="@dimen/font_30"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_margin="@dimen/margin_10"
-                    />
-                <TextView
-                    android:id="@+id/textview_mobile_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textSize="@dimen/font_34"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    />
-                <View android:layout_margin="10dp"
+                    <TextView
+                        android:id="@+id/textview_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/name"
+                        android:textColor="@color/redButtonColor"
+                        android:textSize="@dimen/font_30" />
 
-                    android:layout_width="match_parent"
-                    android:background="@color/hLineColor"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/margin_10"></View>
-                <TextView
-                    android:id="@+id/textview_billing_deliver"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/billing_deliver"
-                    android:textSize="@dimen/font_30"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_margin="@dimen/margin_10"
-                    />
-                <TextView
-                    android:layout_marginBottom="@dimen/margin_10"
-                    android:id="@+id/textview_billing_address"
+                    <TextView
+                        android:id="@+id/textview_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:text=""
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_34" />
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textSize="@dimen/font_34"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@color/hLineColor"></View>
+
+                    <TextView
+                        android:id="@+id/textview_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/mobile"
+                        android:textColor="@color/redButtonColor"
+                        android:textSize="@dimen/font_30" />
+
+                    <TextView
+                        android:id="@+id/textview_mobile_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:text=" "
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_34" />
+
+                    <View
+                        android:layout_width="match_parent"
+
+                        android:layout_height="0.5dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@color/hLineColor"></View>
+
+                    <TextView
+                        android:id="@+id/textview_billing_deliver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/billing_deliver"
+                        android:textColor="@color/redButtonColor"
+                        android:textSize="@dimen/font_30" />
+
+                    <TextView
+                        android:id="@+id/textview_billing_address"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:text=" "
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_34" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_2"
-            app:cardUseCompatPadding="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_gravity="center_vertical">
-
-            <LinearLayout
-                android:paddingLeft="@dimen/margin_10"
-                android:paddingBottom="@dimen/margin_10"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/margin_2"
+                app:cardUseCompatPadding="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <TextView
-                    android:id="@+id/textview_current_cat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_cat"
-                    android:textSize="@dimen/font_30"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_margin="@dimen/margin_10"
-                    />
-                <TextView
-                    android:id="@+id/textview_catgory_name"
-                    android:layout_width="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_10"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textSize="@dimen/font_34"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    />
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_2"
-            app:cardUseCompatPadding="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_gravity="center_vertical">
-
-            <LinearLayout
-                android:paddingLeft="@dimen/margin_10"
-                android:paddingBottom="@dimen/margin_10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textview_next_cat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/next_cat"
-                    android:textSize="@dimen/font_30"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_margin="@dimen/margin_10"
-                    />
-                <TextView
-                    android:id="@+id/textview_next_cat_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textSize="@dimen/font_34"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    />
-                <View
-                    android:layout_margin="10dp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/hLineColor"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/margin_10"></View>
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                   >
 
-                <TextView
-                    android:id="@+id/textview_remaning_target"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textview_current_cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/current_cat"
+                        android:textColor="@color/redButtonColor"
+                        android:textSize="@dimen/font_30" />
+
+                    <TextView
+                        android:id="@+id/textview_catgory_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:text=" "
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_34" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/margin_2"
+                app:cardUseCompatPadding="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/remening_target"
-                    android:textSize="@dimen/font_30"
-                    android:textColor="@color/redButtonColor"
-                    android:layout_margin="@dimen/margin_10"
-                    />
-                <TextView
-                    android:id="@+id/textview_remaning_target_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textSize="@dimen/font_34"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginBottom="@dimen/margin_10"
-                    />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_10"
+                    android:paddingLeft="@dimen/margin_10">
+
+                    <TextView
+                        android:id="@+id/textview_next_cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/next_cat"
+                        android:textColor="@color/redButtonColor"
+                        android:textSize="@dimen/font_30" />
+
+                    <TextView
+                        android:id="@+id/textview_next_cat_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:text=" "
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_34" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@color/hLineColor"></View>
+
+                    <TextView
+                        android:id="@+id/textview_remaning_target"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_10"
+                        android:text="@string/remening_target"
+                        android:textColor="@color/redButtonColor"
+                        android:textSize="@dimen/font_30" />
+
+                    <TextView
+                        android:id="@+id/textview_remaning_target_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:text=" "
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_34" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

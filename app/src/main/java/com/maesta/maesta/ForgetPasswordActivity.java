@@ -95,10 +95,10 @@ public class ForgetPasswordActivity extends BaseActivity {
                     JSONObject data = object.getJSONObject("data");
                     Toast.makeText(ForgetPasswordActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(),
-                           VerifyActivity.class)
+                            VerifyActivity.class)
                             .putExtra("API_KEY", data.getString("api_key"))
                             .putExtra("ID", data.getString("id"))
-                            .putExtra("EMAIL",email ));
+                            .putExtra("EMAIL", email));
 
                     finish();
                 } else {
