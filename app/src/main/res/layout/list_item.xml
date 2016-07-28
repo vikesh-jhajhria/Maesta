@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/expandedListItem"
@@ -12,8 +11,8 @@
         android:paddingBottom="@dimen/margin_5"
         android:paddingTop="@dimen/margin_5"
         android:textSize="@dimen/font_22"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:paddingLeft="82dp"
         android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textColor="@color/textColorSecondary"/>
 
-</LinearLayout>
+</com.balysv.materialripple.MaterialRippleLayout>
