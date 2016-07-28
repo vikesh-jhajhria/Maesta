@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.maesta.maesta.ListingActivity;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.SubcatgoryActivity;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by vikesh.kumar on 7/19/2016.
  */
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ProductHolder>{
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ProductHolder> {
     Context context;
     String categoryId;
     ArrayList<Product> list;
@@ -32,6 +33,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
         this.context = context;
         this.list = list;
     }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -47,13 +49,21 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
     @Override
     public void onBindViewHolder(ProductHolder holder, final int position) {
         holder.title.setText(list.get(position).title);
-        categoryId=(list.get(position).id);
-        holder.category.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SubcatgoryActivity.class);
-                intent.putExtra(categoryId,0);
-                context.startActivity(intent);
+                if (list.get(position).haveSubCategories) {
+                    Intent intent = new Intent(context, SubcatgoryActivity.class);
+                    intent.putExtra("ID", (list.get(position).id));
+                    intent.putExtra("HEADER_IMAGE", list.get(position).thumbURL);
+                    intent.putExtra("TITLE", list.get(position).title);
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, ListingActivity.class);
+                    intent.putExtra("ID", (list.get(position).id));
+                    intent.putExtra("TITLE", list.get(position).title);
+                    context.startActivity(intent);
+                }
 
             }
         });
@@ -61,24 +71,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
                 .placeholder(R.drawable.banner_1).centerCrop().into(holder.image);
     }
 
-
-
-
-
-
     class ProductHolder extends RecyclerView.ViewHolder {
         TextView title, collection;
         ImageView image;
-        CardView category;
-        public ProductHolder (View itemView) {
+
+        public ProductHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.txt_title);
             collection = (TextView) itemView.findViewById(R.id.txt_collection);
             image = (ImageView) itemView.findViewById(R.id.img_product);
-            category=(CardView)itemView.findViewById(R.id.card_category);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_title), Config.MEDIUM);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_collection),Config.REGULAR);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_collection), Config.REGULAR);
         }
     }
 }
