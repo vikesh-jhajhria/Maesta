@@ -16,9 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -34,7 +31,7 @@ import android.widget.Toast;
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.maesta.maesta.adapter.BannerAdapter;
 import com.maesta.maesta.adapter.CategoriesAdapter;
-import com.maesta.maesta.adapter.CustomExpandableListAdapter;
+import com.maesta.maesta.adapter.HomeExpandableListAdapter;
 import com.maesta.maesta.adapter.NewArrivalAdapter;
 import com.maesta.maesta.datasource.ExpandableListDataSource;
 import com.maesta.maesta.fragment.BannerFragment;
@@ -72,8 +69,6 @@ public class HomeActivity extends BaseActivity {
     private Handler handler;
     private ExpandableListView mExpandableListView;
     private ExpandableListAdapter mExpandableListAdapter;
-    private List<String> mExpandableListTitle;
-    private Map<String, List<String>> mExpandableListData;
     private List<RadioButton> pagerIndicatorList;
     TextView user_name;
 
@@ -130,41 +125,31 @@ public class HomeActivity extends BaseActivity {
         findViewById(R.id.my_collection).setOnClickListener(this);
 
         findViewById(R.id.txt_logout).setOnClickListener(this);
-        mExpandableListData = ExpandableListDataSource.getData(this);
-        mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
 
         addDrawerItems();
         applyFont();
     }
 
     private void addDrawerItems() {
-        mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);
+        mExpandableListAdapter = new HomeExpandableListAdapter(this, categoryList);
         mExpandableListView.setAdapter(mExpandableListAdapter);
-        mExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onGroupExpand(int groupPosition) {
-                //getSupportActionBar().setTitle(mExpandableListTitle.get(groupPosition).toString());
-                //mSelectedItemView.setText(mExpandableListTitle.get(groupPosition).toString());
-            }
-        });
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                Product selectedItem =  categoryList.get(i);
 
-        mExpandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                //getSupportActionBar().setTitle("Gener");
-                //mSelectedItemView.setText("Selected item");
-            }
-        });
-
-        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                String selectedItem = ((List) (mExpandableListData.get(mExpandableListTitle.get(groupPosition))))
-                        .get(childPosition).toString();
-                //getSupportActionBar().setTitle(selectedItem);
-                //mSelectedItemView.setText(mExpandableListTitle.get(groupPosition).toString() + " -> " + selectedItem);
-                mDrawerLayout.closeDrawer(GravityCompat.START);
+                if (selectedItem.haveSubCategories) {
+                    Intent intent = new Intent(getApplicationContext(), SubcatgoryActivity.class);
+                    intent.putExtra("ID", selectedItem.id);
+                    intent.putExtra("HEADER_IMAGE", selectedItem.thumbURL);
+                    intent.putExtra("TITLE", selectedItem.title);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), ListingActivity.class);
+                    intent.putExtra("ID", selectedItem.id);
+                    intent.putExtra("TITLE", selectedItem.title);
+                    startActivity(intent);
+                }
                 return false;
             }
         });

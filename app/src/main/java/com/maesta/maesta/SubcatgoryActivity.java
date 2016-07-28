@@ -3,9 +3,6 @@ package com.maesta.maesta;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.maesta.maesta.adapter.CustomExpandableListAdapter;
-import com.maesta.maesta.adapter.SubCategoryAdapter;
 import com.maesta.maesta.adapter.SubCategoryExpandableListAdapter;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
@@ -30,7 +25,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by saloni on 7/19/2016.
@@ -65,22 +59,62 @@ public class SubcatgoryActivity extends BaseActivity {
     private void addDrawerItems() {
         mExpandableListAdapter = new SubCategoryExpandableListAdapter(this, categoryList, subCategoryList);
         mExpandableListView.setAdapter(mExpandableListAdapter);
+
         mExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
-            public void onGroupExpand(int groupPosition) {
-                //getSupportActionBar().setTitle(mExpandableListTitle.get(groupPosition).toString());
-                //mSelectedItemView.setText(mExpandableListTitle.get(groupPosition).toString());
+            public void onGroupExpand(int i) {
+
+            /*    final int firstListItemPosition = mExpandableListView.getFirstVisiblePosition();
+                final int lastListItemPosition = firstListItemPosition + mExpandableListView.getChildCount() - 1;
+
+                View viewAdapter;
+                if (i < firstListItemPosition || i > lastListItemPosition ) {
+                    viewAdapter = mExpandableListView.getAdapter().getView(i, null, mExpandableListView);
+                } else {
+                    final int childIndex = i - firstListItemPosition;
+                    viewAdapter= mExpandableListView.getChildAt(childIndex);
+                }
+                ((ImageView)viewAdapter.findViewById(R.id.img_collapse)).setImageResource(R.drawable.subcatory_down);
+                ((View) viewAdapter.findViewById(R.id.line_bottom)).setVisibility(View.INVISIBLE);
+            */
             }
         });
 
         mExpandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
             @Override
-            public void onGroupCollapse(int groupPosition) {
-                //getSupportActionBar().setTitle("Gener");
-                //mSelectedItemView.setText("Selected item");
+            public void onGroupCollapse(int i) {
+                /*final int firstListItemPosition = mExpandableListView.getFirstVisiblePosition();
+                final int lastListItemPosition = firstListItemPosition + mExpandableListView.getChildCount() - 1;
+
+                View viewAdapter;
+                if (i < firstListItemPosition || i > lastListItemPosition ) {
+                    viewAdapter = mExpandableListView.getAdapter().getView(i, null, mExpandableListView);
+                } else {
+                    final int childIndex = i - firstListItemPosition;
+                    viewAdapter= mExpandableListView.getChildAt(childIndex);
+                }
+                ((ImageView)viewAdapter.findViewById(R.id.img_collapse)).setImageResource(R.drawable.subcatory_arrow);
+                ((View) viewAdapter.findViewById(R.id.line_bottom)).setVisibility(View.VISIBLE);
+            */
             }
         });
 
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
+
+
+                if(((ArrayList<Product>) subCategoryList.get(i)).size() == 0) {
+                    Product selectedItem =  categoryList.get(i);
+                    Intent intent = new Intent(SubcatgoryActivity.this, ListingActivity.class);
+                    intent.putExtra("ID", (selectedItem.id));
+                    intent.putExtra("TITLE", selectedItem.title);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
         mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -146,34 +180,19 @@ public class SubcatgoryActivity extends BaseActivity {
                                 subProduct.iconURL = ((JSONObject) subArray.get(i)).getString("icon");
                                 subProduct.title = ((JSONObject) subArray.get(i)).getString("name");
                                 child.add(subProduct);
-                                child.add(subProduct);
-                                child.add(subProduct);
-                                child.add(subProduct);
-                                child.add(subProduct);
-                                child.add(subProduct);
-                                child.add(subProduct);
-                                child.add(subProduct);
-
-
-
                             }
                         }
                         subCategoryList.add(child);
-                        subCategoryList.add(child);
-                        subCategoryList.add(child);
-                        subCategoryList.add(child);
-                        subCategoryList.add(child);
-                        subCategoryList.add(child);
-                        subCategoryList.add(child);
+
+                        categoryList.add(product);
                         subCategoryList.add(child);
 
                         categoryList.add(product);
+                        subCategoryList.add(child);
+
                         categoryList.add(product);
-                        categoryList.add(product);
-                        categoryList.add(product);
-                        categoryList.add(product);
-                        categoryList.add(product);
-                        categoryList.add(product);
+                        subCategoryList.add(child);
+
                         categoryList.add(product);
                     }
                     addDrawerItems();

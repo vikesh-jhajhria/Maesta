@@ -2,26 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="@dimen/margin_16"
-    android:paddingLeft="@dimen/margin_16"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/margin_8"
-    android:paddingTop="@dimen/margin_8"
-    android:orientation="horizontal">
+    android:paddingLeft="@dimen/margin_16"
+    android:paddingRight="@dimen/margin_16"
+    android:paddingTop="@dimen/margin_8">
 
 
-    <ImageView
-        android:id="@+id/img_nav_header_item"
-        android:layout_width="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_item"
+        android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/my_order" />
+        android:src="@drawable/banner_1" />
 
     <TextView
-        android:id="@+id/listTitle"
+        android:id="@+id/txt_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_16"
         android:layout_weight="1"
-android:gravity="center_vertical"
+        android:gravity="center_vertical"
         android:paddingTop="@dimen/margin_5"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/font_22" />

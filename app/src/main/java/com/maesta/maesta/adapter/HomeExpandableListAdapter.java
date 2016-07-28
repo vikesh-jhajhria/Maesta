@@ -21,40 +21,22 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SubCategoryExpandableListAdapter extends BaseExpandableListAdapter {
+public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
-    private ArrayList<Product> parentItems, child;
-    private ArrayList<Object> childItems;
+    private ArrayList<Product> parentItems;
 
     private LayoutInflater mLayoutInflater;
 
-    public SubCategoryExpandableListAdapter(Context context, ArrayList<Product> expandableListTitle,
-                                            ArrayList<Object> expandableListDetail) {
+    public HomeExpandableListAdapter(Context context, ArrayList<Product> expandableListTitle) {
         mContext = context;
         parentItems = expandableListTitle;
-        childItems = expandableListDetail;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-        child = (ArrayList<Product>) childItems.get(groupPosition);
-
-        TextView textView = null;
-
-        if (convertView == null) {
-            convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                    .inflate(R.layout.list_item, null);
-        }
-
-        textView = (TextView) convertView.findViewById(R.id.expandedListItem);
-        textView.setText(child.get(childPosition).title);
-        Utils.setTypeface(mContext, textView, Config.REGULAR);
-
-
-        return convertView;
+return null;
     }
 
     @Override
@@ -62,37 +44,21 @@ public class SubCategoryExpandableListAdapter extends BaseExpandableListAdapter 
 
         if (convertView == null) {
             convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                    .inflate(R.layout.item_product_subcategary, null);
+                    .inflate(R.layout.list_group, null);
         }
-        TextView txt = ((TextView) convertView.findViewById(R.id.txt_product_name));
+        TextView txt = ((TextView) convertView.findViewById(R.id.txt_item));
         txt.setText(parentItems.get(groupPosition).title);
         Utils.setTypeface(mContext, txt, Config.REGULAR);
         Glide.with(mContext).load(parentItems.get(groupPosition).iconURL).asBitmap()
                 .placeholder(R.drawable.banner_1).centerCrop()
-                .into((CircleImageView) convertView.findViewById(R.id.img_user_icon));
-        final View finalConvertView = convertView;
-        if (getChildrenCount(groupPosition) == 0)
-            ((ImageView) finalConvertView.findViewById(R.id.img_collapse)).setVisibility(View.INVISIBLE);
-        else
-            ((ImageView) finalConvertView.findViewById(R.id.img_collapse)).setVisibility(View.VISIBLE);
+                .into((CircleImageView) convertView.findViewById(R.id.img_item));
 
-        /*convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(getChildrenCount(groupPosition) > 0){
-                    ((ImageView) finalConvertView.findViewById(R.id.img_collapse)).setImageResource(R.drawable.subcatory_down);
-
-                }
-            }
-        });*/
         return convertView;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return ((ArrayList<Product>) childItems.get(groupPosition))
-                .get(childPosition);
+        return null;
     }
 
     @Override
@@ -102,7 +68,7 @@ public class SubCategoryExpandableListAdapter extends BaseExpandableListAdapter 
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<Product>) childItems.get(groupPosition)).size();
+        return 0;
     }
 
     @Override
