@@ -53,6 +53,7 @@ public class NewArrivalAdapter extends RecyclerView.Adapter<NewArrivalAdapter.Pr
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("ID",list.get(position).id);
                 context.startActivity(intent);
+
             }
         });
         Glide.with(context).load(list.get(position).thumbURL).asBitmap()

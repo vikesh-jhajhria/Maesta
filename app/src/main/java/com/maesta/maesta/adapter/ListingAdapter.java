@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
@@ -24,25 +26,31 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     Context context;
 
     List<ListingVO> listing;
-    public ListingAdapter(List<ListingVO>  listingList, Context context){
-        this.context=context;
-        this.listing=listingList;
+
+    public ListingAdapter(List<ListingVO> listingList, Context context) {
+        this.context = context;
+        this.listing = listingList;
     }
+
     @Override
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_listing_category_item,parent,false);
-    return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_listing_category_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ListingVO productlist = listing .get(position);
-        holder.product_name.setText(productlist.textTitile );
-        holder.price.setText(productlist.textcollection );
-        holder.listing_cardview.setOnClickListener(new View.OnClickListener() {
+        final ListingVO productlist = listing.get(position);
+        holder.product_name.setText(productlist.textTitile);
+        holder.price.setText(productlist.price);
+        Glide.with(context).load(productlist.thumbURL).asBitmap()
+                .placeholder(R.drawable.banner_1).fitCenter().into(holder.product_img);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,ProductDetailActivity.class);
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("ID",productlist.id);
+
                 context.startActivity(intent);
             }
         });
@@ -51,28 +59,27 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return  listing.size();
+        return listing.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView  product_name,price;
-        CardView  listing_cardview;
-       // CardView product_detail_card;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView product_name, price;
+        ImageView product_img;
+        // CardView product_detail_card;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            product_name    =   (TextView) itemView.findViewById(R.id.txt_title);
-            price        =   (TextView) itemView.findViewById(R.id.txt_collection);
-            listing_cardview=(CardView)itemView.findViewById(R.id.card_listing);
+            product_name = (TextView) itemView.findViewById(R.id.txt_title);
+            price = (TextView) itemView.findViewById(R.id.txt_collection);
+            product_img = (ImageView) itemView.findViewById(R.id.img_product);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_title), Config.MEDIUM);
 
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_collection), Config.BOLD);
 
-           // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
-
+            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
 
 
         }
-}
+    }
 
 }

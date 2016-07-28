@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,11 +13,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.maesta.maesta.adapter.ListingAdapter;
+import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
+import com.maesta.maesta.vo.Collection;
 import com.maesta.maesta.vo.ListingVO;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +36,7 @@ public class ListingActivity extends BaseActivity {
     private List<ListingVO> productList;
     private ListingAdapter listingAdapter;
     private int categoryId;
+    AppPreferences mPrefs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,14 +46,15 @@ public class ListingActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         productList = new ArrayList<>();
         ListingVO productLists = new ListingVO();
-        productLists.textTitile = "Rounded sass'n Class series of Maseta italia's Eye Wear Section";
+        mPrefs = AppPreferences.getAppPreferences(ListingActivity.this);
+        /*productLists.textTitile = "Rounded sass'n Class series of Maseta italia's Eye Wear Section";
         productLists.textcollection = "Rs.20,000";
         productList.add(productLists);
         productList.add(productLists);
         productList.add(productLists);
         productList.add(productLists);
         productList.add(productLists);
-        productList.add(productLists);
+        productList.add(productLists);*/
         listingAdapter = new ListingAdapter(productList, this);
         final GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 
@@ -63,6 +69,7 @@ public class ListingActivity extends BaseActivity {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle(getIntent().getStringExtra("TITLE"));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -83,7 +90,7 @@ public class ListingActivity extends BaseActivity {
             return true;
         }
         if (item.getItemId() == R.id.check) {
-
+startActivity(new Intent(getApplicationContext(),MyCollectionActivity.class));
             return true;
         }
         return false;
@@ -110,9 +117,11 @@ public class ListingActivity extends BaseActivity {
         @Override
         protected String doInBackground(String... params) {
             postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             postDataParams.put("category_id", params[0]);
             postDataParams.put("page", "1");
-
+            postDataParams.put("search_text", " ");
+            postDataParams.put("api_key", apikey);
             return HTTPUrlConnection.getInstance().load(Config.PRODUCT, postDataParams);
         }
 
@@ -123,11 +132,20 @@ public class ListingActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    JSONObject data = object.getJSONObject("data");
+                    JSONArray data = object.getJSONArray("data");
+                    for(int i= 0; i < data.length(); i++) {
+                        ListingVO product = new ListingVO();
+                        product.id = ((JSONObject) data.get(i)).getInt("id");
+                        product.textTitile = ((JSONObject) data.get(i)).getString("name");
+                        product.price = ((JSONObject) data.get(i)).getString("price");
+                        product.thumbURL = ((JSONObject) data.get(i)).getString("image");
 
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                        productList.add(product);
+                    }
+                    listingAdapter.notifyDataSetChanged();
+                }/*else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(ListingActivity.this);
-                }
+                }*/
                 else {
                     Toast.makeText(ListingActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }

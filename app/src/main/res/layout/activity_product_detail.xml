@@ -24,6 +24,7 @@
 
 <RelativeLayout
     android:id="@+id/rl1"
+
     android:layout_above="@+id/btn_add_collection"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -34,6 +35,7 @@
         android:id="@+id/btn_add_collection"
        android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="@dimen/margin_8"
         android:textSize="@dimen/font_22"
         android:textStyle="bold"
         android:layout_width="match_parent"
