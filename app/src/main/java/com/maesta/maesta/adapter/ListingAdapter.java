@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.maesta.maesta.ListingActivity;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
@@ -26,10 +27,12 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     Context context;
 
     List<ListingVO> listing;
+    String title;
 
-    public ListingAdapter(List<ListingVO> listingList, Context context) {
+    public ListingAdapter(List<ListingVO> listingList, Context context,String title) {
         this.context = context;
         this.listing = listingList;
+        this.title=title;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("ID",productlist.id);
-
+                intent.putExtra("TITLE",title );
                 context.startActivity(intent);
             }
         });

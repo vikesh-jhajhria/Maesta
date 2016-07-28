@@ -8,11 +8,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -40,6 +43,7 @@ import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
+import com.maesta.maesta.vo.ListingVO;
 import com.maesta.maesta.vo.Product;
 
 import org.json.JSONArray;
@@ -71,18 +75,21 @@ public class HomeActivity extends BaseActivity {
     private ExpandableListAdapter mExpandableListAdapter;
     private List<RadioButton> pagerIndicatorList;
     TextView user_name;
+    RecyclerView searchRecycler;
+    String search = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         mPrefs = AppPreferences.getAppPreferences(HomeActivity.this);
         RecyclerViewHeader header = (RecyclerViewHeader) findViewById(R.id.rv_header);
         bannerViewPager = (ViewPager) findViewById(R.id.pager_banner);
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
-
-
+        searchRecycler = (RecyclerView) findViewById(R.id.search_recycle_view);
+        ((EditText) findViewById(R.id.txt_search)).addTextChangedListener(new MySearchValidation(((EditText) findViewById(R.id.txt_search))));
         handler = new Handler();
         if (Utils.isNetworkConnected(this, true))
             new HomeTask().execute();
@@ -101,6 +108,7 @@ public class HomeActivity extends BaseActivity {
             }
 
         });
+
         prepareNewArrival();
         prepareCategories();
         header.attachTo(catetoriesRV);
@@ -155,6 +163,37 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    class MySearchValidation implements TextWatcher {
+        private View view;
+
+        private MySearchValidation(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            switch (view.getId()) {
+                case R.id.txt_search:
+                    search = ((EditText) findViewById(R.id.txt_search)).getText().toString().trim();
+                    if (search.isEmpty()) {
+                        searchRecycler.setVisibility(View.GONE);
+
+                    } else {
+                        searchRecycler.setVisibility(View.VISIBLE);
+                    }
+                    break;
+
+            }
+        }
+    }
 
     private void prepareBanner() {
         pagerIndicatorList = new ArrayList<>();
@@ -217,11 +256,13 @@ public class HomeActivity extends BaseActivity {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+
             case R.id.btn_toggle:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 String UserName = mPrefs.getStringValue(AppPreferences.USER_NAME);
                 user_name.setText(UserName);
                 break;
+
 
             case R.id.img_user:
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -355,5 +396,58 @@ public class HomeActivity extends BaseActivity {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_terms), Config.REGULAR);
 
     }
+
+/*
+    class GetSearchProductsTask extends AsyncTask<String, Void, String> {
+        HashMap<String, String> postDataParams;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgessDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            postDataParams = new HashMap<String, String>();
+            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
+            postDataParams.put("category_id", params[0]);
+            postDataParams.put("page", "1");
+            postDataParams.put("search_text", " ");
+            postDataParams.put("api_key", apikey);
+            return HTTPUrlConnection.getInstance().load(Config.PRODUCT, postDataParams);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dismissProgressDialog();
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.getBoolean("status")) {
+                    JSONArray data = object.getJSONArray("data");
+                    for(int i= 0; i < data.length(); i++) {
+                        ListingVO product = new ListingVO();
+                        product.id = ((JSONObject) data.get(i)).getInt("id");
+                        product.textTitile = ((JSONObject) data.get(i)).getString("name");
+                        product.price = ((JSONObject) data.get(i)).getString("price");
+                        product.thumbURL = ((JSONObject) data.get(i)).getString("image");
+
+                        productList.add(product);
+                    }
+                    listingAdapter.notifyDataSetChanged();
+                }*//*else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(ListingActivity.this);
+                }*//*
+                else {
+                    Toast.makeText(HomeActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }*/
 
 }

@@ -165,7 +165,7 @@ public class VerifyActivity extends BaseActivity {
                 if (object.getBoolean("status")) {
 
                     Toast.makeText(VerifyActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(), ResetActivity.class).putExtra("API_KEY",apiKey).putExtra("ID",userId));
+                    startActivity(new Intent(getApplicationContext(), ResetActivity.class).putExtra("API_KEY", apiKey).putExtra("ID", userId));
                     finish();
                 } else {
                     Toast.makeText(VerifyActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();

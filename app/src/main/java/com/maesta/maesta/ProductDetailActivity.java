@@ -148,6 +148,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
     private void setToolbar() {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
+        getSupportActionBar().setTitle(getIntent().getStringExtra("TITLE"));
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
