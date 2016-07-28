@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/margin_16"
+    android:paddingLeft="@dimen/margin_16"
+    android:paddingBottom="@dimen/margin_8"
+    android:paddingTop="@dimen/margin_8"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/img_nav_header_item"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:src="@drawable/my_order" />
 
     <TextView
         android:id="@+id/listTitle"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_5"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+android:gravity="center_vertical"
         android:paddingTop="@dimen/margin_5"
-        android:textSize="@dimen/font_22"
-        android:textColor="@color/textColorSecondary"/>
-
-    <TextView
-        android:id="@+id/txt_plus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="@dimen/margin_16"
-        android:text="+"
-        android:textSize="@dimen/font_30"
-        android:textColor="@color/hLineColor"/>
-
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/font_22" />
 </LinearLayout>
+
