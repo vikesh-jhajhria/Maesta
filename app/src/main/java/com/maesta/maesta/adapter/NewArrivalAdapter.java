@@ -52,6 +52,7 @@ public class NewArrivalAdapter extends RecyclerView.Adapter<NewArrivalAdapter.Pr
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("ID",list.get(position).id);
+                intent.putExtra("TITLE", list.get(position).title);
                 context.startActivity(intent);
 
             }

@@ -47,15 +47,8 @@ public class ListingActivity extends BaseActivity {
         productList = new ArrayList<>();
         ListingVO productLists = new ListingVO();
         mPrefs = AppPreferences.getAppPreferences(ListingActivity.this);
-        /*productLists.textTitile = "Rounded sass'n Class series of Maseta italia's Eye Wear Section";
-        productLists.textcollection = "Rs.20,000";
-        productList.add(productLists);
-        productList.add(productLists);
-        productList.add(productLists);
-        productList.add(productLists);
-        productList.add(productLists);
-        productList.add(productLists);*/
-        listingAdapter = new ListingAdapter(productList, this);
+
+        listingAdapter = new ListingAdapter(productList, this,getIntent().getStringExtra("TITLE"));
         final GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 
         recyclerView.setLayoutManager(layoutManager);

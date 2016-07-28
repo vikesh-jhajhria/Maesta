@@ -1,6 +1,7 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.maesta.maesta.AboutusActivity;
 import com.maesta.maesta.BaseActivity;
+import com.maesta.maesta.LoginActivity;
 import com.maesta.maesta.MyCollectionActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.AppPreferences;
@@ -67,7 +69,14 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new RemoveOrderTask().execute(collections.id + "", position + "");
+                Utils.showDecisionDialog(context, "Logout", " Do you really want to logout", new Utils.AlertCallback() {
+                    @Override
+                    public void callback() {
+                        new RemoveOrderTask().execute(collections.id + "", position + "");
+                    }
+                });
+
+
             }
         });
         holder.update.setOnClickListener(new View.OnClickListener() {
@@ -145,16 +154,15 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    ((MyCollectionActivity)context).resetTotal(object.getString("total_amount"));
+                    ((MyCollectionActivity) context).resetTotal(object.getString("total_amount"));
                     collection.remove(index);
                     notifyDataSetChanged();
 
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
 
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
-                    Utils.resetLogin((BaseActivity)context);
-                }
-                else {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin((BaseActivity) context);
+                } else {
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -198,7 +206,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
                         if (quantityNo.equalsIgnoreCase(oldQuantity)) {
                             holder.update.setVisibility(View.GONE);
                             break;
-                        } else if (quantityNo.equalsIgnoreCase("0")||quantityNo.isEmpty()) {
+                        } else if (quantityNo.equalsIgnoreCase("0") || quantityNo.isEmpty()) {
                             holder.update.setVisibility(View.GONE);
                             break;
                         } else {
@@ -206,7 +214,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
 
                             break;
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
             }
@@ -246,14 +254,13 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    ((MyCollectionActivity)context).resetTotal(object.getString("total_amount"));
-                    collection.get(index).quantity_number=quantityNo;
+                    ((MyCollectionActivity) context).resetTotal(object.getString("total_amount"));
+                    collection.get(index).quantity_number = quantityNo;
                     notifyItemChanged(index);
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
-                    Utils.resetLogin((BaseActivity)context);
-                }
-                else {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin((BaseActivity) context);
+                } else {
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
