@@ -39,8 +39,7 @@ public class MyCollectionActivity extends BaseActivity {
     private MyCollectionAdapter collectionAdapter;
     AppPreferences mPrefs;
     TextView totalprice;
-    EditText quantity_no;
-    String price, quntity, totalprice_reset, quantityno;
+    int categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +107,8 @@ public class MyCollectionActivity extends BaseActivity {
         }
 
         if (item.getItemId() == R.id.search) {
-
+            startActivity(new Intent(getApplicationContext(), SearchActivity.class)
+                    .putExtra("ID", ""));
             return true;
         }
         return false;
@@ -149,6 +149,7 @@ public class MyCollectionActivity extends BaseActivity {
                     for (int i = 0; i < productArray.length(); i++) {
                         Collection collection = new Collection();
                         collection.id = ((JSONObject) productArray.get(i)).getInt("collection_id");
+                        categoryId=((JSONObject) productArray.get(i)).getInt("collection_id");
                         collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
                         collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
                         collection.price = ((JSONObject) productArray.get(i)).getString("price");

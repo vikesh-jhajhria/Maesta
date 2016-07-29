@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maesta.maesta.utils.AppPreferences;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 
 public class VerifyActivity extends BaseActivity {
     AppPreferences mPrefs;
-    EditText editText1, editText2, editText3;
+    TextView emailId;
     String et1, et2, et3, code;
     String apiKey, userId, email;
 
@@ -40,13 +41,13 @@ public class VerifyActivity extends BaseActivity {
         ((EditText) findViewById(R.id.et_code1)).addTextChangedListener(new MyVerifyValidation(((EditText) findViewById(R.id.et_code1))));
         ((EditText) findViewById(R.id.et_code2)).addTextChangedListener(new MyVerifyValidation(((EditText) findViewById(R.id.et_code2))));
         ((EditText) findViewById(R.id.et_code3)).addTextChangedListener(new MyVerifyValidation(((EditText) findViewById(R.id.et_code3))));
-
+        emailId = (TextView) findViewById(R.id.txtview_emailId);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             apiKey = bundle.getString("API_KEY", "");
             userId = bundle.getString("ID", "");
             email = bundle.getString("EMAIL", "");
-
+            emailId.setText(email);
         }
     }
 
