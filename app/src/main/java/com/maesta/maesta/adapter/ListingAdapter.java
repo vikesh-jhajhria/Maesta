@@ -29,10 +29,10 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     List<ListingVO> listing;
     String title;
 
-    public ListingAdapter(List<ListingVO> listingList, Context context,String title) {
+    public ListingAdapter(List<ListingVO> listingList, Context context, String title) {
         this.context = context;
         this.listing = listingList;
-        this.title=title;
+        this.title = title;
     }
 
     @Override
@@ -52,8 +52,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailActivity.class);
-                intent.putExtra("ID",productlist.id);
-                intent.putExtra("TITLE",title );
+                intent.putExtra("ID", productlist.id);
+                intent.putExtra("TITLE", title);
                 context.startActivity(intent);
             }
         });

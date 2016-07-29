@@ -185,15 +185,7 @@ public class SubcatgoryActivity extends BaseActivity {
                         subCategoryList.add(child);
 
                         categoryList.add(product);
-                        subCategoryList.add(child);
 
-                        categoryList.add(product);
-                        subCategoryList.add(child);
-
-                        categoryList.add(product);
-                        subCategoryList.add(child);
-
-                        categoryList.add(product);
                     }
                     addDrawerItems();
                 } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {

@@ -138,5 +138,6 @@
     <string name="done">Done</string>
     <string name="err_code">Please proper code</string>
     <string name="password_match_error">Confirm password doesn\'t match.</string>
+    <string name="inquiry">Inquiry</string>
 
 </resources>

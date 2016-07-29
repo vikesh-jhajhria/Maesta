@@ -1,6 +1,7 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
@@ -36,13 +38,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final Collection search = searchs.get(position);
         holder.product_name.setText(search.product_name);
         holder.price.setText(search.price);
         Glide.with(context).load(search.thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).centerCrop().into(holder.product_img);
+                .placeholder(R.drawable.banner_1).fitCenter().into(holder.product_img);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("ID",searchs.get(position).id);
+                intent.putExtra("TITLE",searchs.get(position).product_name );
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,20 +64,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView product_name, price;
         ImageView product_img;
-        // CardView product_detail_card;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ;
+
             product_name = (TextView) itemView.findViewById(R.id.txtview_product_name);
             product_img = (ImageView) itemView.findViewById(R.id.img_product);
             price = (TextView) itemView.findViewById(R.id.txt_view_price);
 
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
-
-            // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
-
 
         }
     }

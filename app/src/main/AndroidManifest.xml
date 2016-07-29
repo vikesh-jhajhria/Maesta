@@ -59,11 +59,13 @@
         <activity
             android:name=".TermConditionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ResetActivity"
+        <activity
+            android:name=".ResetActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".VerifyActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".VerifyActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

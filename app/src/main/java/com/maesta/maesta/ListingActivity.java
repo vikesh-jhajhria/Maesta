@@ -48,7 +48,7 @@ public class ListingActivity extends BaseActivity {
         ListingVO productLists = new ListingVO();
         mPrefs = AppPreferences.getAppPreferences(ListingActivity.this);
 
-        listingAdapter = new ListingAdapter(productList, this,getIntent().getStringExtra("TITLE"));
+        listingAdapter = new ListingAdapter(productList, this, getIntent().getStringExtra("TITLE"));
         final GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 
         recyclerView.setLayoutManager(layoutManager);
@@ -74,16 +74,15 @@ public class ListingActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
-
-
         }
 
         if (item.getItemId() == R.id.search) {
-
+            startActivity(new Intent(getApplicationContext(), SearchActivity.class)
+            .putExtra("ID",categoryId+""));
             return true;
         }
         if (item.getItemId() == R.id.check) {
-startActivity(new Intent(getApplicationContext(),MyCollectionActivity.class));
+            startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
             return true;
         }
         return false;
@@ -126,7 +125,7 @@ startActivity(new Intent(getApplicationContext(),MyCollectionActivity.class));
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONArray data = object.getJSONArray("data");
-                    for(int i= 0; i < data.length(); i++) {
+                    for (int i = 0; i < data.length(); i++) {
                         ListingVO product = new ListingVO();
                         product.id = ((JSONObject) data.get(i)).getInt("id");
                         product.textTitile = ((JSONObject) data.get(i)).getString("name");
@@ -138,8 +137,7 @@ startActivity(new Intent(getApplicationContext(),MyCollectionActivity.class));
                     listingAdapter.notifyDataSetChanged();
                 }/*else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(ListingActivity.this);
-                }*/
-                else {
+                }*/ else {
                     Toast.makeText(ListingActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
