@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -131,6 +132,7 @@ public class HomeActivity extends BaseActivity {
         findViewById(R.id.txt_about_us).setOnClickListener(this);
         findViewById(R.id.txt_contact_us).setOnClickListener(this);
         findViewById(R.id.my_collection).setOnClickListener(this);
+        findViewById(R.id.img_search).setOnClickListener(this);
 
         findViewById(R.id.txt_logout).setOnClickListener(this);
 
@@ -144,7 +146,7 @@ public class HomeActivity extends BaseActivity {
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                Product selectedItem =  categoryList.get(i);
+                Product selectedItem = categoryList.get(i);
 
                 if (selectedItem.haveSubCategories) {
                     Intent intent = new Intent(getApplicationContext(), SubcatgoryActivity.class);
@@ -184,13 +186,14 @@ public class HomeActivity extends BaseActivity {
                 case R.id.txt_search:
                     search = ((EditText) findViewById(R.id.txt_search)).getText().toString().trim();
                     if (search.isEmpty()) {
+                        ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.search_home);
                         searchRecycler.setVisibility(View.GONE);
 
                     } else {
+                        ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.close_icon);
                         searchRecycler.setVisibility(View.VISIBLE);
                     }
                     break;
-
             }
         }
     }
@@ -306,6 +309,12 @@ public class HomeActivity extends BaseActivity {
                         });
                     }
                 }, 50);
+                break;
+            case R.id.img_search:
+                search = ((EditText) findViewById(R.id.txt_search)).getText().toString().trim();
+                if (!search.isEmpty()) {
+                    ((EditText) findViewById(R.id.txt_search)).setText("");
+                }
                 break;
 
         }

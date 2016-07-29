@@ -60,32 +60,39 @@
                 android:background="#ffffff"
                 app:cardCornerRadius="2dp">
 
-                <EditText
-                    android:id="@+id/txt_search"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_10"
-                    android:background="@null"
-                    android:drawableRight="@drawable/search_home"
-                    android:gravity="center_vertical"
-                    android:hint="@string/search_hint"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:textColorHint="@color/textColorPrimary"
-                    android:textSize="@dimen/font_22" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txt_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:layout_marginRight="@dimen/margin_40"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:textColorHint="@color/textColorPrimary"
+                        android:textSize="@dimen/font_22" />
+
+                    <ImageView
+                        android:id="@+id/img_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:paddingLeft="@dimen/margin_10"
+                        android:paddingRight="@dimen/margin_10"
+                        android:src="@drawable/search_home" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/search_recycle_view"
-            android:paddingBottom="@dimen/margin_16"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -150,6 +157,17 @@
                         android:layout_marginRight="@dimen/activity_horizontal_margin" />
                 </LinearLayout>
             </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+
+            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/search_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/margin_16"
+                android:visibility="gone"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         </FrameLayout>
 
     </LinearLayout>
@@ -162,5 +180,6 @@
         android:layout_gravity="left|start"
         android:background="@color/white"
         android:divider="@null"
-        android:groupIndicator="@null" />
+        android:groupIndicator="@null"
+        android:visibility="gone" />
 </android.support.v4.widget.DrawerLayout>
