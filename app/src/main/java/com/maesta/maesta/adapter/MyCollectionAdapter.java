@@ -69,7 +69,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.showDecisionDialog(context, "Logout", " Do you really want to Remove", new Utils.AlertCallback() {
+                Utils.showDecisionDialog(context, "Logout", " Do you really want to remove", new Utils.AlertCallback() {
                     @Override
                     public void callback() {
                         new RemoveOrderTask().execute(collections.id + "", position + "");
@@ -206,7 +206,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
                         if (quantityNo.equalsIgnoreCase(oldQuantity)) {
                             holder.update.setVisibility(View.GONE);
                             break;
-                        } else if (quantityNo.equalsIgnoreCase("0") || quantityNo.isEmpty()) {
+                        } else if (quantityNo.isEmpty()) {
                             holder.update.setVisibility(View.GONE);
                             break;
                         } else {

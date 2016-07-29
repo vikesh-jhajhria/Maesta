@@ -83,8 +83,6 @@ public class MyCollectionActivity extends BaseActivity {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txtview_total), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txtview_total_price), Config.BOLD);
         Utils.setTypeface(getApplicationContext(), (Button) findViewById(R.id.btn_place_order), Config.BOLD);
-
-
     }
 
     @Override
@@ -92,7 +90,8 @@ public class MyCollectionActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_place_order:
-                if(Utils.isNetworkConnected(this,true) && collectionList.size() > 0) {
+
+                  if(Utils.isNetworkConnected(this,true) && collectionList.size() > 0) {
                     new PlaceOrderTask().execute();
 
                 }
