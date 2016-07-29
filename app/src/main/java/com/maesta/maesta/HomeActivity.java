@@ -327,6 +327,7 @@ public class HomeActivity extends BaseActivity {
                 search = ((EditText) findViewById(R.id.txt_search)).getText().toString().trim();
                 if (!search.isEmpty()) {
                     ((EditText) findViewById(R.id.txt_search)).setText("");
+                    searchList.clear();
                 }
                 break;
 
