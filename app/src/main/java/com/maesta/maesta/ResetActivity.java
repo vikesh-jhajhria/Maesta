@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class ResetActivity extends BaseActivity {
     String newpass, confirmpass;
     AppPreferences mPrefs;
-    String apiKey,userId;
+    String apiKey, userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,7 @@ public class ResetActivity extends BaseActivity {
             } else if (((EditText) findViewById(R.id.et_confirm_pass)).getText().toString().trim().length() < 6) {
                 ((TextInputLayout) findViewById(R.id.confirm_pass_input)).setError(getString(R.string.password_length_error));
                 ((EditText) findViewById(R.id.et_confirm_pass)).requestFocus();
-            }
-            else if (!((EditText) findViewById(R.id.et_confirm_pass)).getText().toString().trim().matches(newpass)) {
+            } else if (!((EditText) findViewById(R.id.et_confirm_pass)).getText().toString().trim().matches(newpass)) {
                 ((TextInputLayout) findViewById(R.id.confirm_pass_input)).setError(getString(R.string.password_match_error));
                 ((EditText) findViewById(R.id.et_confirm_pass)).requestFocus();
             } else {
@@ -129,8 +128,6 @@ public class ResetActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     Toast.makeText(ResetActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
-
-
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     finishAffinity();
                 } else {
@@ -146,7 +143,7 @@ public class ResetActivity extends BaseActivity {
 
     private void setToolbar() {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
-        getSupportActionBar().setTitle("Change  Password");
+        getSupportActionBar().setTitle("Reset  Password");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
