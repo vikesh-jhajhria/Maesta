@@ -200,11 +200,11 @@ public class HomeActivity extends BaseActivity {
                     if (search.isEmpty()) {
                         ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.search_home);
                         searchRecycler.setVisibility(View.GONE);
+                        searchList.clear();
 
                     } else {
                         ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.close_icon);
                         searchRecycler.setVisibility(View.VISIBLE);
-
                     }
                     break;
             }
@@ -461,7 +461,7 @@ public class HomeActivity extends BaseActivity {
                         searchList.add(product);
                     }
                     seachAdapter.notifyDataSetChanged();
-                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                } else if (!object.isNull("apistatus") && object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(HomeActivity.this);
 
                 } else {
