@@ -133,7 +133,7 @@
     <string name="verification_code">Verification Code</string>
     <string name="hv_you_code">Have not received code ?</string>
     <string name="enter_verification_code">Please enter verification code sent to</string>
-    <string name="secure_password">Secure your account a with password</string>
+    <string name="secure_password">Secure your account  with a password</string>
     <string name="almost_done">You\'r e almost done</string>
     <string name="done">Done</string>
     <string name="err_code">Please proper code</string>

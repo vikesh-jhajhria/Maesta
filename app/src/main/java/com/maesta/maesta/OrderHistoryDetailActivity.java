@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -109,7 +111,7 @@ public class OrderHistoryDetailActivity extends BaseActivity {
 
                     }
                 orderAdapter.notifyDataSetChanged();
-                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                } else if  (!object.isNull("apistatus") && object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(OrderHistoryDetailActivity.this);
                 }else {
                     Toast.makeText(OrderHistoryDetailActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
@@ -120,4 +122,5 @@ public class OrderHistoryDetailActivity extends BaseActivity {
 
         }
     }
+
 }

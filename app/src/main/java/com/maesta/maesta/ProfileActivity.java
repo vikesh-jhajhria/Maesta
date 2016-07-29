@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,21 +10,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
  * Created by saloni.bhansali on 7/20/2016.
  */
-public class ProfileActivity extends BaseActivity
-{
+public class ProfileActivity extends BaseActivity {
     AppPreferences mPrefs;
-    TextView name,mobileno,adress,current_cat_level,nxt_cat_level,target;
+    TextView name, mobileno, adress, current_cat_level, nxt_cat_level, target;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +36,16 @@ public class ProfileActivity extends BaseActivity
         setToolbar();
         applyFont();
         new ProfileTask().execute();
-        name=(TextView)findViewById(R.id.textview_username);
-        mobileno=(TextView)findViewById(R.id.textview_mobile_no);
-        adress=(TextView)findViewById(R.id.textview_billing_address);
-        current_cat_level=(TextView)findViewById(R.id.textview_catgory_name);
-        nxt_cat_level=(TextView)findViewById(R.id.textview_next_cat_level);
-        target=(TextView)findViewById(R.id.textview_remaning_target_level);
+        name = (TextView) findViewById(R.id.textview_username);
+        mobileno = (TextView) findViewById(R.id.textview_mobile_no);
+        adress = (TextView) findViewById(R.id.textview_billing_address);
+        current_cat_level = (TextView) findViewById(R.id.textview_catgory_name);
+        nxt_cat_level = (TextView) findViewById(R.id.textview_next_cat_level);
+        target = (TextView) findViewById(R.id.textview_remaning_target_level);
 
 
     }
+
     private void setToolbar() {
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         getSupportActionBar().setTitle("Profile");
@@ -63,25 +68,9 @@ public class ProfileActivity extends BaseActivity
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.textview_remaning_target_level), Config.REGULAR);
     }
-        public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
-           onBackPressed();
-            return true;
-        }
-        if(item.getItemId() == R.id.search){
 
-            return true;
-        }
 
-        return false;
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_profile, menu);
 
-        return true;
-    }
     class ProfileTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
@@ -118,16 +107,35 @@ public class ProfileActivity extends BaseActivity
                     target.setText(productData.getString("remaining_target"));
 
 
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(ProfileActivity.this);
                 } else {
                     Toast.makeText(ProfileActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        if (item.getItemId() == R.id.check) {
+            startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_file, menu);
+
+        return true;
     }
 }

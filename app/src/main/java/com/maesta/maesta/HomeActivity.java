@@ -145,7 +145,6 @@ public class HomeActivity extends BaseActivity {
         findViewById(R.id.txt_contact_us).setOnClickListener(this);
         findViewById(R.id.my_collection).setOnClickListener(this);
         findViewById(R.id.img_search).setOnClickListener(this);
-
         findViewById(R.id.txt_logout).setOnClickListener(this);
 
         addDrawerItems();
@@ -165,11 +164,13 @@ public class HomeActivity extends BaseActivity {
                     intent.putExtra("ID", selectedItem.id);
                     intent.putExtra("HEADER_IMAGE", selectedItem.thumbURL);
                     intent.putExtra("TITLE", selectedItem.title);
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), ListingActivity.class);
                     intent.putExtra("ID", selectedItem.id);
                     intent.putExtra("TITLE", selectedItem.title);
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
                     startActivity(intent);
                 }
                 return false;
@@ -272,34 +273,39 @@ public class HomeActivity extends BaseActivity {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-
             case R.id.btn_toggle:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 String UserName = mPrefs.getStringValue(AppPreferences.USER_NAME);
                 user_name.setText(UserName);
+
                 break;
-
-
             case R.id.img_user:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
 
             case R.id.txt_my_profile:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
             case R.id.txt_terms:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), TermConditionActivity.class));
                 break;
             case R.id.txt_contact_us:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), ContactUsActivity.class));
                 break;
             case R.id.txt_about_us:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), AboutusActivity.class));
                 break;
             case R.id.txt_my_order:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
                 break;
             case R.id.my_collection:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), MyCollectionActivity.class));
                 break;
             case R.id.txt_logout:
