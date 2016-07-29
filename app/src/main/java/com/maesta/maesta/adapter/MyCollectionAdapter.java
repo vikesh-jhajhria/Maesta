@@ -69,7 +69,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.showDecisionDialog(context, "Logout", " Do you really want to logout", new Utils.AlertCallback() {
+                Utils.showDecisionDialog(context, "Logout", " Do you really want to Remove", new Utils.AlertCallback() {
                     @Override
                     public void callback() {
                         new RemoveOrderTask().execute(collections.id + "", position + "");

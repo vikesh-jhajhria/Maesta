@@ -36,7 +36,9 @@ import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.maesta.maesta.adapter.BannerAdapter;
 import com.maesta.maesta.adapter.CategoriesAdapter;
 import com.maesta.maesta.adapter.HomeExpandableListAdapter;
+import com.maesta.maesta.adapter.MyCollectionAdapter;
 import com.maesta.maesta.adapter.NewArrivalAdapter;
+import com.maesta.maesta.adapter.SearchAdapter;
 import com.maesta.maesta.datasource.ExpandableListDataSource;
 import com.maesta.maesta.fragment.BannerFragment;
 import com.maesta.maesta.utils.AppPreferences;
@@ -44,6 +46,7 @@ import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
+import com.maesta.maesta.vo.Collection;
 import com.maesta.maesta.vo.ListingVO;
 import com.maesta.maesta.vo.Product;
 
@@ -64,7 +67,9 @@ public class HomeActivity extends BaseActivity {
     private ArrayList<Banner> bannerList = new ArrayList<>();
     private ArrayList<Product> newArrivalList = new ArrayList<>();
     private ArrayList<Product> categoryList = new ArrayList<>();
+    private List<Collection> searchList;
     public DrawerLayout mDrawerLayout;
+    private SearchAdapter seachAdapter;
     private BannerAdapter bannerAdapter;
     private NewArrivalAdapter newArrivalAdapter;
     private CategoriesAdapter categoriesAdapter;
@@ -78,6 +83,7 @@ public class HomeActivity extends BaseActivity {
     TextView user_name;
     RecyclerView searchRecycler;
     String search = "";
+    int categordId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +91,8 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
 
         mPrefs = AppPreferences.getAppPreferences(HomeActivity.this);
+
+
         RecyclerViewHeader header = (RecyclerViewHeader) findViewById(R.id.rv_header);
         bannerViewPager = (ViewPager) findViewById(R.id.pager_banner);
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
@@ -95,14 +103,18 @@ public class HomeActivity extends BaseActivity {
         if (Utils.isNetworkConnected(this, true))
             new HomeTask().execute();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
-
+        searchList = new ArrayList<>();
+        seachAdapter = new SearchAdapter(searchList, this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        searchRecycler.setLayoutManager(layoutManager);
+        searchRecycler.setAdapter(seachAdapter);
         ((EditText) findViewById(R.id.txt_search)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-
+                    new GetSearchProductsTask().execute();
                     return true;
                 }
                 return false;
@@ -192,6 +204,7 @@ public class HomeActivity extends BaseActivity {
                     } else {
                         ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.close_icon);
                         searchRecycler.setVisibility(View.VISIBLE);
+
                     }
                     break;
             }
@@ -373,6 +386,7 @@ public class HomeActivity extends BaseActivity {
                         for (int i = 0; i < categoryArray.length(); i++) {
                             Product product = new Product();
                             product.id = ((JSONObject) categoryArray.get(i)).getInt("id");
+                            categordId = ((JSONObject) categoryArray.get(i)).getInt("id");
                             product.thumbURL = ((JSONObject) categoryArray.get(i)).getString("image");
                             product.iconURL = ((JSONObject) categoryArray.get(i)).getString("icon");
                             product.title = ((JSONObject) categoryArray.get(i)).getString("name");
@@ -406,7 +420,7 @@ public class HomeActivity extends BaseActivity {
 
     }
 
-/*
+
     class GetSearchProductsTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
@@ -420,9 +434,9 @@ public class HomeActivity extends BaseActivity {
         protected String doInBackground(String... params) {
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
-            postDataParams.put("category_id", params[0]);
+
             postDataParams.put("page", "1");
-            postDataParams.put("search_text", " ");
+            postDataParams.put("search_text", search);
             postDataParams.put("api_key", apikey);
             return HTTPUrlConnection.getInstance().load(Config.PRODUCT, postDataParams);
         }
@@ -435,20 +449,21 @@ public class HomeActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONArray data = object.getJSONArray("data");
-                    for(int i= 0; i < data.length(); i++) {
-                        ListingVO product = new ListingVO();
+                    searchList.clear();
+                   for (int i = 0; i < data.length(); i++) {
+                        Collection product = new Collection();
                         product.id = ((JSONObject) data.get(i)).getInt("id");
-                        product.textTitile = ((JSONObject) data.get(i)).getString("name");
+                        product.product_name = ((JSONObject) data.get(i)).getString("name");
                         product.price = ((JSONObject) data.get(i)).getString("price");
                         product.thumbURL = ((JSONObject) data.get(i)).getString("image");
 
-                        productList.add(product);
+                        searchList.add(product);
                     }
-                    listingAdapter.notifyDataSetChanged();
-                }*//*else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
-                    Utils.resetLogin(ListingActivity.this);
-                }*//*
-                else {
+                    seachAdapter.notifyDataSetChanged();
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    Utils.resetLogin(HomeActivity.this);
+
+                } else {
                     Toast.makeText(HomeActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -457,6 +472,7 @@ public class HomeActivity extends BaseActivity {
 
 
         }
-    }*/
-
+    }
 }
+
+
