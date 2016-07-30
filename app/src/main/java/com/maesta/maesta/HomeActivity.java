@@ -65,14 +65,12 @@ import java.util.Map;
 /**
  * Created by vikesh.kumar on 7/18/2016.
  */
-public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private ArrayList<Banner> bannerList = new ArrayList<>();
     private ArrayList<Product> newArrivalList = new ArrayList<>();
     private ArrayList<Product> categoryList = new ArrayList<>();
-    private List<Collection> searchList;
     public DrawerLayout mDrawerLayout;
-    private SearchAdapter seachAdapter;
     private BannerAdapter bannerAdapter;
     private NewArrivalAdapter newArrivalAdapter;
     private CategoriesAdapter categoriesAdapter;
@@ -84,8 +82,6 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private ExpandableListAdapter mExpandableListAdapter;
     private List<RadioButton> pagerIndicatorList;
     TextView user_name;
-    RecyclerView searchRecycler;
-    String search = "";
     int categordId;
     SwipeRefreshLayout swipeView;
 
@@ -97,38 +93,14 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         mPrefs = AppPreferences.getAppPreferences(HomeActivity.this);
 
 
-
         RecyclerViewHeader header = (RecyclerViewHeader) findViewById(R.id.rv_header);
         bannerViewPager = (ViewPager) findViewById(R.id.pager_banner);
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
-        searchRecycler = (RecyclerView) findViewById(R.id.search_recycle_view);
-        ((EditText) findViewById(R.id.txt_search)).addTextChangedListener(new MySearchValidation(((EditText) findViewById(R.id.txt_search))));
         handler = new Handler();
         if (Utils.isNetworkConnected(this, true))
             new HomeTask().execute();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
-        searchList = new ArrayList<>();
-        seachAdapter = new SearchAdapter(searchList, this);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        searchRecycler.setLayoutManager(layoutManager);
-        searchRecycler.setAdapter(seachAdapter);
-        ((EditText) findViewById(R.id.txt_search)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-                    if (Utils.isNetworkConnected(getApplicationContext(), true)) {
-                        new GetSearchProductsTask().execute();
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-        });
-
 
         swipeView = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         swipeView.setOnRefreshListener(this);
@@ -170,8 +142,10 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         findViewById(R.id.txt_about_us).setOnClickListener(this);
         findViewById(R.id.txt_contact_us).setOnClickListener(this);
         findViewById(R.id.my_collection).setOnClickListener(this);
-        findViewById(R.id.img_search).setOnClickListener(this);
+        //findViewById(R.id.img_search).setOnClickListener(this);
         findViewById(R.id.txt_logout).setOnClickListener(this);
+        findViewById(R.id.search).setOnClickListener(this);
+
 
         addDrawerItems();
         applyFont();
@@ -190,6 +164,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             }
         }, 1000);
     }
+
     private void addDrawerItems() {
         mExpandableListAdapter = new HomeExpandableListAdapter(this, categoryList);
         mExpandableListView.setAdapter(mExpandableListAdapter);
@@ -217,39 +192,6 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         });
     }
 
-    class MySearchValidation implements TextWatcher {
-        private View view;
-
-        private MySearchValidation(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            switch (view.getId()) {
-                case R.id.txt_search:
-                    search = ((EditText) findViewById(R.id.txt_search)).getText().toString().trim();
-                    if (search.isEmpty()) {
-                        ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.search_home);
-                        searchRecycler.setVisibility(View.GONE);
-                        searchList.clear();
-
-                    } else {
-                        ((ImageView)findViewById(R.id.img_search)).setImageResource(R.drawable.close_icon);
-                        searchRecycler.setVisibility(View.VISIBLE);
-                    }
-                    break;
-            }
-        }
-    }
 
     private void prepareBanner() {
         pagerIndicatorList = new ArrayList<>();
@@ -370,12 +312,9 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                     }
                 }, 50);
                 break;
-            case R.id.img_search:
-                search = ((EditText) findViewById(R.id.txt_search)).getText().toString().trim();
-                if (!search.isEmpty()) {
-                    ((EditText) findViewById(R.id.txt_search)).setText("");
-                    searchList.clear();
-                }
+            case R.id.search:
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class)
+                        .putExtra("ID", ""));
                 break;
 
         }
@@ -471,58 +410,6 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
 
-    class GetSearchProductsTask extends AsyncTask<String, Void, String> {
-        HashMap<String, String> postDataParams;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showProgessDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            postDataParams = new HashMap<String, String>();
-            String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
-
-            postDataParams.put("page", "1");
-            postDataParams.put("search_text", search);
-            postDataParams.put("api_key", apikey);
-            return HTTPUrlConnection.getInstance().load(Config.PRODUCT, postDataParams);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            dismissProgressDialog();
-            try {
-                JSONObject object = new JSONObject(result);
-                if (object.getBoolean("status")) {
-                    JSONArray data = object.getJSONArray("data");
-                    searchList.clear();
-                   for (int i = 0; i < data.length(); i++) {
-                        Collection product = new Collection();
-                        product.id = ((JSONObject) data.get(i)).getInt("id");
-                        product.product_name = ((JSONObject) data.get(i)).getString("name");
-                        product.price = ((JSONObject) data.get(i)).getString("price");
-                        product.thumbURL = ((JSONObject) data.get(i)).getString("image");
-
-                        searchList.add(product);
-                    }
-                    seachAdapter.notifyDataSetChanged();
-                } else if (!object.isNull("apistatus") && object.getString("apistatus").equalsIgnoreCase("API rejection")) {
-                    Utils.resetLogin(HomeActivity.this);
-
-                } else {
-                    Toast.makeText(HomeActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-    }
 }
 
 
