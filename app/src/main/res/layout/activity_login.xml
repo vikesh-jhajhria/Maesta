@@ -22,21 +22,21 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/login_name_input"
             android:layout_width="match_parent"
-            android:clipToPadding="true"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_30"
             android:layout_marginRight="@dimen/margin_30"
-            android:layout_height="wrap_content"
+            android:clipToPadding="true"
             android:textColorHint="@color/textColorPrimary">
 
             <EditText
                 android:id="@+id/txt_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-android:hint="@string/username"
-                android:inputType="textEmailAddress"
+                android:hint="@string/username"
+                android:inputType="textWebEmailAddress"
                 android:singleLine="true"
-                android:textColorHint="@color/textColorPrimary"
                 android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorPrimary"
                 android:textSize="@dimen/font_22" />
 
         </android.support.design.widget.TextInputLayout>
@@ -44,10 +44,10 @@ android:hint="@string/username"
         <android.support.design.widget.TextInputLayout
             android:id="@+id/rgr_password_input"
             android:layout_width="match_parent"
-            android:clipToPadding="true"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_30"
             android:layout_marginRight="@dimen/margin_30"
-            android:layout_height="wrap_content"
+            android:clipToPadding="true"
             android:textColorHint="@color/textColorPrimary">
 
 
@@ -56,11 +56,11 @@ android:hint="@string/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15"
-                android:textColorHint="@color/textColorPrimary"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorPrimary"
                 android:textSize="@dimen/font_22" />
 
         </android.support.design.widget.TextInputLayout>
@@ -92,12 +92,10 @@ android:hint="@string/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textAllCaps="false"
                 android:text="@string/login"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_30" />
         </android.support.v7.widget.CardView>
-
     </LinearLayout>
-
 </android.support.design.widget.CoordinatorLayout>

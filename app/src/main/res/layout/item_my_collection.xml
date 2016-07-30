@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="@dimen/margin_20"
+                android:layout_marginRight="@dimen/margin_16"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/img_1"
                 android:text="Rounded sass'n Class series of Maseta italia's Eye Wear Section"
@@ -68,22 +68,22 @@
                 android:textSize="@dimen/font_18" />
 
             <EditText
+
                 android:id="@+id/et_quantity_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/txtview_quantity"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/txtview_quantity"
                 android:background="@drawable/square"
                 android:inputType="number"
                 android:maxLength="4"
-                android:paddingBottom="2dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                android:paddingTop="2dp"
-                android:text="20"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp"
+                android:text=" "
                 android:textColor="@color/textColorSecondary"
-                android:textSize="@dimen/font_18" />
+                android:textSize="@dimen/font_18"
+                android:layout_below="@+id/txtview_product_name"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:id="@+id/txtview_update"
@@ -95,8 +95,8 @@
                 android:layout_toRightOf="@+id/et_quantity_number"
                 android:background="@color/redButtonColor"
                 android:gravity="center"
-                android:paddingLeft="@dimen/margin_5"
-                android:paddingRight="@dimen/margin_5"
+                android:paddingLeft="@dimen/margin_10"
+                android:paddingRight="@dimen/margin_10"
                 android:text="Update"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_18"

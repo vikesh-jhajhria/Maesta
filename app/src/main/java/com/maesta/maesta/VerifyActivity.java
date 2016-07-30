@@ -2,8 +2,6 @@ package com.maesta.maesta;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
@@ -64,7 +61,10 @@ public class VerifyActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.txtview_resend:
-                new ResendCodeTask().execute(email + "");
+                if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+                    new ResendCodeTask().execute(email + "");
+
+                }
                 break;
             case R.id.btn_submit:
                 if (((EditText) findViewById(R.id.et_code1)).getText().toString().trim().isEmpty()) {
@@ -81,7 +81,9 @@ public class VerifyActivity extends BaseActivity {
                     et2 = ((EditText) findViewById(R.id.et_code2)).getText().toString().trim();
                     et3 = ((EditText) findViewById(R.id.et_code3)).getText().toString().trim();
                     code = et1 + et2 + et3;
-                    new VerifyCodeTask().execute(code, apiKey + "", userId + "");
+                    if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                        new VerifyCodeTask().execute(code, apiKey + "", userId + "");
+                    }
                 }
                 break;
         }
@@ -100,7 +102,6 @@ public class VerifyActivity extends BaseActivity {
         @Override
         protected String doInBackground(String... params) {
             postDataParams = new HashMap<String, String>();
-
             postDataParams.put("email_address", params[0]);
 
 
@@ -152,8 +153,6 @@ public class VerifyActivity extends BaseActivity {
             postDataParams.put("api_key", params[1]);
             postDataParams.put("customer_id", params[2]);
             postDataParams.put("verification_code", params[0]);
-
-
             return HTTPUrlConnection.getInstance().load(Config.VERIFY_CODE, postDataParams);
         }
 
@@ -195,23 +194,19 @@ public class VerifyActivity extends BaseActivity {
             switch (view.getId()) {
                 case R.id.et_code1:
                     if (((EditText) findViewById(R.id.et_code1)).getText().toString().trim().length() == 2) {
-
                         ((EditText) findViewById(R.id.et_code2)).requestFocus();
                     }
                     break;
                 case R.id.et_code2:
                     if (((EditText) findViewById(R.id.et_code2)).getText().toString().trim().length() == 2) {
-
                         ((EditText) findViewById(R.id.et_code3)).requestFocus();
 
                     } else if (((EditText) findViewById(R.id.et_code2)).getText().toString().trim().length() == 0) {
-
                         ((EditText) findViewById(R.id.et_code1)).requestFocus();
                     }
                     break;
                 case R.id.et_code3:
                     if (((EditText) findViewById(R.id.et_code3)).getText().toString().trim().length() == 0) {
-
                         ((EditText) findViewById(R.id.et_code2)).requestFocus();
                     }
                     break;

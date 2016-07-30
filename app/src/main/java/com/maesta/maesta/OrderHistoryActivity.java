@@ -48,7 +48,9 @@ public class OrderHistoryActivity extends BaseActivity {
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(orderAdapter);
-            new OrderHistoryTask().execute();
+            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                new OrderHistoryTask().execute();
+            }
         }
     }
 

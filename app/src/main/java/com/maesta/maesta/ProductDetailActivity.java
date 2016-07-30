@@ -80,9 +80,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         et_quantity = (EditText) findViewById(R.id.et_quantity);
         ((Button) findViewById(R.id.btn_add_collection)).setOnClickListener(this);
 
-
-        new ProductDetailTask().execute();
-
+        if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+            new ProductDetailTask().execute();
+        }
     }
 
     private void prepareBanner() {
@@ -140,8 +140,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     ((EditText) findViewById(R.id.et_quantity)).requestFocus();
                     break;
                 } else {
-                    new AddToCollectionTask().execute();
-
+                    if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+                        new AddToCollectionTask().execute();
+                    }
                 }
         }
     }
@@ -249,9 +250,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                                 }
 
                                 else {
+                                    if(Utils.isNetworkConnected(getApplicationContext(),true)){
                                     new UpdateCollectionTask().execute();
                                 }
-                            }
+                            }}
                         });
 
                     }

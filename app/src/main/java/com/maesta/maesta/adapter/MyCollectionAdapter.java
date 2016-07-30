@@ -1,7 +1,6 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.maesta.maesta.AboutusActivity;
 import com.maesta.maesta.BaseActivity;
-import com.maesta.maesta.LoginActivity;
 import com.maesta.maesta.MyCollectionActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.AppPreferences;
@@ -26,10 +22,8 @@ import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Collection;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,7 +66,9 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
                 Utils.showDecisionDialog(context, "Logout", " Do you really want to remove", new Utils.AlertCallback() {
                     @Override
                     public void callback() {
-                        new RemoveOrderTask().execute(collections.id + "", position + "");
+                        if (Utils.isNetworkConnected(context, true)) {
+                            new RemoveOrderTask().execute(collections.id + "", position + "");
+                        }
                     }
                 });
 
@@ -82,7 +78,11 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new UpdateCollectionTask().execute(collections.id + "", position + "");
+                if (quantityNo.equalsIgnoreCase("0")) {
+                    Toast.makeText(context, "Invaild Quantity", Toast.LENGTH_LONG).show();
+                } else if (Utils.isNetworkConnected(context, true)) {
+                    new UpdateCollectionTask().execute(collections.id + "", position + "");
+                }
             }
         });
     }
@@ -228,7 +228,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //((BaseActivity) context).showProgessDialog();
+            ((BaseActivity) context).showProgessDialog();
         }
 
         @Override
@@ -250,7 +250,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            //((BaseActivity) context).dismissProgressDialog();
+            ((BaseActivity) context).dismissProgressDialog();
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {

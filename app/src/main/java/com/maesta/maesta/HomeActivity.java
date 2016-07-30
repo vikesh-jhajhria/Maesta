@@ -119,8 +119,10 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-                    new GetSearchProductsTask().execute();
-                    return true;
+                    if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                        new GetSearchProductsTask().execute();
+                        return true;
+                    }
                 }
                 return false;
             }

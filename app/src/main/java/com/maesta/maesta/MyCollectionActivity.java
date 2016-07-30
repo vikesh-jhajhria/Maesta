@@ -59,9 +59,10 @@ public class MyCollectionActivity extends BaseActivity {
             recyclerView.setAdapter(collectionAdapter);
             totalprice = (TextView) findViewById(R.id.txtview_total_price);
             findViewById(R.id.btn_place_order).setOnClickListener(this);
+            if(Utils.isNetworkConnected(getApplicationContext(),true)) {
 
-
-            new MyCollectionTask().execute();
+                new MyCollectionTask().execute();
+            }
 
         }
     }

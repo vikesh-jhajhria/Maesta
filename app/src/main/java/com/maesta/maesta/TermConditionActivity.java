@@ -29,7 +29,9 @@ public class TermConditionActivity extends BaseActivity {
         setContentView(R.layout.activity_terms_condition);
         setToolbar();
         applyFont();
-        new GetTermsTask().execute();
+        if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+            new GetTermsTask().execute();
+        }
     }
 
     private void setToolbar() {

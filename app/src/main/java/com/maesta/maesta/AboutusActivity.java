@@ -32,7 +32,11 @@ public class AboutusActivity extends BaseActivity {
         setContentView(R.layout.activity_aboutus);
         setToolbar();
         applyFont();
-        new GetAboutusTask().execute();
+
+        if(Utils.isNetworkConnected(getApplicationContext(),true)){
+            new GetAboutusTask().execute();
+        }
+
     }
 
     private void setToolbar() {

@@ -55,7 +55,9 @@ public class ListingActivity extends BaseActivity {
         recyclerView.setAdapter(listingAdapter);
 
         categoryId = getIntent().getIntExtra("ID", 0);
-        new GetProductsTask().execute(categoryId + "");
+        if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+            new GetProductsTask().execute(categoryId + "");
+        }
     }
 
     private void setToolbar() {
