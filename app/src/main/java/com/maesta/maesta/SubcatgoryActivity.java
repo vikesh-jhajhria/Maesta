@@ -52,7 +52,9 @@ public class SubcatgoryActivity extends BaseActivity {
             setToolbar();
 
             categoryId = getIntent().getIntExtra("ID", 0);
-            new SubCategoryTask().execute(categoryId + "");
+            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                new SubCategoryTask().execute(categoryId + "");
+            }
         }
     }
 

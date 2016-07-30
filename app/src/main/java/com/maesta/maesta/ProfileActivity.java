@@ -35,7 +35,9 @@ public class ProfileActivity extends BaseActivity {
         mPrefs = AppPreferences.getAppPreferences(ProfileActivity.this);
         setToolbar();
         applyFont();
-        new ProfileTask().execute();
+        if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+            new ProfileTask().execute();
+        }
         name = (TextView) findViewById(R.id.textview_username);
         mobileno = (TextView) findViewById(R.id.textview_mobile_no);
         adress = (TextView) findViewById(R.id.textview_billing_address);

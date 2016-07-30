@@ -36,7 +36,9 @@ public class ContactUsActivity extends BaseActivity {
         findViewById(R.id.btn_mobile_change).setOnClickListener(this);
         setToolbar();
         applyFont();
-        new GetContactDetailTask().execute();
+        if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+            new GetContactDetailTask().execute();
+        }
     }
 
     private void setToolbar() {
@@ -95,9 +97,10 @@ public class ContactUsActivity extends BaseActivity {
                     ((EditText)findViewById(R.id.et_msg)).setError(getString(R.string.err_message));
                     ((EditText)findViewById(R.id.et_msg)).requestFocus();
                     break;
-                }
-               new ContactUsTask().execute(name,number,message);
+                }   if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+                   new ContactUsTask().execute(name, number, message);
                 break;
+            }
         }
     }
 
