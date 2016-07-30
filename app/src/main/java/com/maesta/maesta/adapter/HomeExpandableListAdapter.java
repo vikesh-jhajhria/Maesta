@@ -51,7 +51,7 @@ return null;
         Utils.setTypeface(mContext, txt, Config.REGULAR);
         Glide.with(mContext).load(parentItems.get(groupPosition).iconURL).asBitmap()
                 .placeholder(R.drawable.banner_1).centerCrop()
-                .into((CircleImageView) convertView.findViewById(R.id.img_item));
+                .into((ImageView) convertView.findViewById(R.id.img_item));
 
         return convertView;
     }

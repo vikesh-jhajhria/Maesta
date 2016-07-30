@@ -146,6 +146,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
         android:background="@color/white"
+        android:scrollbars="none"
         android:divider="@null"
         android:groupIndicator="@null"
         android:visibility="visible" />

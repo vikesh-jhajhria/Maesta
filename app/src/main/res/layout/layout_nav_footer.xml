@@ -3,79 +3,113 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_30"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_5"
-        android:background="@color/hLineColor" />
+        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@color/bg_color" />
 
 
     <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/my_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
-
-        <TextView
-            android:id="@+id/txt_my_profile"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:clickable="false"
-            android:drawableLeft="@drawable/my_profile"
-            android:drawablePadding="@dimen/margin_20"
-            android:includeFontPadding="false"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_10"
-            android:text="@string/my_profile"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_22" />
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16">
+
+
+            <ImageView
+                android:id="@+id/img_item"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/margin_9"
+                android:layout_marginTop="@dimen/margin_9"
+                android:src="@drawable/my_profile" />
+
+            <TextView
+                android:id="@+id/txt_my_profile"
+                android:layout_width="match_parent"
+                android:clickable="false"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_72"
+                android:gravity="center_vertical"
+                android:text="@string/my_profile"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_22" />
+        </RelativeLayout>
 
 
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/my_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
-        <TextView
-            android:id="@+id/txt_my_order"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:clickable="false"
-            android:drawableLeft="@drawable/my_order"
-            android:drawablePadding="@dimen/margin_20"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_10"
-            android:text="@string/my_order"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_22" />
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16">
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/margin_9"
+                android:layout_marginTop="@dimen/margin_9"
+                android:src="@drawable/my_order" />
+
+            <TextView
+                android:id="@+id/txt_my_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_72"
+                android:gravity="center_vertical"
+                android:text="@string/my_order"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_22" />
+        </RelativeLayout>
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <View
 
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/margin_5"
-        android:background="@color/hLineColor" />
+        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@color/bg_color" />
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
         <TextView
             android:id="@+id/txt_about_us"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_15"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
             android:text="@string/aboutus"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
@@ -83,16 +117,15 @@
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
         <TextView
             android:id="@+id/txt_contact_us"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_10"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
             android:text="@string/contact_us"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
@@ -100,16 +133,15 @@
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
         <TextView
             android:id="@+id/txt_terms"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_10"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
             android:text="@string/terms_condition"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
@@ -117,16 +149,15 @@
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
         <TextView
             android:id="@+id/txt_logout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_20"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_10"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
             android:text="@string/logout"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/font_22" />
