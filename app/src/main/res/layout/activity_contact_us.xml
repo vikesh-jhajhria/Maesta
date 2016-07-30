@@ -22,215 +22,222 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?actionBarSize"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16"
-            android:layout_marginRight="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_16"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_2"
-            app:cardUseCompatPadding="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/inquiry_txtview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_20"
-                    android:layout_marginRight="@dimen/margin_20"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:text="@string/inquiry"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/font_28" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/pass_name_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-
-                    <EditText
-                        android:id="@+id/et_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:hint="@string/name"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textSize="@dimen/font_22" />
-
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/new_contact_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-
-                    <EditText
-                        android:id="@+id/et_contact"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:hint="@string/contact"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:textSize="@dimen/font_22" />
-
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/new_msg_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-
-                    <EditText
-                        android:id="@+id/et_msg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:hint="@string/msg"
-                        android:inputType="text"
-                        android:maxLines="5"
-                        android:textSize="@dimen/font_22" />
-
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.v7.widget.CardView
-
-                    android:id="@+id/btn_pass_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="20dp"
-                    android:clickable="false"
-                    app:cardBackgroundColor="@color/redButtonColor"
-                    app:cardCornerRadius="@dimen/margin_25"
-                    app:cardUseCompatPadding="false">
-
-                    <Button
-
-                        android:id="@+id/btn_mobile_change"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:text="@string/send"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_30" />
-
-                </android.support.v7.widget.CardView>
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_16"
-            android:layout_marginLeft="@dimen/margin_16"
-            android:layout_marginRight="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_16"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/margin_2"
-            app:cardUseCompatPadding="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
-
-
-                <TextView
-                    android:id="@+id/contct_txtview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:text="@string/contact_adres"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/font_28" />
-
-                <TextView
-                    android:id="@+id/contact_adres_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:text="@string/maesta_distributor"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_18" />
-
-                <TextView
-                    android:id="@+id/full_adres_txtview1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:text="@string/distributor_adres"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_18" />
-
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/margin_2"
+                app:cardUseCompatPadding="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/phone_txtview"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/inquiry_txtview"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:text="@string/phone"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:layout_marginRight="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:text="@string/inquiry"
                         android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/font_28" />
 
-                        android:textSize="@dimen/font_18" />
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/pass_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+
+                        <EditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:hint="@string/name"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="@dimen/font_22" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/new_contact_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+
+                        <EditText
+                            android:id="@+id/et_contact"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:hint="@string/contact"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textSize="@dimen/font_22" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/new_msg_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+
+
+                        <EditText
+                            android:id="@+id/et_msg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:hint="@string/msg"
+                            android:inputType="text"
+                            android:maxLines="5"
+                            android:textSize="@dimen/font_22" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.v7.widget.CardView
+
+                        android:id="@+id/btn_pass_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_margin="20dp"
+                        android:clickable="false"
+                        app:cardBackgroundColor="@color/redButtonColor"
+                        app:cardCornerRadius="@dimen/margin_25"
+                        app:cardUseCompatPadding="false">
+
+                        <Button
+
+                            android:id="@+id/btn_mobile_change"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:text="@string/send"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/font_30" />
+
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/margin_2"
+                app:cardUseCompatPadding="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_16"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
 
                     <TextView
-                        android:id="@+id/txtview_phone_no"
+                        android:id="@+id/contct_txtview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:text="@string/contact_adres"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/font_28" />
+
+                    <TextView
+                        android:id="@+id/contact_adres_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_20"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:text="@string/phone_number"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:text="@string/maesta_distributor"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_18" />
+
+                    <TextView
+                        android:id="@+id/full_adres_txtview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+
+                        android:text="@string/distributor_adres"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_18" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/phone_txtview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:text="@string/phone"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/font_18" />
+
+                        <TextView
+                            android:id="@+id/txtview_phone_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:text="@string/phone_number"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_18" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
 
 
