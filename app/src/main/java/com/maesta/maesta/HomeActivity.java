@@ -3,6 +3,7 @@ package com.maesta.maesta;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -21,6 +23,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -62,7 +65,7 @@ import java.util.Map;
 /**
  * Created by vikesh.kumar on 7/18/2016.
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private ArrayList<Banner> bannerList = new ArrayList<>();
     private ArrayList<Product> newArrivalList = new ArrayList<>();
@@ -84,6 +87,7 @@ public class HomeActivity extends BaseActivity {
     RecyclerView searchRecycler;
     String search = "";
     int categordId;
+    SwipeRefreshLayout swipeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,7 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
 
         mPrefs = AppPreferences.getAppPreferences(HomeActivity.this);
+
 
 
         RecyclerViewHeader header = (RecyclerViewHeader) findViewById(R.id.rv_header);
@@ -122,6 +127,25 @@ public class HomeActivity extends BaseActivity {
 
         });
 
+
+        swipeView = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        swipeView.setOnRefreshListener(this);
+        swipeView.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
+        swipeView.setDistanceToTriggerSync(20);// in dips
+        swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
+
+        findViewById(R.id.rv_categories).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+                int scrollY = findViewById(R.id.rv_categories).getScrollY();
+                if (scrollY == 0) swipeView.setEnabled(true);
+                else swipeView.setEnabled(false);
+
+            }
+        });
+
         prepareNewArrival();
         prepareCategories();
         header.attachTo(catetoriesRV);
@@ -151,6 +175,19 @@ public class HomeActivity extends BaseActivity {
         applyFont();
     }
 
+    @Override
+    public void onRefresh() {
+
+        swipeView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Utils.isNetworkConnected(getApplicationContext(), true))
+                    new HomeTask().execute();
+                else
+                    swipeView.setRefreshing(false);
+            }
+        }, 1000);
+    }
     private void addDrawerItems() {
         mExpandableListAdapter = new HomeExpandableListAdapter(this, categoryList);
         mExpandableListView.setAdapter(mExpandableListAdapter);
@@ -215,6 +252,7 @@ public class HomeActivity extends BaseActivity {
     private void prepareBanner() {
         pagerIndicatorList = new ArrayList<>();
         bannerAdapter = new BannerAdapter(getSupportFragmentManager());
+        ((RadioGroup) findViewById(R.id.pager_indicator_group)).removeAllViews();
         for (int i = 0; i < bannerList.size(); i++) {
             RadioButton btn = createDot();
             pagerIndicatorList.add(btn);
@@ -368,6 +406,7 @@ public class HomeActivity extends BaseActivity {
                     JSONObject bannerData = object.getJSONObject("banner");
                     if (bannerData.getBoolean("status")) {
                         JSONArray bannerArray = bannerData.getJSONArray("data");
+                        bannerList.clear();
                         for (int i = 0; i < bannerArray.length(); i++) {
                             Banner banner = new Banner();
                             banner.url = ((JSONObject) bannerArray.get(i)).getString("image");
@@ -377,6 +416,7 @@ public class HomeActivity extends BaseActivity {
                     JSONObject productData = object.getJSONObject("product");
                     if (productData.getBoolean("status")) {
                         JSONArray productArray = productData.getJSONArray("data");
+                        newArrivalList.clear();
                         for (int i = 0; i < productArray.length(); i++) {
                             Product product = new Product();
                             product.id = ((JSONObject) productArray.get(i)).getInt("id");
@@ -384,13 +424,12 @@ public class HomeActivity extends BaseActivity {
                             product.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
                             product.title = ((JSONObject) productArray.get(i)).getString("name");
                             newArrivalList.add(product);
-
-
                         }
                     }
                     JSONObject categoryData = object.getJSONObject("category");
                     if (categoryData.getBoolean("status")) {
                         JSONArray categoryArray = categoryData.getJSONArray("data");
+                        categoryList.clear();
                         for (int i = 0; i < categoryArray.length(); i++) {
                             Product product = new Product();
                             product.id = ((JSONObject) categoryArray.get(i)).getInt("id");
@@ -406,6 +445,7 @@ public class HomeActivity extends BaseActivity {
                     newArrivalAdapter.notifyDataSetChanged();
                     categoriesAdapter.notifyDataSetChanged();
                     prepareBanner();
+                    swipeView.setRefreshing(false);
                 } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(HomeActivity.this);
                 } else {

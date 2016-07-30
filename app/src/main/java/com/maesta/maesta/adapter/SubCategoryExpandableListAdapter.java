@@ -64,6 +64,13 @@ public class SubCategoryExpandableListAdapter extends BaseExpandableListAdapter 
             convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                     .inflate(R.layout.item_product_subcategary, null);
         }
+        convertView.findViewById(R.id.line_bottom).setVisibility(View.GONE);
+        if(groupPosition == 0){
+            convertView.findViewById(R.id.line_top).setVisibility(View.GONE);
+        }
+        if(groupPosition == parentItems.size()-1){
+            convertView.findViewById(R.id.line_bottom).setVisibility(View.VISIBLE);
+        }
         TextView txt = ((TextView) convertView.findViewById(R.id.txt_product_name));
         txt.setText(parentItems.get(groupPosition).title);
         Utils.setTypeface(mContext, txt, Config.REGULAR);

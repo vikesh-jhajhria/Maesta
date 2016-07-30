@@ -68,7 +68,7 @@
         android:layout_height="0.5dp"
         android:layout_alignParentTop="true"
         android:background="@color/hLineColor"
-        android:visibility="invisible"></View>
+        android:visibility="visible"></View>
 
     <View
         android:id="@+id/line_bottom"
@@ -76,5 +76,5 @@
         android:layout_height="0.5dp"
         android:layout_below="@+id/rl1"
         android:background="@color/hLineColor"
-        android:visibility="visible"></View>
+        android:visibility="invisible"></View>
 </RelativeLayout>
