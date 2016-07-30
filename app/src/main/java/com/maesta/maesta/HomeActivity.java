@@ -271,6 +271,7 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
