@@ -24,28 +24,29 @@
 
     <RelativeLayout
         android:id="@+id/rl1"
-
+        android:layout_marginBottom="65dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_add_collection">
 
-        <include layout="@layout/item_product_detail">
+        <include layout="@layout/item_product_detail"
+            >
 
         </include>
 
-        <Button
-            android:id="@+id/btn_add_collection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/margin_8"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorAccent"
-            android:text="@string/add_to_collection"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_22"
-            android:textStyle="bold" />
-
     </RelativeLayout>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:id="@+id/btn_add_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/colorAccent"
+        android:text="@string/add_to_collection"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_22"
+        android:textStyle="bold" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -5,9 +5,9 @@
     android:id="@+id/card_listing"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginRight="@dimen/margin_8"
-    android:layout_marginLeft="@dimen/margin_8"
-    android:layout_marginTop="@dimen/margin_16"
+    android:layout_marginRight="@dimen/margin_6"
+    android:layout_marginLeft="@dimen/margin_6"
+    android:layout_marginTop="@dimen/margin_12"
 
     app:cardBackgroundColor="@color/white"
     app:cardElevation="@dimen/margin_2"
@@ -30,6 +30,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:gravity="center_vertical"
             android:layout_height="match_parent"
             android:padding="@dimen/margin_2">
 
@@ -40,8 +41,8 @@
                 android:layout_marginTop="@dimen/margin_5"
                 android:gravity="center"
                 android:maxLines="2"
-                android:paddingLeft="@dimen/margin_5"
-                android:paddingRight="@dimen/margin_5"
+                android:paddingLeft="@dimen/margin_12"
+                android:paddingRight="@dimen/margin_12"
                 android:text="hdgfhfghfghfghfghfhfghfghfgfghfghfghfghh"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/font_22" />
