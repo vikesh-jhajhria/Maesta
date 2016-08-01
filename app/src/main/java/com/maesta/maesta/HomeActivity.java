@@ -1,20 +1,15 @@
 package com.maesta.maesta;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -25,14 +20,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -43,18 +32,13 @@ import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.maesta.maesta.adapter.BannerAdapter;
 import com.maesta.maesta.adapter.CategoriesAdapter;
 import com.maesta.maesta.adapter.HomeExpandableListAdapter;
-import com.maesta.maesta.adapter.MyCollectionAdapter;
 import com.maesta.maesta.adapter.NewArrivalAdapter;
-import com.maesta.maesta.adapter.SearchAdapter;
-import com.maesta.maesta.datasource.ExpandableListDataSource;
 import com.maesta.maesta.fragment.BannerFragment;
 import com.maesta.maesta.utils.AppPreferences;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.HTTPUrlConnection;
 import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Banner;
-import com.maesta.maesta.vo.Collection;
-import com.maesta.maesta.vo.ListingVO;
 import com.maesta.maesta.vo.Product;
 
 import org.json.JSONArray;
@@ -64,7 +48,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by vikesh.kumar on 7/18/2016.
@@ -139,20 +122,6 @@ public class HomeActivity extends BaseActivity {
         addDrawerItems();
         applyFont();
     }
-
-    /*@Override
-    public void onRefresh() {
-
-        swipeView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (Utils.isNetworkConnected(getApplicationContext(), true))
-                    new HomeTask().execute();
-                else
-                    swipeView.setRefreshing(false);
-            }
-        }, 1000);
-    }*/
 
     private void addDrawerItems() {
         mExpandableListAdapter = new HomeExpandableListAdapter(this, categoryList);
