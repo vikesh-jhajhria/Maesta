@@ -8,14 +8,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="@dimen/margin_2"
             app:cardUseCompatPadding="true"
@@ -43,6 +43,8 @@
                         android:id="@+id/pager_indicator_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_2"
+                        android:background="@drawable/round_rect"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/margin_10"
@@ -76,6 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="@dimen/margin_2"
             app:cardUseCompatPadding="true"
@@ -94,7 +98,7 @@
                     android:layout_margin="@dimen/margin_10"
                     android:text=""
                     android:textColor="@color/redButtonColor"
-                    android:textSize="@dimen/font_22" />
+                    android:textSize="@dimen/font_24" />
 
                 <TextView
                     android:id="@+id/textview_price_detail"
@@ -103,7 +107,7 @@
                     android:layout_marginLeft="@dimen/margin_10"
                     android:text="*Price are inclusive of All Taxes"
                     android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_22" />
+                    android:textSize="@dimen/font_20" />
 
                 <View
                     android:layout_width="match_parent"
@@ -135,6 +139,7 @@
                         android:layout_toRightOf="@+id/txtview_quantity"
                         android:background="@drawable/square"
                         android:inputType="number"
+                        android:maxLength="5"
                         android:padding="3dp"
                         android:textColor="@color/textColorBlack" />
                 </RelativeLayout>
@@ -144,8 +149,9 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/margin_12"
-            android:layout_marginTop="@dimen/margin_12"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_10"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="@dimen/margin_2"
             app:cardUseCompatPadding="true"
@@ -170,10 +176,11 @@
                 <TextView
 
                     android:id="@+id/textview_desc_detail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_25"
                     android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
                     android:text="N/A"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_22" />

@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.maesta.maesta.R;
 import com.maesta.maesta.utils.Config;
 import com.maesta.maesta.utils.Utils;
@@ -39,6 +41,9 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
         holder.quantity.setText(orderDetail.quantity );
         holder.price.setText(orderDetail.price );
 
+        Glide.with(context).load(orderDetail.thumbURL).asBitmap()
+                .placeholder(R.drawable.banner_1).fitCenter().into(holder.product_image);
+
     }
     @Override
     public int getItemCount() {
@@ -47,20 +52,19 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
 
     class ViewHolder extends RecyclerView.ViewHolder  {
         TextView  product_name, quantity, price, quantityno;
-
-       // CardView product_detail_card;
+        ImageView product_image;
 
         public ViewHolder(View itemView) {
             super(itemView);;
             product_name    =   (TextView) itemView.findViewById(R.id.txtview_product_name);
             quantity       =   (TextView) itemView.findViewById(R.id. txtview_quantity);
             price        =   (TextView) itemView.findViewById(R.id.txt_view_price);
-            quantityno        =   (TextView) itemView.findViewById(R.id.txtview_quantity_number);
+            quantityno        =   (TextView) itemView.findViewById(R.id.et_quantity_number);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price),Config.BOLD);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity), Config.MEDIUM);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity_number), Config.REGULAR);
-           // product_detail_card    =   (CardView) itemView.findViewById(R.id.product_detail_card);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.et_quantity_number), Config.REGULAR);
+            product_image =   (ImageView) itemView.findViewById(R.id.img_item);
 
 
 

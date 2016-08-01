@@ -128,6 +128,18 @@ public class ResetActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     Toast.makeText(ResetActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
+                    JSONObject data = object.getJSONObject("data");
+                    AppPreferences pref = AppPreferences.getAppPreferences(getApplicationContext());
+                    pref.putStringValue(AppPreferences.USER_ID, data.getString("id"));
+                    pref.putStringValue(AppPreferences.USER_NAME, data.getString("name"));
+                    pref.putStringValue(AppPreferences.USER_EMAIL, data.getString("email"));
+                    pref.putStringValue(AppPreferences.USER_PHONE, data.getString("mobile"));
+                    pref.putStringValue(AppPreferences.ADDRESS, data.getString("address"));
+                    pref.putStringValue(AppPreferences.API_KEY, data.getString("api_key"));
+                    pref.putStringValue(AppPreferences.CURRENT_CATEGORY_LEVEL, data.getString("current_category_level"));
+                    pref.putStringValue(AppPreferences.NEXT_CATEGORY_LEVEL, data.getString("next_category_level"));
+                    pref.putStringValue(AppPreferences.REMAINING_TARGET, data.getString("remaining_target"));
+
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     finishAffinity();
                 } else {

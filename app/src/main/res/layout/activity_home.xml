@@ -64,10 +64,10 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <!--<android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content">-->
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -93,6 +93,7 @@
                         android:orientation="vertical">
 
                         <RelativeLayout
+                            android:id="@+id/rl_banner"
                             android:layout_width="match_parent"
                             android:layout_height="150dp">
 
@@ -106,6 +107,8 @@
                                 android:id="@+id/pager_indicator_group"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:padding="@dimen/margin_2"
+                                android:background="@drawable/round_rect"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="@dimen/margin_10"
@@ -120,6 +123,7 @@
                             android:layout_marginLeft="@dimen/activity_horizontal_margin"
                             android:layout_marginTop="@dimen/margin_15"
                             android:text="@string/new_arrivals"
+                            android:visibility="gone"
                             android:textColor="@color/textColorBlack"
                             android:textSize="@dimen/font_22" />
 
@@ -128,15 +132,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_10"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                            android:layout_marginRight="@dimen/activity_horizontal_margin" />
+                            android:layout_marginLeft="@dimen/margin_7"
+                            android:layout_marginRight="@dimen/margin_7" />
 
                     </LinearLayout>
                 </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
 
 
             </FrameLayout>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
     </LinearLayout>
 
     <ExpandableListView

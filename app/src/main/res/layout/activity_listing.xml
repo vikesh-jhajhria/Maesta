@@ -22,19 +22,18 @@
     </android.support.design.widget.AppBarLayout>
 
 
-        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/recycle_view"
-            android:layout_marginRight="@dimen/margin_6"
-            android:layout_marginLeft="@dimen/margin_6"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/margin_12"
-            android:layout_above="@+id/card1"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_alignParentTop="true"
-            />
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/card1"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/margin_7"
+        android:layout_marginRight="@dimen/margin_7"
+        android:paddingBottom="@dimen/margin_12"
+        android:paddingTop="@dimen/margin_4"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>

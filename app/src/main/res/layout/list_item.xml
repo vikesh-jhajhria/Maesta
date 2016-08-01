@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/margin_5"
         android:paddingTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_10"
         android:textSize="@dimen/font_22"
         android:paddingLeft="82dp"
         android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"

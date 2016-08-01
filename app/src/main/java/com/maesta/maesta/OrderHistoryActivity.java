@@ -33,6 +33,10 @@ public class OrderHistoryActivity extends BaseActivity {
     private List<Order> orderList;
     private OrderHistoryAdapter orderAdapter;
     AppPreferences mPrefs;
+    private int page = 1;
+    private boolean loadNextPage = true;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,29 @@ public class OrderHistoryActivity extends BaseActivity {
             final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(orderAdapter);
+
+            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (dy > 0) {
+                        visibleItemCount = layoutManager.getChildCount();
+                        totalItemCount = layoutManager.getItemCount();
+                        firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                        if (loadNextPage) {
+                            if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                                loadNextPage = false;
+                                page++;
+
+                                if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                                    new OrderHistoryTask().execute();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
             if (Utils.isNetworkConnected(getApplicationContext(), true)) {
                 new OrderHistoryTask().execute();
             }
@@ -64,7 +91,7 @@ public class OrderHistoryActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -72,6 +99,7 @@ public class OrderHistoryActivity extends BaseActivity {
 
         return false;
     }
+
     class OrderHistoryTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
@@ -88,7 +116,7 @@ public class OrderHistoryActivity extends BaseActivity {
             String UserId = mPrefs.getStringValue(AppPreferences.USER_ID);
             postDataParams.put("api_key", apikey);
             postDataParams.put("customer_id", UserId);
-            postDataParams.put("page", "1");
+            postDataParams.put("page", page + "");
 
 
             return HTTPUrlConnection.getInstance().load(Config.ORDER_HISTORY, postDataParams);
@@ -102,20 +130,21 @@ public class OrderHistoryActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONArray orderArray = object.getJSONArray("data");
-                    for(int i= 0; i < orderArray.length(); i++) {
+                    for (int i = 0; i < orderArray.length(); i++) {
                         Order order = new Order();
-                        order.order_id = ((JSONObject)orderArray.get(i)).getString("order_id");
-                        order.invoice_number = ((JSONObject)orderArray.get(i)).getString("invoice_number");
-                        order.order_place = ((JSONObject)orderArray.get(i)).getString("order_place");
-                        order.order_status = ((JSONObject)orderArray.get(i)).getString("order_status");
-                        order.total_amount = ((JSONObject)orderArray.get(i)).getString("total_amount");
+                        order.order_id = ((JSONObject) orderArray.get(i)).getString("order_id");
+                        order.invoice_number = ((JSONObject) orderArray.get(i)).getString("invoice_number");
+                        order.order_place = ((JSONObject) orderArray.get(i)).getString("order_place");
+                        order.order_status = ((JSONObject) orderArray.get(i)).getString("order_status");
+                        order.total_amount = ((JSONObject) orderArray.get(i)).getString("total_amount");
                         orderList.add(order);
                     }
                     orderAdapter.notifyDataSetChanged();
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    JSONObject pageObject = object.getJSONObject("paging");
+                    loadNextPage = pageObject.getBoolean("nextPage");
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(OrderHistoryActivity.this);
-                }
-                else {
+                } else {
                     Toast.makeText(OrderHistoryActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -126,4 +155,4 @@ public class OrderHistoryActivity extends BaseActivity {
     }
 
 
-    }
+}

@@ -39,6 +39,9 @@ public class SearchActivity extends BaseActivity {
     RecyclerView searchRecycler;
     String search = "", categoryId = "";
     AppPreferences mPrefs;
+    private int page = 1;
+    private boolean loadNextPage = true;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,29 @@ public class SearchActivity extends BaseActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         searchRecycler.setLayoutManager(layoutManager);
         searchRecycler.setAdapter(seachAdapter);
+
+        searchRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                    if (loadNextPage) {
+                        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                            loadNextPage = false;
+                            page++;
+
+                            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                                new GetSearchProductsTask().execute();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         ((EditText) findViewById(R.id.txt_search)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -111,7 +137,7 @@ public class SearchActivity extends BaseActivity {
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
 
-            postDataParams.put("page", "1");
+            postDataParams.put("page", page + "");
             postDataParams.put("search_text", search);
             postDataParams.put("api_key", apikey);
             postDataParams.put("category_id", categoryId);
@@ -135,6 +161,8 @@ public class SearchActivity extends BaseActivity {
                         product.thumbURL = ((JSONObject) data.get(i)).getString("image");
 
                         searchList.add(product);
+                        JSONObject pageObject = object.getJSONObject("paging");
+                        loadNextPage = pageObject.getBoolean("nextPage");
                     }
                     seachAdapter.notifyDataSetChanged();
                 } else if (!object.isNull("apistatus") && object.getString("apistatus").equalsIgnoreCase("API rejection")) {

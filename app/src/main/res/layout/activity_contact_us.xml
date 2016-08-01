@@ -120,8 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:hint="@string/msg"
-                            android:inputType="text"
-                            android:maxLines="5"
+                            android:inputType="textMultiLine"
                             android:textSize="@dimen/font_22" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -136,7 +135,7 @@
                         android:layout_margin="20dp"
                         android:clickable="false"
                         app:cardBackgroundColor="@color/redButtonColor"
-                        app:cardCornerRadius="@dimen/margin_25"
+                        app:cardCornerRadius="@dimen/margin_1"
                         app:cardUseCompatPadding="false">
 
                         <Button
@@ -194,7 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16"
-                        android:text="@string/maesta_distributor"
+                        android:text=""
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_18" />
 
@@ -204,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
 
-                        android:text="@string/distributor_adres"
+                        android:text=""
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_18" />
 
@@ -230,7 +229,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="@dimen/margin_5"
-                            android:text="@string/phone_number"
+                            android:text=""
                             android:textColor="@color/textColorSecondary"
                             android:textSize="@dimen/font_18" />
                     </LinearLayout>

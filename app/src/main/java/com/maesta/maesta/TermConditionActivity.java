@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class TermConditionActivity extends BaseActivity {
     }
 
     private void applyFont() {
-        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_terms), Config.REGULAR);
+        //Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_terms), Config.REGULAR);
     }
 
     class GetTermsTask extends AsyncTask<String, Void, String> {
@@ -84,7 +85,7 @@ public class TermConditionActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
-                    ((TextView) findViewById(R.id.txt_terms)).setText(Html.fromHtml(data.getString("description")));
+                    ((WebView) findViewById(R.id.txt_terms)).loadData(data.getString("description"), "text/html; charset=utf-8", "UTF-8");
                 }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(TermConditionActivity.this);
                 } else {

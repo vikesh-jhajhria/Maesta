@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.maesta.maesta.BaseActivity;
 import com.maesta.maesta.ListingActivity;
 import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
@@ -43,7 +44,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
     @Override
     public ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_home_category_item, parent, false);
-        return new ProductHolder(view);
+        ProductHolder holder = new ProductHolder(view);
+        ViewGroup.LayoutParams params = holder.image.getLayoutParams();
+        params.height = (10*((int) Utils.getDeviceSize((BaseActivity)context).get("Width"))) / 22;
+        holder.image.setLayoutParams(params);
+        return holder;
     }
 
     @Override

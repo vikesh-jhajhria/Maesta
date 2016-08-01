@@ -33,9 +33,11 @@ public class OrderHistoryDetailActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<Collection> orderdetail;
     private OrderHistoryDetailAdapter orderAdapter;
-    AppPreferences mPrefs;
-    String orderId = "";
-
+    private AppPreferences mPrefs;
+    private String orderId = "";
+    private int page = 1;
+    private boolean loadNextPage = true;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,28 @@ public class OrderHistoryDetailActivity extends BaseActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(orderAdapter);
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                    if (loadNextPage) {
+                        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                            loadNextPage = false;
+                            page++;
+
+                            if (Utils.isNetworkConnected(getApplicationContext(),true)) {
+                                new OrderHistoryDetailTask().execute(orderId);
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
         if (Utils.isNetworkConnected(this, true)) {
             new OrderHistoryDetailTask().execute(orderId);
@@ -88,7 +112,7 @@ public class OrderHistoryDetailActivity extends BaseActivity {
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             postDataParams.put("api_key", apikey);
             postDataParams.put("order_id", params[0]);
-            postDataParams.put("page", "1");
+            postDataParams.put("page", page+"");
             return HTTPUrlConnection.getInstance().load(Config.ORDER_HISTORY_DETAIL, postDataParams);
         }
 
@@ -111,6 +135,8 @@ public class OrderHistoryDetailActivity extends BaseActivity {
 
                     }
                 orderAdapter.notifyDataSetChanged();
+                    JSONObject pageObject= object.getJSONObject("paging");
+                    loadNextPage = pageObject.getBoolean("nextPage");
                 } else if  (!object.isNull("apistatus") && object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(OrderHistoryDetailActivity.this);
                 }else {

@@ -64,16 +64,16 @@ public class SubCategoryExpandableListAdapter extends BaseExpandableListAdapter 
             convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                     .inflate(R.layout.item_product_subcategary, null);
         }
-        convertView.findViewById(R.id.line_bottom).setVisibility(View.GONE);
+        convertView.findViewById(R.id.line_bottom).setVisibility(View.INVISIBLE);
         if(groupPosition == 0){
-            convertView.findViewById(R.id.line_top).setVisibility(View.GONE);
+            convertView.findViewById(R.id.line_top).setVisibility(View.INVISIBLE);
         }
         if(groupPosition == parentItems.size()-1){
             convertView.findViewById(R.id.line_bottom).setVisibility(View.VISIBLE);
         }
         TextView txt = ((TextView) convertView.findViewById(R.id.txt_product_name));
         txt.setText(parentItems.get(groupPosition).title);
-        Utils.setTypeface(mContext, txt, Config.REGULAR);
+        Utils.setTypeface(mContext, txt, Config.BOLD);
         Glide.with(mContext).load(parentItems.get(groupPosition).iconURL).asBitmap()
                 .placeholder(R.drawable.banner_1).centerCrop()
                 .into((CircleImageView) convertView.findViewById(R.id.img_user_icon));

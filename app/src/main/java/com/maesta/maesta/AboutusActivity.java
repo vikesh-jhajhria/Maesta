@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +57,7 @@ public class AboutusActivity extends BaseActivity {
     }
 
     private void applyFont() {
-        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_about), Config.REGULAR);
+        //Utils.setTypeface(getApplicationContext(), (WebView) findViewById(R.id.txt_about), Config.REGULAR);
     }
     class GetAboutusTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
@@ -86,7 +87,8 @@ public class AboutusActivity extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
                     JSONObject data = object.getJSONObject("data");
-                    ((TextView) findViewById(R.id.txt_about)).setText(Html.fromHtml(data.getString("description")));
+                    ((WebView) findViewById(R.id.txt_about)).loadData(data.getString("description"), "text/html; charset=utf-8", "UTF-8");
+                    //.setText(Html.fromHtml(data.getString("description")));
                     Glide.with(getApplicationContext()).load(data.getString("image")).asBitmap()
                             .placeholder(R.drawable.banner_1).fitCenter().into((ImageView) findViewById(R.id.img_about));
                 }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {

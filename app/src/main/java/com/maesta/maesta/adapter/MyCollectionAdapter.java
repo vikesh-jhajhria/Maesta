@@ -63,7 +63,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.showDecisionDialog(context, "Logout", " Do you really want to remove", new Utils.AlertCallback() {
+                Utils.showDecisionDialog(context, "Alert !", " Do you really want to remove the selected item ?", new Utils.AlertCallback() {
                     @Override
                     public void callback() {
                         if (Utils.isNetworkConnected(context, true)) {
@@ -110,9 +110,9 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             txtview_remove = (TextView) itemView.findViewById(R.id.remove_txtview);
             update = (TextView) itemView.findViewById(R.id.txtview_update);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_product_name), Config.BOLD);
-            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity), Config.BOLD);
+            Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txtview_quantity), Config.REGULAR);
             Utils.setTypeface(context, (TextView) itemView.findViewById(R.id.txt_view_price), Config.BOLD);
-            Utils.setTypeface(context, (EditText) itemView.findViewById(R.id.et_quantity_number), Config.MEDIUM);
+            Utils.setTypeface(context, (EditText) itemView.findViewById(R.id.et_quantity_number), Config.REGULAR);
             product_detail_card = (CardView) itemView.findViewById(R.id.product_detail_card);
 
 

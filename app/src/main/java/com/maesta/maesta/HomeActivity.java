@@ -1,6 +1,7 @@
 package com.maesta.maesta;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,8 +32,10 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +69,7 @@ import java.util.Map;
 /**
  * Created by vikesh.kumar on 7/18/2016.
  */
-public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class HomeActivity extends BaseActivity {
 
     private ArrayList<Banner> bannerList = new ArrayList<>();
     private ArrayList<Product> newArrivalList = new ArrayList<>();
@@ -83,7 +87,6 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private List<RadioButton> pagerIndicatorList;
     TextView user_name;
     int categordId;
-    SwipeRefreshLayout swipeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,29 +105,15 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             new HomeTask().execute();
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
-        swipeView.setOnRefreshListener(this);
-        swipeView.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
-                Color.RED, Color.CYAN);
-        swipeView.setDistanceToTriggerSync(20);// in dips
-        swipeView.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
-
-        findViewById(R.id.rv_categories).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-
-            @Override
-            public void onScrollChanged() {
-                int scrollY = findViewById(R.id.rv_categories).getScrollY();
-                if (scrollY == 0) swipeView.setEnabled(true);
-                else swipeView.setEnabled(false);
-
-            }
-        });
-
         prepareNewArrival();
         prepareCategories();
         header.attachTo(catetoriesRV);
 
-
+        RelativeLayout rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
+        Log.v("width>>>",((int) Utils.getDeviceSize(this).get("Width"))+"");
+        ViewGroup.LayoutParams params = rl_banner.getLayoutParams();
+        params.height = (10*((int) Utils.getDeviceSize(this).get("Width"))) / 22;
+        rl_banner.setLayoutParams(params);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.navList);
@@ -151,7 +140,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         applyFont();
     }
 
-    @Override
+    /*@Override
     public void onRefresh() {
 
         swipeView.postDelayed(new Runnable() {
@@ -163,7 +152,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                     swipeView.setRefreshing(false);
             }
         }, 1000);
-    }
+    }*/
 
     private void addDrawerItems() {
         mExpandableListAdapter = new HomeExpandableListAdapter(this, categoryList);
@@ -366,6 +355,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                             product.title = ((JSONObject) productArray.get(i)).getString("name");
                             newArrivalList.add(product);
                         }
+                        findViewById(R.id.txt_new_arrival).setVisibility(View.VISIBLE);
                     }
                     JSONObject categoryData = object.getJSONObject("category");
                     if (categoryData.getBoolean("status")) {
@@ -386,7 +376,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                     newArrivalAdapter.notifyDataSetChanged();
                     categoriesAdapter.notifyDataSetChanged();
                     prepareBanner();
-                    swipeView.setRefreshing(false);
+                    //swipeView.setRefreshing(false);
                 } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(HomeActivity.this);
                 } else {
@@ -406,6 +396,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_about_us), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_contact_us), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_terms), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_new_arrival), Config.REGULAR);
 
     }
 

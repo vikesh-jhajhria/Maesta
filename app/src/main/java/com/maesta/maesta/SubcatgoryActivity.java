@@ -44,6 +44,7 @@ public class SubcatgoryActivity extends BaseActivity {
         {
             mPrefs = AppPreferences.getAppPreferences(SubcatgoryActivity.this);
             mExpandableListView = (ExpandableListView) findViewById(R.id.navList);
+            mExpandableListView.setFocusable(false);
             categoryList = new ArrayList<>();
             subCategoryList = new ArrayList<>();
             Glide.with(this).load(getIntent().getStringExtra("HEADER_IMAGE")).asBitmap()
@@ -106,9 +107,8 @@ public class SubcatgoryActivity extends BaseActivity {
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
 
 
-
-                if(((ArrayList<Product>) subCategoryList.get(i)).size() == 0) {
-                    Product selectedItem =  categoryList.get(i);
+                if (((ArrayList<Product>) subCategoryList.get(i)).size() == 0) {
+                    Product selectedItem = categoryList.get(i);
                     Intent intent = new Intent(SubcatgoryActivity.this, ListingActivity.class);
                     intent.putExtra("ID", (selectedItem.id));
                     intent.putExtra("TITLE", selectedItem.title);
@@ -177,10 +177,10 @@ public class SubcatgoryActivity extends BaseActivity {
 
                             for (int j = 0; j < subArray.length(); j++) {
                                 Product subProduct = new Product();
-                                subProduct.id = ((JSONObject) subArray.get(i)).getInt("id");
-                                subProduct.thumbURL = ((JSONObject) subArray.get(i)).getString("image");
-                                subProduct.iconURL = ((JSONObject) subArray.get(i)).getString("icon");
-                                subProduct.title = ((JSONObject) subArray.get(i)).getString("name");
+                                subProduct.id = ((JSONObject) subArray.get(j)).getInt("id");
+                                subProduct.thumbURL = ((JSONObject) subArray.get(j)).getString("image");
+                                subProduct.iconURL = ((JSONObject) subArray.get(j)).getString("icon");
+                                subProduct.title = ((JSONObject) subArray.get(j)).getString("name");
                                 child.add(subProduct);
                             }
                         }

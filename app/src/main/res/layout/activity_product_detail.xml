@@ -24,29 +24,30 @@
 
     <RelativeLayout
         android:id="@+id/rl1"
-        android:layout_marginBottom="65dp"
+        android:layout_marginTop="?actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_add_collection">
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:id="@+id/btn_add_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/colorAccent"
+            android:text="@string/add_to_collection"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_22"
+            android:textStyle="bold" />
 
         <include layout="@layout/item_product_detail"
-            >
-
-        </include>
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btn_add_collection"/>
     </RelativeLayout>
 
-    <Button
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:id="@+id/btn_add_collection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@color/colorAccent"
-        android:text="@string/add_to_collection"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_22"
-        android:textStyle="bold" />
+
 
 </android.support.design.widget.CoordinatorLayout>

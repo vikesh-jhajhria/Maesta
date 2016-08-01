@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <RelativeLayout
-        android:id="@+id/rl1"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/line_top"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/margin_12"
+        android:layout_marginBottom="@dimen/margin_12"
+        android:layout_marginLeft="@dimen/margin_70"
+        android:background="@color/hLineColor"
+        android:visibility="visible"></View>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_user_icon"
@@ -23,58 +28,38 @@
             android:src="@drawable/banner_1"
             app:civ_border_color="@color/hLineColor"
             app:civ_border_width="@dimen/margin_1" />
+        <TextView
+            android:id="@+id/txt_product_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/font_24" />
 
         <ImageView
             android:id="@+id/img_collapse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="17dp"
             android:src="@drawable/subcatory_arrow"
-            android:layout_alignBottom="@+id/img_user_icon"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignTop="@+id/img_collapse"
-            android:layout_toRightOf="@+id/img_user_icon"
-            android:layout_toEndOf="@+id/img_user_icon">
 
-            <TextView
-                android:id="@+id/txt_product_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/textColorSecondary"
-                android:textSize="@dimen/font_22" />
 
-            <!--<android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_subcategory"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"/>-->
 
-        </LinearLayout>
 
-    </RelativeLayout>
 
-    <View
-        android:id="@+id/line_top"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/hLineColor"
-        android:visibility="visible"></View>
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/line_bottom"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@+id/rl1"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/margin_70"
         android:background="@color/hLineColor"
-        android:visibility="invisible"></View>
-</RelativeLayout>
+        android:visibility="visible"></View>
+</LinearLayout>

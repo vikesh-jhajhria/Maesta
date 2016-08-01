@@ -37,6 +37,9 @@ public class ListingActivity extends BaseActivity {
     private ListingAdapter listingAdapter;
     private int categoryId;
     AppPreferences mPrefs;
+    private int page = 1;
+    private boolean loadNextPage = true;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +58,30 @@ public class ListingActivity extends BaseActivity {
         recyclerView.setAdapter(listingAdapter);
 
         categoryId = getIntent().getIntExtra("ID", 0);
-        if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                    if (loadNextPage) {
+                        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                            loadNextPage = false;
+                            page++;
+
+                            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                                new GetProductsTask().execute(categoryId + "");
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        if (Utils.isNetworkConnected(getApplicationContext(), true)) {
             new GetProductsTask().execute(categoryId + "");
         }
     }
@@ -80,7 +106,7 @@ public class ListingActivity extends BaseActivity {
 
         if (item.getItemId() == R.id.search) {
             startActivity(new Intent(getApplicationContext(), SearchActivity.class)
-            .putExtra("ID",categoryId+""));
+                    .putExtra("ID", categoryId + ""));
             return true;
         }
         if (item.getItemId() == R.id.check) {
@@ -113,7 +139,7 @@ public class ListingActivity extends BaseActivity {
             postDataParams = new HashMap<String, String>();
             String apikey = mPrefs.getStringValue(AppPreferences.API_KEY);
             postDataParams.put("category_id", params[0]);
-            postDataParams.put("page", "1");
+            postDataParams.put("page", page + "");
             postDataParams.put("search_text", " ");
             postDataParams.put("api_key", apikey);
             return HTTPUrlConnection.getInstance().load(Config.PRODUCT, postDataParams);
@@ -135,6 +161,9 @@ public class ListingActivity extends BaseActivity {
                         product.thumbURL = ((JSONObject) data.get(i)).getString("image");
 
                         productList.add(product);
+
+                        JSONObject pageObject = object.getJSONObject("paging");
+                        loadNextPage = pageObject.getBoolean("nextPage");
                     }
                     listingAdapter.notifyDataSetChanged();
                 }/*else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {

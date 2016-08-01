@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +44,7 @@ public class MyCollectionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.collection_layout_recycleview);
+        setContentView(R.layout.activity_mycollection);
         {
             mPrefs = AppPreferences.getAppPreferences(MyCollectionActivity.this);
             recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
@@ -59,7 +58,7 @@ public class MyCollectionActivity extends BaseActivity {
             recyclerView.setAdapter(collectionAdapter);
             totalprice = (TextView) findViewById(R.id.txtview_total_price);
             findViewById(R.id.btn_place_order).setOnClickListener(this);
-            if(Utils.isNetworkConnected(getApplicationContext(),true)) {
+            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
 
                 new MyCollectionTask().execute();
             }
@@ -91,7 +90,7 @@ public class MyCollectionActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn_place_order:
 
-                  if(Utils.isNetworkConnected(this,true) && collectionList.size() > 0) {
+                if (Utils.isNetworkConnected(this, true) && collectionList.size() > 0) {
                     new PlaceOrderTask().execute();
 
                 }
@@ -150,20 +149,18 @@ public class MyCollectionActivity extends BaseActivity {
                     for (int i = 0; i < productArray.length(); i++) {
                         Collection collection = new Collection();
                         collection.id = ((JSONObject) productArray.get(i)).getInt("collection_id");
-                        categoryId=((JSONObject) productArray.get(i)).getInt("collection_id");
+                        categoryId = ((JSONObject) productArray.get(i)).getInt("collection_id");
                         collection.product_name = ((JSONObject) productArray.get(i)).getString("name");
                         collection.quantity_number = ((JSONObject) productArray.get(i)).getString("quantity");
                         collection.price = ((JSONObject) productArray.get(i)).getString("price");
                         collection.thumbURL = ((JSONObject) productArray.get(i)).getString("image");
                         collection.quantity = ("Quantity");
                         collectionList.add(collection);
-
                     }
-
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                    collectionAdapter.notifyDataSetChanged();
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(MyCollectionActivity.this);
-                }
-                else {
+                } else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -201,14 +198,13 @@ public class MyCollectionActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-
+                    Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), OrderHistoryActivity.class));
                     finish();
 
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(MyCollectionActivity.this);
-                }
-                else {
+                } else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
