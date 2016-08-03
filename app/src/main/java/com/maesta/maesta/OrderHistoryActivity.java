@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,43 +42,53 @@ public class OrderHistoryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_recycleview);
-        {
-            mPrefs = AppPreferences.getAppPreferences(OrderHistoryActivity.this);
-            recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-            orderList = new ArrayList<>();
+        mPrefs = AppPreferences.getAppPreferences(OrderHistoryActivity.this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        orderList = new ArrayList<>();
 
-            setToolbar();
+        setToolbar();
 
-            orderAdapter = new OrderHistoryAdapter(orderList, this);
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(orderAdapter);
+        orderAdapter = new OrderHistoryAdapter(orderList, this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(orderAdapter);
 
-            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    if (dy > 0) {
-                        visibleItemCount = layoutManager.getChildCount();
-                        totalItemCount = layoutManager.getItemCount();
-                        firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-                        if (loadNextPage) {
-                            if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
-                                loadNextPage = false;
-                                page++;
+                    if (loadNextPage) {
+                        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                            loadNextPage = false;
+                            page++;
 
-                                if (Utils.isNetworkConnected(getApplicationContext(), true)) {
-                                    new OrderHistoryTask().execute();
-                                }
+                            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+                                new OrderHistoryTask().execute();
                             }
                         }
                     }
                 }
-            });
-
-            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
-                new OrderHistoryTask().execute();
             }
+        });
+
+        if (Utils.isNetworkConnected(getApplicationContext(), false))
+            new OrderHistoryTask().execute();
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new OrderHistoryTask().execute();
+            else
+                onBackPressed();
         }
     }
 

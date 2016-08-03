@@ -1,6 +1,7 @@
 package com.maesta.maesta;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -89,10 +90,13 @@ public class SearchActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-                    if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+
+                    if (Utils.isNetworkConnected(getApplicationContext(), false))
                         new GetSearchProductsTask().execute();
-                        return true;
-                    }
+                    else
+                        startActivityForResult(new Intent(SearchActivity.this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+                    return true;
+
                 }
                 return false;
             }
@@ -101,9 +105,21 @@ public class SearchActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new GetSearchProductsTask().execute();
+            else
+                onBackPressed();
+        }
+    }
+
     private void applyFont() {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_search), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_cancel), Config.BOLD);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_info), Config.REGULAR);
     }
 
     @Override
@@ -163,6 +179,8 @@ public class SearchActivity extends BaseActivity {
                         searchList.add(product);
                         JSONObject pageObject = object.getJSONObject("paging");
                         loadNextPage = pageObject.getBoolean("nextPage");
+                        ((TextView) findViewById(R.id.txt_info)).setText("Loading " + pageObject.getString("current") + " out of "
+                                + pageObject.getString("count"));
                     }
                     seachAdapter.notifyDataSetChanged();
                 } else if (!object.isNull("apistatus") && object.getString("apistatus").equalsIgnoreCase("API rejection")) {

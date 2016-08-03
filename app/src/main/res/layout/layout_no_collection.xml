@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:clickable="true"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_25">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_collection" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_15" />
+
+        <TextView
+            android:id="@+id/txt_no_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_collection"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/font_22" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_40" />
+
+        <Button
+            android:id="@+id/btn_add_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/redButtonColor"
+            android:paddingLeft="@dimen/margin_25"
+            android:paddingRight="@dimen/margin_25"
+            android:text="@string/add_new"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_22"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

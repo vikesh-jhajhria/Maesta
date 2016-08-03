@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_30"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/network_icon" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/txt_cnt_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cnt_connect"
+            android:textSize="@dimen/font_20"
+            android:textColor="@color/textColorSecondary"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/txt_plz_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/plz_check"
+            android:textSize="@dimen/font_18"
+            android:textColor="@color/textColorSecondary"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+
+        <Button
+            android:id="@+id/btn_try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/redButtonColor"
+            android:paddingLeft="@dimen/margin_25"
+            android:paddingRight="@dimen/margin_25"
+            android:text="@string/try_again"
+            android:textSize="@dimen/font_22"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+</RelativeLayout>

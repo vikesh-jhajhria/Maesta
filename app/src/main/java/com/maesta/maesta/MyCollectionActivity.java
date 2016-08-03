@@ -49,6 +49,7 @@ public class MyCollectionActivity extends BaseActivity {
             mPrefs = AppPreferences.getAppPreferences(MyCollectionActivity.this);
             recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
             collectionList = new ArrayList<>();
+            findViewById(R.id.btn_add_new).setOnClickListener(this);
 
             setToolbar();
             applyFont();
@@ -58,15 +59,34 @@ public class MyCollectionActivity extends BaseActivity {
             recyclerView.setAdapter(collectionAdapter);
             totalprice = (TextView) findViewById(R.id.txtview_total_price);
             findViewById(R.id.btn_place_order).setOnClickListener(this);
-            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
 
-                new MyCollectionTask().execute();
-            }
 
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Utils.isNetworkConnected(getApplicationContext(), false))
+            new MyCollectionTask().execute();
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new MyCollectionTask().execute();
+            else
+                onBackPressed();
+        }
+    }
+
     public void resetTotal(String totalAmout) {
+        if(collectionList.size() == 0)
+            findViewById(R.id.layout_no_collection).setVisibility(View.VISIBLE);
         totalprice.setText(totalAmout);
     }
 
@@ -82,6 +102,8 @@ public class MyCollectionActivity extends BaseActivity {
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txtview_total), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txtview_total_price), Config.BOLD);
         Utils.setTypeface(getApplicationContext(), (Button) findViewById(R.id.btn_place_order), Config.BOLD);
+        Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_no_collection), Config.REGULAR);
+        Utils.setTypeface(getApplicationContext(), (Button) findViewById(R.id.btn_add_new), Config.BOLD);
     }
 
     @Override
@@ -95,7 +117,9 @@ public class MyCollectionActivity extends BaseActivity {
 
                 }
                 break;
-
+            case R.id.btn_add_new:
+                onBackPressed();
+                break;
 
         }
     }
@@ -142,10 +166,11 @@ public class MyCollectionActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
+                    findViewById(R.id.layout_no_collection).setVisibility(View.GONE);
+                    findViewById(R.id.ll_bottom_button).setVisibility(View.VISIBLE);
                     totalprice.setText(object.getString("total"));
-
-
                     JSONArray productArray = object.getJSONArray("data");
+                    collectionList.clear();
                     for (int i = 0; i < productArray.length(); i++) {
                         Collection collection = new Collection();
                         collection.id = ((JSONObject) productArray.get(i)).getInt("collection_id");
@@ -158,7 +183,9 @@ public class MyCollectionActivity extends BaseActivity {
                         collectionList.add(collection);
                     }
                     collectionAdapter.notifyDataSetChanged();
-                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                } else if(object.getString("message").equalsIgnoreCase("No records found.")) {
+                    findViewById(R.id.layout_no_collection).setVisibility(View.VISIBLE);
+                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(MyCollectionActivity.this);
                 } else {
                     Toast.makeText(MyCollectionActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();

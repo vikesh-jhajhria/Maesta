@@ -139,5 +139,10 @@
     <string name="err_code">Please proper code</string>
     <string name="password_match_error">Confirm password doesn\'t match.</string>
     <string name="inquiry">Inquiry</string>
+    <string name="no_collection">No item added in your collection list.</string>
+    <string name="add_new">Add New</string>
+    <string name="try_again">Try Again</string>
+    <string name="cnt_connect">Can\'t Connect</string>
+    <string name="plz_check">Please check your network connection.</string>
 
 </resources>

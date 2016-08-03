@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.maesta.maesta.BaseActivity;
 import com.maesta.maesta.LoginActivity;
+import com.maesta.maesta.NetworkActivity;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -65,12 +66,16 @@ public class Utils {
 
     }
 
-    public static boolean isNetworkConnected(Context context, boolean showToast) {
+    public static boolean isNetworkConnected(Context context,boolean showWarning) {
         ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conManager.getActiveNetworkInfo();
         boolean isConnected = netInfo != null && netInfo.isConnected();
-        if (!isConnected && showToast)
+        if (!isConnected && showWarning) {
             Toast.makeText(context, "No connection", Toast.LENGTH_LONG).show();
+        }
+        /*if (!isConnected && showWarning) {
+            ((BaseActivity)context).startActivity(new Intent(context, NetworkActivity.class));
+        }*/
         return (netInfo != null && netInfo.isConnected());
     }
 

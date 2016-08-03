@@ -81,8 +81,20 @@ public class ListingActivity extends BaseActivity {
                 }
             }
         });
-        if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+        if (Utils.isNetworkConnected(getApplicationContext(), false))
             new GetProductsTask().execute(categoryId + "");
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new GetProductsTask().execute(categoryId + "");
+            else
+                onBackPressed();
         }
     }
 

@@ -46,7 +46,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
         View view = LayoutInflater.from(context).inflate(R.layout.layout_home_category_item, parent, false);
         ProductHolder holder = new ProductHolder(view);
         ViewGroup.LayoutParams params = holder.image.getLayoutParams();
-        params.height = (10*((int) Utils.getDeviceSize((BaseActivity)context).get("Width"))) / 22;
+        params.height = (1000*((int) Utils.getDeviceSize((BaseActivity)context).get("Width"))) / 2057;
         holder.image.setLayoutParams(params);
         return holder;
     }
@@ -73,7 +73,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
             }
         });
         Glide.with(context).load(list.get(position).thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).centerCrop().into(holder.image);
+                .placeholder(R.drawable.banner_1).fitCenter().into(holder.image);
     }
 
     class ProductHolder extends RecyclerView.ViewHolder {

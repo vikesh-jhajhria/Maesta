@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,10 +35,21 @@ public class AboutusActivity extends BaseActivity {
         setToolbar();
         applyFont();
 
-        if(Utils.isNetworkConnected(getApplicationContext(),true)){
+        if (Utils.isNetworkConnected(getApplicationContext(), false))
             new GetAboutusTask().execute();
-        }
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new GetAboutusTask().execute();
+            else
+                onBackPressed();
+        }
     }
 
     private void setToolbar() {
@@ -59,6 +71,7 @@ public class AboutusActivity extends BaseActivity {
     private void applyFont() {
         //Utils.setTypeface(getApplicationContext(), (WebView) findViewById(R.id.txt_about), Config.REGULAR);
     }
+
     class GetAboutusTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
@@ -91,10 +104,9 @@ public class AboutusActivity extends BaseActivity {
                     //.setText(Html.fromHtml(data.getString("description")));
                     Glide.with(getApplicationContext()).load(data.getString("image")).asBitmap()
                             .placeholder(R.drawable.banner_1).fitCenter().into((ImageView) findViewById(R.id.img_about));
-                }else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
+                } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(AboutusActivity.this);
-                }
-                else {
+                } else {
                     Toast.makeText(AboutusActivity.this, object.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

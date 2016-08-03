@@ -10,6 +10,8 @@ public class Config {
     public final static String REGULAR = "REGULAR";
     public final static String ROBOTO = "ROBOTO";
 
+    public final static int  NETWORK_ACTIVITY = 1001;
+
 
     public static boolean APP_IN_FRONT;
 

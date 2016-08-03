@@ -35,9 +35,7 @@ public class ProfileActivity extends BaseActivity {
         mPrefs = AppPreferences.getAppPreferences(ProfileActivity.this);
         setToolbar();
         applyFont();
-        if(Utils.isNetworkConnected(getApplicationContext(),true)) {
-            new ProfileTask().execute();
-        }
+
         name = (TextView) findViewById(R.id.textview_username);
         mobileno = (TextView) findViewById(R.id.textview_mobile_no);
         adress = (TextView) findViewById(R.id.textview_billing_address);
@@ -45,7 +43,21 @@ public class ProfileActivity extends BaseActivity {
         nxt_cat_level = (TextView) findViewById(R.id.textview_next_cat_level);
         target = (TextView) findViewById(R.id.textview_remaning_target_level);
 
+        if(Utils.isNetworkConnected(getApplicationContext(),false))
+            new ProfileTask().execute();
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new ProfileTask().execute();
+            else
+                onBackPressed();
+        }
     }
 
     private void setToolbar() {

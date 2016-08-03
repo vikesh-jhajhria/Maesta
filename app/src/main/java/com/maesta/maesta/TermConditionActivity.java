@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -30,8 +31,20 @@ public class TermConditionActivity extends BaseActivity {
         setContentView(R.layout.activity_terms_condition);
         setToolbar();
         applyFont();
-        if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+        if (Utils.isNetworkConnected(getApplicationContext(), false))
             new GetTermsTask().execute();
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new GetTermsTask().execute();
+            else
+                onBackPressed();
         }
     }
 

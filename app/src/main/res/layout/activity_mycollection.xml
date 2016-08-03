@@ -29,12 +29,12 @@
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/margin_5"
+            android:layout_above="@+id/ll_bottom_button"
+            android:layout_alignParentTop="true"
             android:paddingBottom="@dimen/margin_12"
             android:paddingLeft="@dimen/margin_7"
             android:paddingRight="@dimen/margin_7"
-            android:layout_above="@+id/ll_bottom_button"
-            android:layout_alignParentTop="true"
+            android:paddingTop="@dimen/margin_5"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:visibility="invisible"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -82,4 +83,12 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
+
+    <include
+        android:id="@+id/layout_no_collection"
+        layout="@layout/layout_no_collection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>

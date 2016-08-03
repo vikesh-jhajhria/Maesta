@@ -1,5 +1,6 @@
 package com.maesta.maesta;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,8 +75,20 @@ public class OrderHistoryDetailActivity extends BaseActivity {
             }
         });
 
-        if (Utils.isNetworkConnected(this, true)) {
+        if (Utils.isNetworkConnected(this, false))
             new OrderHistoryDetailTask().execute(orderId);
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new OrderHistoryDetailTask().execute(orderId);
+            else
+                onBackPressed();
         }
     }
 

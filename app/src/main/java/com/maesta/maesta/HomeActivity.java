@@ -70,6 +70,7 @@ public class HomeActivity extends BaseActivity {
     private List<RadioButton> pagerIndicatorList;
     TextView user_name;
     int categordId;
+    private boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +85,7 @@ public class HomeActivity extends BaseActivity {
         newArrivalRV = (RecyclerView) findViewById(R.id.rv_new_arrival);
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
         handler = new Handler();
-        if (Utils.isNetworkConnected(this, true))
-            new HomeTask().execute();
+
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
         prepareNewArrival();
@@ -93,9 +93,9 @@ public class HomeActivity extends BaseActivity {
         header.attachTo(catetoriesRV);
 
         RelativeLayout rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
-        Log.v("width>>>",((int) Utils.getDeviceSize(this).get("Width"))+"");
+        Log.v("width>>>", ((int) Utils.getDeviceSize(this).get("Width")) + "");
         ViewGroup.LayoutParams params = rl_banner.getLayoutParams();
-        params.height = (10*((int) Utils.getDeviceSize(this).get("Width"))) / 22;
+        params.height = (1000 * ((int) Utils.getDeviceSize(this).get("Width"))) / 2057;
         rl_banner.setLayoutParams(params);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -104,7 +104,6 @@ public class HomeActivity extends BaseActivity {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.layout_nav_header, null, false);
         mExpandableListView.addHeaderView(listHeaderView);
-        findViewById(R.id.img_user).setOnClickListener(this);
         user_name = (TextView) findViewById(R.id.txt_username);
         View listFooterView = inflater.inflate(R.layout.layout_nav_footer, null, false);
         mExpandableListView.addFooterView(listFooterView);
@@ -118,9 +117,50 @@ public class HomeActivity extends BaseActivity {
         findViewById(R.id.txt_logout).setOnClickListener(this);
         findViewById(R.id.search).setOnClickListener(this);
 
-
+        if (categoryList.size() == 0) {
+            if (Utils.isNetworkConnected(this, false))
+                new HomeTask().execute();
+            else
+                startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+        }
         addDrawerItems();
         applyFont();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
+                new HomeTask().execute();
+            else
+                onBackPressed();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press again to close Maesta", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     private void addDrawerItems() {

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@color/colorAccent"
-            android:text="@string/add_to_collection"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/font_22"
             android:textStyle="bold" />

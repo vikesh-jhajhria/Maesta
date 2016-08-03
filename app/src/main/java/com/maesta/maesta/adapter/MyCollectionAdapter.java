@@ -154,10 +154,9 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
-                    ((MyCollectionActivity) context).resetTotal(object.getString("total_amount"));
                     collection.remove(index);
                     notifyDataSetChanged();
-
+                    ((MyCollectionActivity) context).resetTotal(object.getString("total_amount"));
                     Toast.makeText(context, object.getString("message"), Toast.LENGTH_LONG).show();
 
                 } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {

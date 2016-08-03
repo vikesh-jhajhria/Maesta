@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -41,21 +42,36 @@ public class SubcatgoryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_subcatogary);
-        {
-            mPrefs = AppPreferences.getAppPreferences(SubcatgoryActivity.this);
-            mExpandableListView = (ExpandableListView) findViewById(R.id.navList);
-            mExpandableListView.setFocusable(false);
-            categoryList = new ArrayList<>();
-            subCategoryList = new ArrayList<>();
-            Glide.with(this).load(getIntent().getStringExtra("HEADER_IMAGE")).asBitmap()
-                    .placeholder(R.drawable.banner_1).centerCrop().into((ImageView) findViewById(R.id.profile_image));
+        mPrefs = AppPreferences.getAppPreferences(SubcatgoryActivity.this);
+        mExpandableListView = (ExpandableListView) findViewById(R.id.navList);
+        mExpandableListView.setFocusable(false);
+        categoryList = new ArrayList<>();
+        subCategoryList = new ArrayList<>();
+        ImageView headerImage = (ImageView) findViewById(R.id.profile_image);
+        ViewGroup.LayoutParams params = headerImage.getLayoutParams();
+        params.height = (1000 * ((int) Utils.getDeviceSize(this).get("Width"))) / 2057;
+        headerImage.setLayoutParams(params);
+        Glide.with(this).load(getIntent().getStringExtra("HEADER_IMAGE")).asBitmap()
+                .placeholder(R.drawable.banner_1).fitCenter().into(headerImage);
 
-            setToolbar();
+        setToolbar();
 
-            categoryId = getIntent().getIntExtra("ID", 0);
-            if (Utils.isNetworkConnected(getApplicationContext(), true)) {
+        categoryId = getIntent().getIntExtra("ID", 0);
+
+        if (Utils.isNetworkConnected(getApplicationContext(), false))
+            new SubCategoryTask().execute(categoryId + "");
+        else
+            startActivityForResult(new Intent(this, NetworkActivity.class), Config.NETWORK_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.NETWORK_ACTIVITY) {
+            if (Utils.isNetworkConnected(this, false))
                 new SubCategoryTask().execute(categoryId + "");
-            }
+            else
+                onBackPressed();
         }
     }
 

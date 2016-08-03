@@ -107,11 +107,11 @@
                                 android:id="@+id/pager_indicator_group"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/margin_2"
+                                android:padding="@dimen/margin_1"
                                 android:background="@drawable/round_rect"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginBottom="@dimen/margin_10"
+                                android:layout_marginBottom="@dimen/margin_8"
                                 android:orientation="horizontal" />
                         </RelativeLayout>
 
