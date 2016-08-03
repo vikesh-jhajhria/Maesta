@@ -136,7 +136,7 @@
     <string name="secure_password">Secure your account  with a password</string>
     <string name="almost_done">You\'r e almost done</string>
     <string name="done">Done</string>
-    <string name="err_code">Please proper code</string>
+    <string name="err_code">Please enter proper code</string>
     <string name="password_match_error">Confirm password doesn\'t match.</string>
     <string name="inquiry">Inquiry</string>
     <string name="no_collection">No item added in your collection list.</string>

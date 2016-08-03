@@ -244,7 +244,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                         collectionId = collectionData.getString("id");
                         et_quantity.setText(collectionData.getString("quantity"));
                         final String oldQuantity = collectionData.getString("quantity");
-
+                        et_quantity.setSelection(et_quantity.getText().length());
 
                         ((Button) findViewById(R.id.btn_add_collection)).setText("Update Collection");
                         ((Button) findViewById(R.id.btn_add_collection)).setOnClickListener(new View.OnClickListener() {
@@ -266,6 +266,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                         });
 
                     } else {
+                        et_quantity.setSelection(et_quantity.getText().length());
                         ((Button) findViewById(R.id.btn_add_collection)).setText("Add to Collection");
                     }
 

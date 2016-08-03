@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/expandedListItem"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_5"
-        android:paddingTop="@dimen/margin_5"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:textSize="@dimen/font_22"
-        android:paddingLeft="82dp"
-        android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textColor="@color/textColorSecondary"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/expandedListItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_15"
+            android:paddingLeft="75dp"
+            android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:paddingTop="@dimen/margin_15"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/font_22" />
+        <View
+            android:layout_below="@id/expandedListItem"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="75dp"
+            android:background="@color/hLineColor"/>
+    </RelativeLayout>
 
 </com.balysv.materialripple.MaterialRippleLayout>

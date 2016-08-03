@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,13 @@ public class SubcatgoryActivity extends BaseActivity {
         mExpandableListView.setFocusable(false);
         categoryList = new ArrayList<>();
         subCategoryList = new ArrayList<>();
+        LayoutInflater inflater = getLayoutInflater();
+        View listHeaderView = inflater.inflate(R.layout.layout_list_header, null, false);
+        mExpandableListView.addHeaderView(listHeaderView);
         ImageView headerImage = (ImageView) findViewById(R.id.profile_image);
-        ViewGroup.LayoutParams params = headerImage.getLayoutParams();
-        params.height = (1000 * ((int) Utils.getDeviceSize(this).get("Width"))) / 2057;
-        headerImage.setLayoutParams(params);
+        //ViewGroup.LayoutParams params = headerImage.getLayoutParams();
+        //params.height = (1000 * ((int) Utils.getDeviceSize(this).get("Width"))) / 2057;
+        //headerImage.setLayoutParams(params);
         Glide.with(this).load(getIntent().getStringExtra("HEADER_IMAGE")).asBitmap()
                 .placeholder(R.drawable.banner_1).fitCenter().into(headerImage);
 
