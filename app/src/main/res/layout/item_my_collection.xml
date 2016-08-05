@@ -36,6 +36,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
             android:layout_marginLeft="@dimen/margin_10" />
 
         <TextView
