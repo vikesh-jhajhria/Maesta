@@ -2,6 +2,7 @@ package com.maesta.maesta;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,6 +22,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.RadioButton;
@@ -52,7 +55,7 @@ import java.util.List;
 /**
  * Created by vikesh.kumar on 7/18/2016.
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private ArrayList<Banner> bannerList = new ArrayList<>();
     private ArrayList<Product> newArrivalList = new ArrayList<>();
@@ -68,6 +71,8 @@ public class HomeActivity extends BaseActivity {
     private ExpandableListView mExpandableListView;
     private ExpandableListAdapter mExpandableListAdapter;
     private List<RadioButton> pagerIndicatorList;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isRefreshing;
     TextView user_name;
     int categordId;
     private boolean doubleBackToExitPressedOnce;
@@ -86,11 +91,29 @@ public class HomeActivity extends BaseActivity {
         catetoriesRV = (RecyclerView) findViewById(R.id.rv_categories);
         handler = new Handler();
 
+
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
         prepareNewArrival();
         prepareCategories();
         header.attachTo(catetoriesRV);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
+        swipeRefreshLayout.setDistanceToTriggerSync(50);// in dips
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+
+        catetoriesRV.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+                int scrollY = catetoriesRV.getScrollY();
+                if (scrollY == 0) swipeRefreshLayout.setEnabled(true);
+                else swipeRefreshLayout.setEnabled(false);
+
+            }
+        });
 
         RelativeLayout rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
         Log.v("width>>>", ((int) Utils.getDeviceSize(this).get("Width")) + "");
@@ -318,13 +341,28 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isRefreshing = true;
+                if (Utils.isNetworkConnected(HomeActivity.this, true))
+                    new HomeTask().execute();
+                else
+                    swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
+    }
+
     class HomeTask extends AsyncTask<String, Void, String> {
         HashMap<String, String> postDataParams;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showProgessDialog();
+            if(!isRefreshing)
+                showProgessDialog();
         }
 
         @Override
@@ -338,7 +376,8 @@ public class HomeActivity extends BaseActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            dismissProgressDialog();
+            if(!isRefreshing)
+                dismissProgressDialog();
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
@@ -384,6 +423,7 @@ public class HomeActivity extends BaseActivity {
                     }
                     newArrivalAdapter.notifyDataSetChanged();
                     categoriesAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
                     prepareBanner();
                     //swipeView.setRefreshing(false);
                 } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
