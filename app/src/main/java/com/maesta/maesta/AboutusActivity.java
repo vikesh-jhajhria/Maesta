@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,11 @@ public class AboutusActivity extends BaseActivity {
         setContentView(R.layout.activity_aboutus);
         setToolbar();
         applyFont();
+
+        ImageView banner = (ImageView) findViewById(R.id.img_about);
+        ViewGroup.LayoutParams params = banner.getLayoutParams();
+        params.height = (1000*((int) Utils.getDeviceSize(this).get("Width"))) / 2057;
+        banner.setLayoutParams(params);
 
         if (Utils.isNetworkConnected(getApplicationContext(), false))
             new GetAboutusTask().execute();

@@ -130,6 +130,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         user_name = (TextView) findViewById(R.id.txt_username);
         View listFooterView = inflater.inflate(R.layout.layout_nav_footer, null, false);
         mExpandableListView.addFooterView(listFooterView);
+        user_name.setOnClickListener(this);
         findViewById(R.id.txt_my_profile).setOnClickListener(this);
         findViewById(R.id.txt_terms).setOnClickListener(this);
         findViewById(R.id.txt_my_order).setOnClickListener(this);
@@ -287,7 +288,7 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
-
+            case R.id.txt_username:
             case R.id.txt_my_profile:
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -337,7 +338,6 @@ public class HomeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class)
                         .putExtra("ID", ""));
                 break;
-
         }
     }
 
