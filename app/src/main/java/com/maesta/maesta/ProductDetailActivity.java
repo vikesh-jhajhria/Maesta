@@ -50,7 +50,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     AppPreferences mPrefs;
     private int ProductId;
 
-    String quantity, collectionId, oldquantity;
+    String quantity, collectionId;
     TextView txtview_product_name, productmodel_txtview, txtview_price, txtview_desc, txtview_price_detail, txtview_quantity, txtview_desc_detail;
     EditText et_quantity;
     String imageUrl = "", newQuantity = "";

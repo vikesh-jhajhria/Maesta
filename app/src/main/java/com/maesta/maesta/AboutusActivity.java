@@ -22,9 +22,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-/**
- * Created by saloni.bhansali on 7/20/2016.
- */
+
 public class AboutusActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
