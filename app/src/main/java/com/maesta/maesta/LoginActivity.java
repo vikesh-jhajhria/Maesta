@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,11 +39,13 @@ public class LoginActivity extends BaseActivity {
 
         ((Button) findViewById(R.id.btn_login)).setOnClickListener(this);
         ((TextView) findViewById(R.id.txt_forgot_pass)).setOnClickListener(this);
-        ((EditText) findViewById(R.id.txt_password)).setTypeface(((EditText) findViewById(R.id.txt_username)).getTypeface());
         ((EditText) findViewById(R.id.txt_username)).addTextChangedListener(new MyLoginValidation(((EditText) findViewById(R.id.txt_username))));
         ((EditText) findViewById(R.id.txt_password)).addTextChangedListener(new MyLoginValidation(((EditText) findViewById(R.id.txt_password))));
 
         applyFont();
+        ((EditText) findViewById(R.id.txt_password)).setTypeface(((EditText) findViewById(R.id.txt_username)).getTypeface());
+
+        //((EditText) findViewById(R.id.txt_password)).setTransformationMethod(new PasswordTransformationMethod());
     }
 
     @Override
@@ -84,7 +87,7 @@ public class LoginActivity extends BaseActivity {
     private void applyFont() {
         Utils.setTypeface(getApplicationContext(), (EditText) findViewById(R.id.txt_username), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.txt_forgot_pass), Config.REGULAR);
-        Utils.setTypeface(getApplicationContext(), (EditText) findViewById(R.id.txt_password), Config.REGULAR);
+        //Utils.setTypeface(getApplicationContext(), (EditText) findViewById(R.id.txt_password), Config.REGULAR);
         Utils.setTypeface(getApplicationContext(), (TextView) findViewById(R.id.btn_login), Config.REGULAR);
     }
 
