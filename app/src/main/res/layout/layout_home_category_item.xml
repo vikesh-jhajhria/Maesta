@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/margin_2"
             android:scaleType="fitXY"
-            android:src="@drawable/banner_1" />
+            android:src="@drawable/default_image" />
 
         <RelativeLayout
             android:layout_width="match_parent"

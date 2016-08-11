@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/banner_1" />
+                android:src="@drawable/default_image" />
 
             <WebView
                 android:id="@+id/txt_about"

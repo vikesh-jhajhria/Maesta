@@ -59,7 +59,7 @@ public class MyCollectionAdapter extends RecyclerView.Adapter<MyCollectionAdapte
         holder.quantityno.addTextChangedListener(new updateValidation(holder, position));
 
         Glide.with(context).load(collections.thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).fitCenter().into(holder.productimg);
+                .placeholder(R.drawable.default_image).fitCenter().into(holder.productimg);
         holder.txtview_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

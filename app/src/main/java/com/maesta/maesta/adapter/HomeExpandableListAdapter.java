@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.maesta.maesta.R;
@@ -16,10 +15,6 @@ import com.maesta.maesta.utils.Utils;
 import com.maesta.maesta.vo.Product;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -50,7 +45,7 @@ return null;
         txt.setText(parentItems.get(groupPosition).title);
         Utils.setTypeface(mContext, txt, Config.REGULAR);
         Glide.with(mContext).load(parentItems.get(groupPosition).iconURL).asBitmap()
-                .placeholder(R.drawable.banner_1).centerCrop()
+                .placeholder(R.drawable.default_image).centerCrop()
                 .into((ImageView) convertView.findViewById(R.id.img_item));
 
         return convertView;

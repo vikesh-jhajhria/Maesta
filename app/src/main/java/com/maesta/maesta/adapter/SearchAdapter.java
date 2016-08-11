@@ -43,7 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.product_name.setText(search.product_name);
         holder.price.setText(search.price);
         Glide.with(context).load(search.thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).fitCenter().into(holder.product_img);
+                .placeholder(R.drawable.default_image).fitCenter().into(holder.product_img);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

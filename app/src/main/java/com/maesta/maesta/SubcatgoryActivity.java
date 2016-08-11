@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -56,7 +55,7 @@ public class SubcatgoryActivity extends BaseActivity {
         //params.height = (1000 * ((int) Utils.getDeviceSize(this).get("Width"))) / 2057;
         //headerImage.setLayoutParams(params);
         Glide.with(this).load(getIntent().getStringExtra("HEADER_IMAGE")).asBitmap()
-                .placeholder(R.drawable.banner_1).fitCenter().into(headerImage);
+                .placeholder(R.drawable.default_image).fitCenter().into(headerImage);
 
         setToolbar();
 

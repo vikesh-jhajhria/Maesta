@@ -1,18 +1,14 @@
 package com.maesta.maesta.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.maesta.maesta.ListingActivity;
-import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 
 import com.maesta.maesta.utils.Config;
@@ -43,7 +39,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         final Product subcategory = subcategory_list.get(position);
         holder.productName.setText(subcategory.title);
         Glide.with(context).load(subcategory_list.get(position).iconURL).asBitmap()
-                .placeholder(R.drawable.banner_1).centerCrop().into(holder.cat_img);
+                .placeholder(R.drawable.default_image).centerCrop().into(holder.cat_img);
         if(subcategory_list.get(position).haveSubCategories) {
             holder.next_icon.setImageResource(R.drawable.subcatory_arrow);
             holder.next_icon.setVisibility(View.VISIBLE);

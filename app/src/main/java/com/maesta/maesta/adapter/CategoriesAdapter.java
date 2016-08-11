@@ -2,7 +2,6 @@ package com.maesta.maesta.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.maesta.maesta.BaseActivity;
 import com.maesta.maesta.ListingActivity;
-import com.maesta.maesta.ProductDetailActivity;
 import com.maesta.maesta.R;
 import com.maesta.maesta.SubcatgoryActivity;
 import com.maesta.maesta.utils.Config;
@@ -73,7 +71,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Pr
             }
         });
         Glide.with(context).load(list.get(position).thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).fitCenter().into(holder.image);
+                .placeholder(R.drawable.default_image).fitCenter().into(holder.image);
     }
 
     class ProductHolder extends RecyclerView.ViewHolder {

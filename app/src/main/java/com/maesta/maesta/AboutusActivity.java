@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -109,7 +106,7 @@ public class AboutusActivity extends BaseActivity {
                     ((WebView) findViewById(R.id.txt_about)).loadData(data.getString("description"), "text/html; charset=utf-8", "UTF-8");
                     //.setText(Html.fromHtml(data.getString("description")));
                     Glide.with(getApplicationContext()).load(data.getString("image")).asBitmap()
-                            .placeholder(R.drawable.banner_1).fitCenter().into((ImageView) findViewById(R.id.img_about));
+                            .placeholder(R.drawable.default_image).fitCenter().into((ImageView) findViewById(R.id.img_about));
                 } else if (object.getString("apistatus").equalsIgnoreCase("API rejection")) {
                     Utils.resetLogin(AboutusActivity.this);
                 } else {

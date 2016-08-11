@@ -42,7 +42,7 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
         holder.price.setText(orderDetail.price );
 
         Glide.with(context).load(orderDetail.thumbURL).asBitmap()
-                .placeholder(R.drawable.banner_1).fitCenter().into(holder.product_image);
+                .placeholder(R.drawable.default_image).fitCenter().into(holder.product_image);
 
     }
     @Override

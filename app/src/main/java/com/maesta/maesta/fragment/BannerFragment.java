@@ -2,13 +2,11 @@ package com.maesta.maesta.fragment;
 
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 
@@ -53,7 +51,7 @@ public class BannerFragment extends Fragment {
                                  Bundle savedInstanceState) {
             View view   =   inflater.inflate(R.layout.layout_banner_fragment, container, false);
             Glide.with(getActivity()).load(banner.url).asBitmap()
-                    .placeholder(R.drawable.banner_1).fitCenter().into((ImageView) view.findViewById(R.id.img_banner));
+                    .placeholder(R.drawable.default_image).fitCenter().into((ImageView) view.findViewById(R.id.img_banner));
 
             return view;
         }
