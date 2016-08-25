@@ -30,12 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_bottom_button"
-            android:layout_alignParentTop="true"
             android:paddingBottom="@dimen/margin_12"
             android:paddingLeft="@dimen/margin_7"
             android:paddingRight="@dimen/margin_7"
             android:paddingTop="@dimen/margin_5"
-
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -68,6 +66,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="5dp"
                     android:text="0.00"
+                    android:textStyle="bold"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/font_22" />
             </RelativeLayout>
