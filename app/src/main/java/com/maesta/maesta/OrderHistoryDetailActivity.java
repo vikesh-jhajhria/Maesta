@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maesta.maesta.adapter.MyCollectionAdapter;
@@ -37,16 +38,19 @@ public class OrderHistoryDetailActivity extends BaseActivity {
     private AppPreferences mPrefs;
     private String orderId = "";
     private int page = 1;
+    TextView totalprice;
+
     private boolean loadNextPage = true;
     int firstVisibleItem, visibleItemCount, totalItemCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_recycleview);
+        setContentView(R.layout.layout_order_recycleview);
         orderId = getIntent().getStringExtra("ID");
         mPrefs = AppPreferences.getAppPreferences(OrderHistoryDetailActivity.this);
         setToolbar();
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+
         orderdetail = new ArrayList<>();
         orderAdapter = new OrderHistoryDetailAdapter(orderdetail, this);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -74,6 +78,7 @@ public class OrderHistoryDetailActivity extends BaseActivity {
                 }
             }
         });
+        totalprice = (TextView) findViewById(R.id.txtview_total_price);
 
         if (Utils.isNetworkConnected(this, false))
             new OrderHistoryDetailTask().execute(orderId);
@@ -136,6 +141,7 @@ public class OrderHistoryDetailActivity extends BaseActivity {
             try {
                 JSONObject object = new JSONObject(result);
                 if (object.getBoolean("status")) {
+                    totalprice.setText(object.getString("total_amount"));
                     JSONArray orderArray = object.getJSONArray("data");
                     for (int i = 0; i < orderArray.length(); i++) {
                         Collection collection = new Collection();
